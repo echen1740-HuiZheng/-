@@ -2540,7 +2540,7 @@ function MAP3D_FACTORY(S3) {
         const ring = new THREE.Mesh(new THREE.TorusGeometry(.27, .045, 8, 24), std(done ? 0xB8862B : 0xB8322B)); ring.position.y = .8; ring.rotation.x = Math.PI / 2; pg.add(ring);
         const num = label(String(k + 1), { size:34, bg:null, fg:'#241C17', charW:.2 }); num.position.set(0, .8, .3); pg.add(num);
         const t = new THREE.Object3D(); t.position.set(0, 1.1, 0); pg.add(t);
-        if (!locked) tags.push({ o:t, el:tag('pin', H.title(id), locked), up:k * 13 });
+        if (!locked) tags.push({ o:t, el:tag('pin', H.title(id), locked), pri:done ? 1 : 0 });
         const grab = new THREE.Mesh(new THREE.SphereGeometry(L.PIN_HIT, 12, 8), new THREE.MeshBasicMaterial({ transparent:true, opacity:0, depthWrite:false }));
         grab.position.set(0, .8, 0); grab.userData = { kind:'pin', id, ch }; pg.add(grab); hits.push(grab); anchors[id] = grab; pinIds.push(id);
       });
@@ -2632,9 +2632,19 @@ function MAP3D_FACTORY(S3) {
       place(); R.render(S, cam);
       S.updateMatrixWorld(true);
       const w = host.clientWidth, h = host.clientHeight;
+      /* 標籤先到先佔：街區名稱優先，再來是還沒破的圖釘；會疊到別人的就先隱藏（圖釘上仍有數字） */
+      const placed = [];
+      if (!tags.sorted) { tags.sort((a, b) => (a.pri == null ? -1 : a.pri) - (b.pri == null ? -1 : b.pri)); tags.sorted = true; }
       tags.forEach(t => {
         t.o.getWorldPosition(v3); v3.project(cam);
-        t.el.style.transform = 'translate(' + ((v3.x + 1) / 2 * w).toFixed(1) + 'px,' + ((1 - v3.y) / 2 * h).toFixed(1) + 'px) translate(-50%,calc(-100% - ' + (t.up || 0) + 'px))';
+        const x = (v3.x + 1) / 2 * w, y = (1 - v3.y) / 2 * h;
+        if (!t.bw) { t.bw = t.el.offsetWidth; t.bh = t.el.offsetHeight; }
+        const r = { l:x - t.bw / 2 - 2, r:x + t.bw / 2 + 2, t:y - t.bh - 2, b:y + 2 };
+        const hit = placed.some(p => r.l < p.r && r.r > p.l && r.t < p.b && r.b > p.t);
+        t.el.style.visibility = hit ? 'hidden' : 'visible';
+        if (hit) return;
+        placed.push(r);
+        t.el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-100%)';
       });
     }
     raf = requestAnimationFrame(frame);
