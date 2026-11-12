@@ -298,6 +298,14 @@
   .act3d { position:relative; height:310px; border-radius:24px; overflow:hidden; background:#1a2040;
            box-shadow:inset 0 0 0 3px rgba(255,255,255,.12), 0 10px 24px rgba(0,0,0,.3) }
 
+  /* ---------- 平板／大螢幕：放寬欄寬、舞台依視窗高度放大（手機維持原樣） ---------- */
+  @media (min-width:700px) and (min-height:500px) {
+    .wrap { max-width:min(1000px, 96vw); padding:20px 24px 56px }
+    .stage { height:clamp(300px, 56vh, 620px) }
+    .act { height:clamp(280px, 56vh, 620px) }
+    .act3d { height:clamp(310px, 56vh, 620px) }
+  }
+
   .who { width:84px !important; height:84px !important }
   .speech { grid-template-columns:84px 1fr !important }
   .who img { width:100%; height:100%; object-fit:cover; display:block }
@@ -1911,7 +1919,7 @@ const W3 = (() => {
     }
     if (name === 'sea') {
       const geo = new THREE.PlaneGeometry(90, 60, 70, 40); geo.rotateX(-Math.PI / 2);
-      const water = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color:0x1F6A9A, roughness:.25, metalness:.15 }));
+      const water = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color:0x0B4A82, roughness:.7, metalness:0 }));
       water.position.set(0, -.1, -12); water.receiveShadow = true; add(water);
       const base = geo.attributes.position.array.slice();
       tickers.push(t => { const p = geo.attributes.position.array; for (let i = 0; i < p.length; i += 3) p[i + 1] = Math.sin(base[i] * .5 + t * 1.5) * .12 + Math.cos(base[i + 2] * .6 + t * 1.2) * .1; geo.attributes.position.needsUpdate = true; geo.computeVertexNormals(); });
@@ -1966,8 +1974,8 @@ const W3 = (() => {
           x.fillStyle = 'rgba(232,200,96,.18)'; for (let j = 16; j < h; j += 48) for (let i = 16; i < w; i += 64) { x.beginPath(); x.arc(i, j, 4, 0, 6.3); x.fill(); }
         }
       };
-      const floor = new THREE.Mesh(new THREE.BoxGeometry(22, .2, 13), new THREE.MeshStandardMaterial({ map:plank(8, 4, isHall ? '#8a8478' : '#8B5A2B', isHall ? '#76705f' : '#7A4A22'), roughness:.65 }));
-      floor.position.set(0, -.1, -1); floor.receiveShadow = true; add(floor);
+      const floor = new THREE.Mesh(new THREE.BoxGeometry(22, .2, 20), new THREE.MeshStandardMaterial({ map:plank(8, 6, isHall ? '#8a8478' : '#8B5A2B', isHall ? '#76705f' : '#7A4A22'), roughness:.65 }));
+      floor.position.set(0, -.1, 2.5); floor.receiveShadow = true; add(floor);
       const wall = new THREE.Mesh(new THREE.BoxGeometry(22, 7.5, .3), new THREE.MeshStandardMaterial({ map:T3.canvasTex(isHall ? 'w-hall' : 'w-study', 256, 256, wallDraw, 5, 2), roughness:.9 }));
       wall.position.set(0, 3.7, -5.3); wall.receiveShadow = true; add(wall);
       add(mesh(box(22, 1.1, .4), M(isHall ? 0x5a554a : 0x3a2214, { roughness:.7 }), S, 0, .55, -5.05, false));
@@ -2062,9 +2070,14 @@ const P3 = (() => {
   const emi = (c, k = 1) => new THREE.MeshStandardMaterial({ color:c, emissive:c, emissiveIntensity:k, roughness:.4 });
 
   /* ---------- 共用：掛載互動舞台 ---------- */
+  /* 平板／桌機把互動關卡的 3D 高度放大（上限 1.9 倍，並受視窗高度限制） */
+  function playHeight(base) {
+    if (window.innerWidth < 700) return base;
+    return Math.round(Math.max(base, Math.min(base * 1.9, window.innerHeight * .56)));
+  }
   function mountPlay(S3, host, o) {
     const R = S3.renderer, cv = R.domElement;
-    host.innerHTML = ''; host.className = 'act3d'; host.style.height = (o.height || 330) + 'px';
+    host.innerHTML = ''; host.className = 'act3d'; const baseH = o.height || 330; host.style.height = playHeight(baseH) + 'px';
     cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;border-radius:24px;touch-action:manipulation';
     host.appendChild(cv);
     const S = new THREE.Scene();
@@ -2095,6 +2108,8 @@ const P3 = (() => {
     const onMove = e => { const n = hit(e); if (n !== hover) { if (hover) hover.userData.hover && hover.userData.hover(hover, false); hover = n; if (n) n.userData.hover && n.userData.hover(n, true); cv.style.cursor = n ? 'pointer' : 'default'; } };
     cv.addEventListener('pointerdown', onDown); cv.addEventListener('pointermove', onMove);
     const ro = new ResizeObserver(fit);
+    const onWin = () => { host.style.height = playHeight(baseH) + 'px'; };
+    window.addEventListener('resize', onWin);
 
     const api = {
       S, cam, zoom:1, pickables:pick,
@@ -2102,7 +2117,7 @@ const P3 = (() => {
       pickable(obj, fn, hoverFn) { obj.userData.pick = fn; obj.userData.hover = hoverFn; if (!pick.includes(obj)) pick.push(obj); return obj; },
       tick(fn) { ticks.push(fn); },
       tween(obj, dur, fn, end) { tw.push({ obj, t:0, dur, fn, end }); },
-      dispose() { alive = false; cancelAnimationFrame(raf); ro.disconnect(); cv.removeEventListener('pointerdown', onDown); cv.removeEventListener('pointermove', onMove);
+      dispose() { alive = false; cancelAnimationFrame(raf); ro.disconnect(); window.removeEventListener('resize', onWin); cv.removeEventListener('pointerdown', onDown); cv.removeEventListener('pointermove', onMove);
         S.traverse(x => { if (x.geometry && x.geometry.dispose) x.geometry.dispose(); }); if (cv.parentNode) cv.parentNode.removeChild(cv); }
     };
     ro.observe(host); fit();
@@ -2145,22 +2160,27 @@ const P3 = (() => {
   function hoverScale(o, on) { o.scale.setScalar((o.userData.s0 || 1) * (on ? 1.08 : 1)); }
 
   /* 文字牌：含注音 */
-  function labelTex(text, w = 512, h = 150, bg = '#F7EEDA', fg = '#241C17') {
+  function labelTex(text, w = 512, h = 150, bg = '#F7EEDA', fg = '#241C17', perLine = 0) {
     const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d');
     x.fillStyle = bg; const r = 28;
     x.beginPath(); x.moveTo(r, 0); x.arcTo(w, 0, w, h, r); x.arcTo(w, h, 0, h, r); x.arcTo(0, h, 0, 0, r); x.arcTo(0, 0, w, 0, r); x.closePath(); x.fill();
-    const ch = H.annotate(text), n = ch.length, size = Math.min(56, (w - 50) / n);
-    const x0 = (w - n * size) / 2 + size / 2, y0 = h * .62;
+    const ch = H.annotate(text), n = ch.length;
+    const rows = perLine ? Math.ceil(n / perLine) : 1, cols = perLine ? Math.min(n, perLine) : n;
+    const size = Math.min(56, (w - 50) / cols), rowH = size * 1.3;
     x.textAlign = 'center'; x.textBaseline = 'middle';
     ch.forEach((c2, i) => {
-      const cx = x0 + i * size;
+      const row = perLine ? Math.floor(i / perLine) : 0, inRow = perLine ? Math.min(perLine, n - row * perLine) : n, k = i - row * (perLine || n);
+      const cx = (w - inRow * size) / 2 + size / 2 + k * size;
+      const y0 = rows === 1 ? h * .62 : h / 2 + (row - (rows - 1) / 2) * rowH + size * .2;
       x.fillStyle = fg; x.font = `900 ${size * .86}px "Noto Serif TC","PMingLiU","Songti TC",serif`; x.fillText(c2.ch, cx, y0);
       if (c2.zy) { x.font = `700 ${size * .34}px "Noto Sans TC",sans-serif`; x.fillStyle = '#6A5A4B'; x.fillText(c2.zy, cx, y0 - size * .66); }
     });
     const t = new THREE.CanvasTexture(c); if (THREE.sRGBEncoding) t.encoding = THREE.sRGBEncoding; return t;
   }
-  function plate(text, w = 2.2, h = .66, bg) {
-    const tx = labelTex(text, 512, Math.round(512 * h / w), bg);
+  function plate(text, w = 2.2, h = .66, bg, perLine = 0) {
+    const rows = perLine ? Math.ceil(text.length / perLine) : 1;
+    if (rows > 1) { perLine = Math.ceil(text.length / rows); h = h * (1 + .5 * (rows - 1)); }
+    const tx = labelTex(text, 512, Math.round(512 * h / w), bg, undefined, perLine);
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map:tx, transparent:true }));
     return m;
   }
@@ -2184,25 +2204,26 @@ const P3 = (() => {
     box.innerHTML = `<div class="slots">${'<span class="slot"></span>'.repeat(need)}</div><div id="p3"></div>`;
     const slots = [...box.querySelectorAll('.slot')];
     const bg = cfg.bg === 'paper' ? 'night' : cfg.bg;
-    const api = mountPlay(S3r, box.querySelector('#p3'), { bg, cam:{ p:[0, 6.4, 8.6], t:[0, .4, .2] }, halfW:5.2, height:340 });
+    const api = mountPlay(S3r, box.querySelector('#p3'), { bg, cam:{ p:[0, 6.4, 8.6], t:[0, .4, .2] }, halfW:5.2, height:360 });
     // 地面：紙板 / 大衣內裡
     const floorCol = cfg.bg === 'paper' ? 0xF4EAD0 : cfg.bg === 'ship' ? 0x5a2a6a : 0xD9B88A;
     if (cfg.bg === 'paper' || cfg.bg === 'ship') mesh(box_(10.8, .12, 6.8), mat(floorCol, { roughness:.95 }), api.S, 0, .0, .2);
+    if (cfg.bg === 'sea') { const sd = new THREE.Mesh(new THREE.CircleGeometry(7, 48), mat(0xB89A62, { roughness:1 })); sd.rotation.x = -Math.PI / 2; sd.scale.y = .8; sd.position.set(0, .28, .2); sd.receiveShadow = true; api.S.add(sd); }
     const ticksT = [];
     cfg.items.forEach((it, i) => {
       const g = grp(api.S, (it.x - 50) * .1, 0, (it.y - 50) * .072 + .2);
       const m = it.m3d || { type:'emoji', e:it.h };
       let body;
-      if (m.type === 'man') { body = danceMan(m.pose, m.flag); body.scale.setScalar(.92); }
+      if (m.type === 'man') { body = danceMan(m.pose, m.flag); body.scale.setScalar(1.2); }
       else if (m.type === 'goose') {
-        body = W3.animal('goose'); body.scale.setScalar(1.35); body.rotation.y = rnd(-.45, .45);
+        body = W3.animal('goose'); body.scale.setScalar(1.75); body.rotation.y = rnd(-.45, .45);
         if (m.mark) { const c = m.mark === 'blue' ? 0x2E7CFF : 0xE04B43; mesh(sph(.14, 12, 10), emi(c, .55), body, .24, .2, .18); mesh(tor(.075, .03), emi(c, .5), body, .1, .1, 0).rotation.x = Math.PI / 2; mesh(cyl(.012, .012, .5, 6), mat(0xdddddd), body, .1, .45, 0); mesh(box_(.3, .18, .02), emi(c, .55), body, .26, .66, 0); }
         outline(body, 1.04);
       } else {
         const e = String(it.h); const mk = W3.PROPS[e]; body = mk ? mk() : (() => { const gg = grp(); gg.add(W3.emojiSprite(e, 1)); return gg; })();
-        body.scale.setScalar(1.15); body.position.y = .35;
+        body.scale.setScalar(1.55); body.position.y = .45;
       }
-      g.add(body); hitBox(g, .6, 1.8, .9);
+      g.add(body); hitBox(g, m.type === 'goose' ? .6 : .85, m.type === 'goose' ? 2.0 : 2.3, 1.1);
       g.userData.s0 = 1;
       api.pickable(g, n => {
         if (n.userData.on) return;
@@ -2222,7 +2243,7 @@ const P3 = (() => {
   /* ---------- 2. 單選 ---------- */
   function choose(cfg, box, done) {
     box.innerHTML = '<div id="p3"></div>';
-    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || 'day', cam:{ p:[0, 3.0, 8.6], t:[0, 1.05, 0] }, halfW:5.0, height:340 });
+    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || 'day', cam:{ p:[0, 3.0, 8.6], t:[0, 1.05, 0] }, halfW:4.5, height:340 });
     const n = cfg.opts.length, xs = n === 3 ? [-2.7, 0, 2.7] : n === 2 ? [-1.7, 1.7] : [-3, -1, 1, 3];
     cfg.opts.forEach((o, i) => {
       const g = grp(api.S, xs[i], 0, 0);
@@ -2235,7 +2256,7 @@ const P3 = (() => {
       else if (t === 'rock-slab') { item = grp(stage); mesh(box_(1.7, .35, 1.0), mat(0x9A8F7C, { roughness:.95 }), item, 0, .2, 0); mesh(box_(1.1, .25, .7), mat(0xB2A790, { roughness:.95 }), item, 0, .5, 0); }
       else { item = grp(stage); const pm = W3.PROPS[o.em]; if (pm) { const p = pm(); p.scale.setScalar(1.7); item.add(p); } else { const sp = W3.emojiSprite(o.em, 1.9); sp.position.y = 1.1; item.add(sp); } }
       outline(item, 1.04);
-      const pl = plate(o.t, 2.35, .72); pl.position.set(0, .42, 1.35); pl.rotation.x = -.22; g.add(pl);
+      const pl = plate(o.t, 2.35, .72, undefined, 7), plRows = Math.ceil(o.t.length / 7); pl.position.set(0, .06 + pl.geometry.parameters.height / 2, Math.min(2.4, 1.35 + .35 * (plRows - 1))); pl.rotation.x = -.22; g.add(pl);
       hitBox(g, 1.2, 2.6, 1.3); g.userData.s0 = 1;
       api.tick(t2 => { item.rotation.y = Math.sin(t2 * .8 + i) * .25; });
       api.pickable(g, nn => {
@@ -2349,20 +2370,20 @@ const P3 = (() => {
     box.innerHTML = `<div class="clue" id="clue"></div><div id="p3"></div>`;
     const clueEl = box.querySelector('#clue');
     const n = cfg.people.length, two = n > 4;
-    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || (n > 4 ? 'ship' : 'barn'), cam:n > 4 ? { p:[0, 4.4, 10.6], t:[0, 1.0, 0] } : { p:[0, 2.5, 7.4], t:[0, 1.35, 0] }, halfW:n > 4 ? 4.7 : 4.3, height:380 });
+    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || (n > 4 ? 'ship' : 'barn'), cam:n > 4 ? { p:[0, 4.7, 8.8], t:[0, 1.0, 0] } : { p:[0, 2.5, 7.4], t:[0, 1.35, 0] }, halfW:n > 4 ? 5.3 : 4.3, height:380 });
     const per = two ? Math.ceil(n / 2) : n;
     const els = {};
     cfg.people.forEach((p, i) => {
       const row = two ? Math.floor(i / per) : 0, col = two ? i % per : i, cnt = two ? Math.min(per, n - row * per) : n;
-      const x = (col - (cnt - 1) / 2) * (two ? 2.15 : 2.3) + (row ? .55 : -.55), z = two ? (row ? 1.7 : -1.5) : 0;
+      const x = (col - (cnt - 1) / 2) * (two ? 1.92 : 2.3) + (row ? .5 : -.5), z = two ? (row ? 1.7 : -1.5) : 0;
       let rig;
       if (p.a) rig = personFromAttrs(p.a);
       else rig = T3.buildPerson(H.PEOPLE[p.em] || 'pax');
-      const ac = personActorOf(rig); ac.place(x, 0, z); ac.baseScale = two ? .95 : 1;
+      const ac = personActorOf(rig); ac.place(x, 0, z); ac.baseScale = two ? 1.12 : 1;
       ac.setIdleYaw(clamp(-x * .08, -.4, .4)); rig.root.rotation.y = ac.idleYaw; api.S.add(rig.root);
       api.tick((t, dt) => ac.update(dt, t));
-      const g = grp(api.S, x, 0, z); hitBox(g, .65, 2.0, 1.0);
-      if (p.name) { const pl = plate(p.name, two ? 1.6 : 1.9, two ? .5 : .62); pl.position.set(0, .3, two ? .75 : 1.0); pl.rotation.x = -.2; g.add(pl); }
+      const g = grp(api.S, x, 0, z); hitBox(g, .8, 2.3, 1.0);
+      if (p.name) { const pl = plate(p.name, two ? 1.7 : 1.9, two ? .56 : .62); pl.position.set(0, .3, two ? .75 : 1.0); pl.rotation.x = -.2; g.add(pl); }
       if (p.badges) { p.badges.split(' ').forEach((b, bi) => { const sp = W3.emojiSprite(b, 1.0); sp.position.set(0, 2.2 + bi * .8, 0); g.add(sp); }); }
       els[p.id] = { g, rig, ac };
       api.pickable(g, nn => {
@@ -2880,12 +2901,12 @@ const Stage3D = (() => {
       raf = requestAnimationFrame(frame);
       const dt = Math.min(.05, (now - last) / 1000); last = now; time += dt;
       const t = Math.tan(cam.fov * Math.PI / 360);
-      const dist = Math.max(3.3 / (t * cam.aspect), 2.1 / t);
+      const dist = Math.max(3.9 / (t * cam.aspect), 2.1 / t);
       const sp = speaker && actors[speaker] ? actors[speaker].root.position.x : 0;
       camX += (sp * .3 - camX) * Math.min(1, dt * 2.2);
       camZoom += ((speaker ? .9 : 1) - camZoom) * Math.min(1, dt * 1.6);
       cam.position.set(camX + Math.sin(time * .25) * .18, 1.5 + Math.sin(time * .2) * .05, dist * camZoom);
-      cam.lookAt(camX * .8, 1.22, 0);
+      cam.lookAt(camX * .8, 1.85, 0);
       for (const ac of Object.values(actors)) if (ac.root.visible) ac.update(dt, time);
       W3.tickers.forEach(f => f(time, dt));
       for (let i = bubbles.length - 1; i >= 0; i--) {
