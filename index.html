@@ -646,7 +646,7 @@
       Object.entries(scene.cast || {}).forEach(([id, a]) => {
         const el = document.createElement('div'); el.className = 'actor' + (a.hid ? ' hid' : '');
         el.style.left = a.x + '%'; el.style.top = a.y + '%';
-        const inner = a.k ? (ACTOR_SVG[a.k] || ACTOR_SVG.client) : `<span>${a.e}</span>`;
+        const inner = a.k ? (ACTOR_SVG[a.k] || ACTOR_SVG.client) : `<span>${({ '🛺':'🐎' })[a.e] || a.e}</span>`;
         el.innerHTML = `<span class="b"><span class="f" style="${a.k ? '' : `font-size:${60 * (a.s || 1)}px;`}${a.k && a.s ? `display:block;width:${84 * a.s}px;` : ''}">${inner}</span></span>`;
         host.appendChild(el); map[id] = el;
       });
@@ -1541,6 +1541,14 @@ const W3 = (() => {
       for (let i = 0; i < 5; i++) mesh(sph(.05, 8, 6), emi(0xFFE080, .7), g, -.7 + i * .3, .78, .36); return g; },
     '🚂': () => { const g = grp(); mesh(cyl(.28, .28, 1, 20), mat(0x2E2E38), g, .1, .5, 0).rotation.z = Math.PI / 2; mesh(box(.5, .6, .56), mat(0xC23B33), g, -.5, .6, 0); mesh(cyl(.1, .13, .3, 12), mat(0x1a1a22), g, .4, .85, 0);
       for (const x of [-.45, -.05, .35]) for (const z of [-.3, .3]) { const w = mesh(cyl(.17, .17, .06, 16), mat(0x5a5a62), g, x, .17, z); w.rotation.x = Math.PI / 2; } return g; },
+    '🛺': () => { const g = grp(); const wood = mat(0x4A2E22), red = mat(0x7A2630), dark = mat(0x1a1a22);
+      mesh(box(1.3, .7, .85), red, g, 0, .78, 0); mesh(box(1.5, .1, .95), wood, g, 0, 1.18, 0); mesh(box(1.3, .08, .85), wood, g, 0, .4, 0);
+      mesh(box(.5, .34, .02), mat(0xBFE3F2), g, -.1, .85, .44, false); mesh(box(.5, .34, .02), mat(0xBFE3F2), g, -.1, .85, -.44, false);
+      for (const x of [-.45, .5]) for (const z of [-.47, .47]) { const w = mesh(cyl(.34, .34, .07, 18), dark, g, x, .34, z); w.rotation.x = Math.PI / 2; }
+      mesh(box(.9, .05, .06), wood, g, 1.15, .7, .2, false); mesh(box(.9, .05, .06), wood, g, 1.15, .7, -.2, false);
+      const brown = mat(0x6A4A2E); mesh(box(.95, .46, .4), brown, g, 1.55, .92, 0); mesh(box(.3, .5, .26), brown, g, 2.02, 1.2, 0).rotation.z = -.5; mesh(box(.32, .24, .24), brown, g, 2.26, 1.4, 0);
+      for (const x of [1.2, 1.9]) for (const z of [-.13, .13]) mesh(cyl(.05, .05, .75, 8), brown, g, x, .375, z);
+      return g; },
     '🧥': () => { const g = grp(); lathe([[.01, 0], [.3, .02], [.28, .6], [.2, .9], [.05, .95]], mat(0x3E6FB0, { side:THREE.DoubleSide }), g); return g; },
     '🚿': () => { const g = grp(); mesh(cyl(.3, .3, .06, 20), mat(0xBFD0E0, { metalness:.7, roughness:.3 }), g, 0, .9, 0); for (let i = 0; i < 20; i++) { const d = mesh(sph(.02, 6, 4), mat(0x6EC6FF, { transparent:true, opacity:.7 }), g, rnd(-.25, .25), rnd(.1, .85), rnd(-.25, .25), false); d.userData.drop = 1; } return g; },
     '🔵': () => { const g = grp(); mesh(sph(.22, 20, 16), emi(0x3E86E0, .9), g, 0, .3, 0); return g; },
@@ -2108,7 +2116,7 @@ const P3 = (() => {
     const onMove = e => { const n = hit(e); if (n !== hover) { if (hover) hover.userData.hover && hover.userData.hover(hover, false); hover = n; if (n) n.userData.hover && n.userData.hover(n, true); cv.style.cursor = n ? 'pointer' : 'default'; } };
     cv.addEventListener('pointerdown', onDown); cv.addEventListener('pointermove', onMove);
     const ro = new ResizeObserver(fit);
-    const onWin = () => { host.style.height = playHeight(baseH) + 'px'; };
+    let lastW = window.innerWidth; const onWin = () => { if (window.innerWidth === lastW) return; lastW = window.innerWidth; host.style.height = playHeight(baseH) + 'px'; };
     window.addEventListener('resize', onWin);
 
     const api = {
@@ -2223,7 +2231,7 @@ const P3 = (() => {
         const e = String(it.h); const mk = W3.PROPS[e]; body = mk ? mk() : (() => { const gg = grp(); gg.add(W3.emojiSprite(e, 1)); return gg; })();
         body.scale.setScalar(1.55); body.position.y = .45;
       }
-      g.add(body); hitBox(g, m.type === 'goose' ? .6 : .85, m.type === 'goose' ? 2.0 : 2.3, 1.1);
+      g.add(body); hitBox(g, m.type === 'goose' || m.type === 'man' ? .6 : .85, m.type === 'goose' || m.type === 'man' ? 2.0 : 2.3, 1.1);
       g.userData.s0 = 1;
       api.pickable(g, n => {
         if (n.userData.on) return;
@@ -2243,7 +2251,7 @@ const P3 = (() => {
   /* ---------- 2. 單選 ---------- */
   function choose(cfg, box, done) {
     box.innerHTML = '<div id="p3"></div>';
-    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || 'day', cam:{ p:[0, 3.0, 8.6], t:[0, 1.05, 0] }, halfW:4.5, height:340 });
+    const api = mountPlay(S3r, box.querySelector('#p3'), { bg:cfg.bg || 'day', cam:{ p:[0, 3.0, 8.6], t:[0, 1.05, 0] }, halfW:cfg.opts.some(o => o.t.length > 14) ? 4.9 : 4.5, height:340 });
     const n = cfg.opts.length, xs = n === 3 ? [-2.7, 0, 2.7] : n === 2 ? [-1.7, 1.7] : [-3, -1, 1, 3];
     cfg.opts.forEach((o, i) => {
       const g = grp(api.S, xs[i], 0, 0);
@@ -2256,7 +2264,7 @@ const P3 = (() => {
       else if (t === 'rock-slab') { item = grp(stage); mesh(box_(1.7, .35, 1.0), mat(0x9A8F7C, { roughness:.95 }), item, 0, .2, 0); mesh(box_(1.1, .25, .7), mat(0xB2A790, { roughness:.95 }), item, 0, .5, 0); }
       else { item = grp(stage); const pm = W3.PROPS[o.em]; if (pm) { const p = pm(); p.scale.setScalar(1.7); item.add(p); } else { const sp = W3.emojiSprite(o.em, 1.9); sp.position.y = 1.1; item.add(sp); } }
       outline(item, 1.04);
-      const pl = plate(o.t, 2.35, .72, undefined, 7), plRows = Math.ceil(o.t.length / 7); pl.position.set(0, .06 + pl.geometry.parameters.height / 2, Math.min(2.4, 1.35 + .35 * (plRows - 1))); pl.rotation.x = -.22; g.add(pl);
+      const perL = o.t.length > 21 ? 9 : 7, pl = plate(o.t, 2.35, .72, undefined, perL), plRows = Math.min(3, Math.ceil(o.t.length / perL)), liftS = !W3.PROPS[o.em] && !o.m3d; if (liftS) stage.position.y = .35 + .3 * (plRows - 1); pl.position.set(0, .06 + pl.geometry.parameters.height / 2, Math.min(2.4, 1.35 + .35 * (plRows - 1))); pl.rotation.x = -.22; g.add(pl);
       hitBox(g, 1.2, 2.6, 1.3); g.userData.s0 = 1;
       api.tick(t2 => { item.rotation.y = Math.sin(t2 * .8 + i) * .25; });
       api.pickable(g, nn => {
@@ -2767,7 +2775,7 @@ const Stage3D = (() => {
       let ac;
       const baseS = a.s || 1;
       if (a.k && a.k !== 'needle') {
-        const rig = T3.buildPerson(a.k); ac = new T3.PersonActor(id, rig, {});
+        const rig = T3.buildPerson(a.k, a.look || {}); ac = new T3.PersonActor(id, rig, {});
         ac.baseScale = baseS; S.add(ac.root); ac.place(WX(a.x), a.lift || 0, WZ(a.y)); addBlob(ac.root);
       } else if (a.e && PEOPLE[a.e]) {
         const rig = T3.buildPerson(PEOPLE[a.e]); ac = new T3.PersonActor(id, rig, { face:FACE_OF[a.e] });
@@ -2901,12 +2909,12 @@ const Stage3D = (() => {
       raf = requestAnimationFrame(frame);
       const dt = Math.min(.05, (now - last) / 1000); last = now; time += dt;
       const t = Math.tan(cam.fov * Math.PI / 360);
-      const dist = Math.max(3.9 / (t * cam.aspect), 2.1 / t);
+      const dW = 3.7 / (t * cam.aspect), dH = 2.0 / t, dist = Math.max(dW, dH), wide = dH >= dW;   // 寬螢幕以人物高度取景，窄螢幕以橫向取景
       const sp = speaker && actors[speaker] ? actors[speaker].root.position.x : 0;
       camX += (sp * .3 - camX) * Math.min(1, dt * 2.2);
       camZoom += ((speaker ? .9 : 1) - camZoom) * Math.min(1, dt * 1.6);
       cam.position.set(camX + Math.sin(time * .25) * .18, 1.5 + Math.sin(time * .2) * .05, dist * camZoom);
-      cam.lookAt(camX * .8, 1.85, 0);
+      cam.lookAt(camX * .8, wide ? 1.45 : 1.22, 0);
       for (const ac of Object.values(actors)) if (ac.root.visible) ac.update(dt, time);
       W3.tickers.forEach(f => f(time, dt));
       for (let i = bubbles.length - 1; i >= 0; i--) {
@@ -3309,10 +3317,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
                 ['n',"他說：我快要結婚了，可是，有一張照片。",['king tilt','king emo 😟']],
                 ['n',"照片裡的人，是歌劇女伶艾琳．艾德勒，她不肯還給我。",['king shake','w tilt']],
                 ['h',"我答應他：我會把照片找回來。",['h nod','h emo 😉']] ] },
-        { scene:{ bg:'day', cast:{ h:K('holmes',-12), w:K('watson',-28), house:E('🏠',72,88,1.5), irene:K('irene',92,88,1,{hid:1}), man:K('gent',112,88,1,{hid:1}) } },
-          say:[ ['h',"第二天，我扮成一個馬夫，在她家門外走來走去。",['h go 30','w go 14']],
-                ['h',"我看見艾琳小姐坐上馬車，匆匆離開。",['irene show','irene go 114 88 3']],
-                ['n',"一位先生跟她一起，是律師戈弗雷．諾頓。",['man show','man go 114 88 3 @400']],
+        { scene:{ bg:'day', cast:{ h:K('holmes',-12), w:K('watson',-28), house:E('🏠',38,88,1.4), car:E('🛺',60,88,.85), irene:K('irene',46,88,1,{hid:1}), man:K('gent',50,88,1,{hid:1}) } },
+          say:[ ['h',"第二天，我扮成一個馬夫，在她家門外走來走去。",['h go 22','w go 8']],
+                ['h',"我看見艾琳小姐坐上馬車，匆匆離開。",['irene show','irene go 60 96 1.6','irene hide @1700']],
+                ['n',"一位先生跟她一起，是律師戈弗雷．諾頓。",['man show','man go 60 96 1.6','man hide @1700','car go 125 88 3 @2300']],
                 ['n',"這位小姐，一點也不簡單。",['h inspect','h emo 💭']] ] },
         { play:'spot', prompt:"艾琳把照片藏在家裡。房間裡，有三個可以藏東西的地方，找出來！",
           cfg:{ bg:'night', items:[
@@ -3942,7 +3950,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
                 ['n',"這不是書房的泥，也不是花園的泥。",['h tilt','w tilt']],
                 ['n',"木屑和黑泥，是跳遠的沙坑才會有的東西。",['h point','h emo 💡']],
                 ['h',"我們上樓，去看看三位要考試的學生。",['h go 40','w go 60','prof go 90']] ] },
-        { scene:{ bg:'hall', cast:{ g:K('kid',20), r:K('kid',54), m:K('kid',88), bt:K('butler',116), h:K('holmes',-14) } },
+        { scene:{ bg:'hall', cast:{ h:K('holmes',12), g:K('pax',30,88,1,{look:{coat:0xC23B33,hair:0x8A5A2A,collar:0x7A1E1A,pants:0x2E3A5E,size:1.06,build:1.05}}), r:K('pax',52,88,1,{look:{coat:0x3E7A5A,hair:0x1A1410,collar:0x2A5A40,pants:0x6A5A3A,size:1.0}}), m:K('pax',74,88,1,{look:{coat:0x4A5E8A,hair:0xC8A050,collar:0x2E3E60,pants:0x3A3A40,glass:1,size:.98,build:.92}}), bt:K('butler',92) } },
           say:[ ['n',"三位學生，都住在教授樓上。",['g hop','r hop @200','m hop @400']],
                 ['n',"吉爾克里斯特很會跑步和跳遠，是學校的運動健將。",['g nod','g emo 🏃']],
                 ['n',"拉斯很安靜，做什麼事都慢慢來。",['r nod']],
@@ -3960,10 +3968,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🧘', t:"房間很整齊的拉斯", why:"他的房間什麼線索也沒有，不能亂猜他。" },
             { em:'📖', t:"整晚在圖書館的麥克拉倫", why:"圖書館有人作證，他不在書房。" } ] },
           win:"看線索，不看人，答案就出來了。" },
-        { scene:{ bg:'study', cast:{ h:K('holmes',26), w:K('watson',68), bt:K('butler',92), g:K('kid',112,88,1,{hid:1}) } },
+        { scene:{ bg:'study', cast:{ h:K('holmes',26), w:K('watson',68), bt:K('butler',92), g:K('pax',112,88,1,{hid:1,look:{coat:0xC23B33,hair:0x8A5A2A,collar:0x7A1E1A,pants:0x2E3A5E,size:1.06,build:1.05}}) } },
           say:[ ['n',"班尼斯特低著頭說，他把鑰匙忘在門上了。",['bt shake','bt emo 😔']],
                 ['n',"他以前，在吉爾克里斯特家裡做過事。",['bt nod','h tilt']],
-                ['n',"吉爾克里斯特經過門口，看到鑰匙，一時糊塗，就進去了。",['g show','g go 90 88 1.4']],
+                ['n',"吉爾克里斯特經過門口，看到鑰匙，一時糊塗，就進去了。",['g show','g go 80 88 1.4']],
                 ['n',"他低下頭，說：對不起，我做錯了。",['g emo 😔','g shake']],
                 ['n',"他沒有再說謊，也沒有怪別人。",['g nod','w nod']] ] },
         { play:'choose', prompt:"吉爾克里斯特承認了。他接下來，應該怎麼做？",
@@ -3972,8 +3980,8 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🤫', t:"假裝沒事，繼續考試", why:"考卷已經偷看了，這樣對別的同學不公平。" },
             { em:'👉', t:"說是別人不小心害的", why:"把錯推給別人，只會讓事情更糟。" } ] },
           win:"說實話，需要很大的勇氣。" },
-        { scene:{ bg:'day', cast:{ h:K('holmes',30), w:K('watson',62), prof:K('prof',92), g:K('kid',112) } },
-          say:[ ['n',"吉爾克里斯特，自己走去找教授，說明了一切。",['g go 98','prof nod']],
+        { scene:{ bg:'day', cast:{ h:K('holmes',30), w:K('watson',62), prof:K('prof',92), g:K('pax',46,88,1,{look:{coat:0xC23B33,hair:0x8A5A2A,collar:0x7A1E1A,pants:0x2E3A5E,size:1.06,build:1.05}}) } },
+          say:[ ['n',"吉爾克里斯特，自己走去找教授，說明了一切。",['g go 80','prof nod']],
                 ['n',"他決定，這次不參加考試。",['g nod','g emo 😔']],
                 ['n',"教授拍拍他的肩膀，說：你有勇氣承認，我很高興。",['prof nod','prof emo 😊']],
                 ['h',"我對華生說：一點泥、一些木屑，就能說出真相。",['h wave']],
@@ -5417,9 +5425,29 @@ if (typeof module !== 'undefined') module.exports = CHAPTERS;
   function renderDots() {
     dotsEl.innerHTML = cur.c.steps.map((_, k) => `<i class="${k < cur.i ? 'on' : ''} ${k === cur.i ? 'cur' : ''}"></i>`).join('');
   }
+  /* 站在畫面邊緣或外面、而且劇情從未讓他走進來的角色，拉回畫面內（人物最遠 6..94，道具 8..92） */
+  function fixEdges(s) {
+    if (!s.scene || !s.scene.cast || s.scene._edgeFixed) return; s.scene._edgeFixed = true;
+    const enters = {};
+    (s.say || []).forEach(ln => (ln[2] || []).forEach(a => {
+      const m = a.replace(/@\d+$/, '').trim().split(/\s+/);
+      if (m[1] === 'show' || (m[1] === 'go' && +m[2] >= 4 && +m[2] <= 96)) enters[m[0]] = true;
+    }));
+    Object.entries(s.scene.cast).forEach(([id, a]) => {
+      if (a.hid || enters[id]) return;
+      const person = !!a.k && a.k !== 'needle';
+      let nx = a.x, dir = 0;
+      if (person) { if (a.x > 94) { nx = 94; dir = -1; } else if (a.x < 6) { nx = 6; dir = 1; } }
+      else if (a.x > 92 && a.x <= 110) { nx = 92; dir = -1; } else if (a.x < 8 && a.x >= -10) { nx = 8; dir = 1; }
+      if (!dir) return;
+      const others = Object.entries(s.scene.cast).filter(([oid, o]) => oid !== id && !o.hid && o.x >= 0 && o.x <= 100);
+      for (let g = 0; g < 6 && others.some(([, o]) => Math.abs(o.x - nx) < 7); g++) nx += dir * 7;
+      a.x = nx;
+    });
+  }
   function renderStep() {
     unmount3D(); clearInterval(whoTimer);
-    const s = cur.c.steps[cur.i];
+    const s = cur.c.steps[cur.i]; fixEdges(s);
     save.step[cur.c.id] = cur.i; persist();
     renderDots(); window.scrollTo(0, 0);
     body.innerHTML = '';
