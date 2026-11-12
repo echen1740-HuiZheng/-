@@ -2911,10 +2911,10 @@ const Stage3D = (() => {
       const t = Math.tan(cam.fov * Math.PI / 360);
       const dW = 3.7 / (t * cam.aspect), dH = 2.0 / t, dist = Math.max(dW, dH), wide = dH >= dW;   // 寬螢幕以人物高度取景，窄螢幕以橫向取景
       const sp = speaker && actors[speaker] ? actors[speaker].root.position.x : 0;
-      camX += (sp * .3 - camX) * Math.min(1, dt * 2.2);
-      camZoom += ((speaker ? .9 : 1) - camZoom) * Math.min(1, dt * 1.6);
+      camX += ((wide ? sp * .3 : 0) - camX) * Math.min(1, dt * 2.2);
+      camZoom += ((speaker && wide ? .9 : 1) - camZoom) * Math.min(1, dt * 1.6);
       cam.position.set(camX + Math.sin(time * .25) * .18, 1.5 + Math.sin(time * .2) * .05, dist * camZoom);
-      cam.lookAt(camX * .8, wide ? 1.45 : 1.22, 0);
+      cam.lookAt(camX * .8, 1.45, 0);
       for (const ac of Object.values(actors)) if (ac.root.visible) ac.update(dt, time);
       W3.tickers.forEach(f => f(time, dt));
       for (let i = bubbles.length - 1; i >= 0; i--) {
@@ -3596,7 +3596,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { l:{ em:'🌳', t:"影子在榆樹下面" }, r:{ em:'📍', t:"從榆樹影子的尖端開始量" } },
             { l:{ em:'🚶', t:"向北十又十，向東五又五…" }, r:{ em:'👣', t:"照著步數，一段一段走" } } ] },
           win:"謎語的意思，我們都懂了。" },
-        { scene:{ bg:'day', cast:{ h:K('holmes',22), rm:K('gent',70), stump:E('🪵',50,88,1.4), oak:E('🌳',88,86,2.2), sun:E('☀️',84,20,1.3) } },
+        { scene:{ bg:'day', cast:{ h:K('holmes',22), rm:K('gent',70), stump:E('🪵',50,88,1.4), oak:E('🌳',88,86,2.2), sun:E('☀️',40,30,1.3) } },
           say:[ ['h',"我們來到院子，找那棵榆樹。",['h go 40','rm go 56']],
                 ['n',"雷吉諾嘆了一口氣：榆樹很久以前，被雷劈倒了。",['stump show','rm shake']],
                 ['n',"可是，我們還是知道，它以前有多高。",['h tilt','h nod']],
@@ -3608,10 +3608,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🤷', t:"隨便猜一個長度", why:"猜錯了，就找不到地方。" },
             { em:'🗣️', t:"問鄰居記不記得", why:"鄰居不一定記得，量影子比較準。" } ] },
           win:"影子的長度，量出來了！" },
-        { scene:{ bg:'day', cast:{ h:K('holmes',16), rm:K('gent',34), rod:E('🎣',60,70,1.2), sun:E('☀️',84,20,1.3), oak:E('🌳',90,86,2.2) } },
+        { scene:{ bg:'day', cast:{ h:K('holmes',16), rm:K('gent',34), rod:E('🎣',60,70,1.2), sun:E('☀️',40,30,1.3), oak:E('🌳',90,86,2.2) } },
           say:[ ['h',"我們把釣竿立在地上，影子正好九尺長。",['rod hop','h point']],
                 ['h',"我說：那麼榆樹的影子，就是九十六尺。",['h nod','h emo 💡']],
-                ['n',"太陽剛好在橡樹的上面，我們趕快量。",['sun go 88 24 2','rm hop']],
+                ['n',"太陽剛好在橡樹旁邊的高處，我們趕快量。",['sun go 48 24 2','rm hop']],
                 ['n',"影子的尖端，落在院子裡的一個點上。",['h go 50','h point']],
                 ['n',"就從這裡開始，照著謎語，一步步走。",['h hop']] ] },
         { play:'path', prompt:"向北十又十，向東五又五，向南二又二，向西一又一。一格是兩尺，往前走。",
@@ -3649,10 +3649,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
                 ['n',"他叫霍爾德，是倫敦很有名的大銀行家。",['bk hop','w tilt']],
                 ['n',"他說：有人拿了很貴重的東西，向我借錢。",['bk emo 😟']],
                 ['n',"那是一頂，鑲著三十九顆綠寶石的皇冠。",['bk shake','h tilt']] ] },
-        { scene:{ bg:'hall', cast:{ bk:K('banker',22), crown:E('👑',44,56,1.3), h:K('holmes',72), son:K('kid',88), niece:K('lady',104) } },
+        { scene:{ bg:'hall', cast:{ bk:K('banker',22), crown:E('👑',44,56,1.3), h:K('holmes',72), son:K('pax',60,88,1,{look:{coat:0x5E4A6E,hair:0x6A3A1E,collar:0x3A2A4A,pants:0x2d3036,size:1.0}}), niece:K('lady',94) } },
           say:[ ['n',"他把皇冠帶回家，鎖在房間的櫃子裡。",['crown show','crown hop @300','bk nod']],
                 ['n',"半夜，他聽到聲音，起來一看，嚇得發抖。",['crown shake','bk shake']],
-                ['n',"他的兒子亞瑟，手裡拿著皇冠，站在那裡。",['son go 70','son emo 😨']],
+                ['n',"他的兒子亞瑟，手裡拿著皇冠，站在那裡。",['son go 54','son emo 😨']],
                 ['n',"皇冠的一角，被扯壞了，少了三顆綠寶石！",['crown spin','bk grow']],
                 ['n',"亞瑟什麼都不肯解釋，警察就把他帶走了。",['son shake','son emo 😔','h tilt']] ] },
         { play:'choose', prompt:"亞瑟拿著皇冠，卻什麼都不說。福爾摩斯覺得，他為什麼不說？",
@@ -3674,7 +3674,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { h:'🐾', x:84, y:26, note:"小貓的腳印，和案子沒關係。" },
             { h:'🍂', x:14, y:24, note:"落葉，和案子沒關係。" } ] },
           win:"木腿、靴子、皮鞋，三種腳印都找到了。" },
-        { scene:{ bg:'hall', cast:{ h:K('holmes',22), maid:K('granny',60), bf:K('clerk',110,88,1,{hid:1}), peg:E('🦿',100,92,.9,{hid:1}) } },
+        { scene:{ bg:'hall', cast:{ h:K('holmes',22), maid:K('granny',60), bf:K('clerk',110,88,1,{hid:1}), peg:E('🦿',86,92,.9,{hid:1}) } },
           say:[ ['h',"我敲了廚房的門，問女傭露西。",['h go 40','maid hop']],
                 ['n',"她紅著臉，說昨晚她的男朋友來看她。",['maid emo 😳']],
                 ['n',"他就是那個一條腿的人，叫法蘭西斯。",['bf show','bf go 80','peg show']],
@@ -3686,11 +3686,11 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🛑', t:"案子沒線索了，不查了", why:"還有別的腳印沒查，不能放棄。" },
             { em:'😠', t:"硬說亞瑟就是小偷", why:"亞瑟什麼都沒說，不代表他有罪。" } ] },
           win:"再看下一條線索！" },
-        { scene:{ bg:'night', cast:{ h:K('holmes',22), w:K('watson',8), niece:K('lady',86), gent:K('gent2',112,88,1.1,{hid:1}), crown:E('👑',58,60,1,{hid:1}) } },
+        { scene:{ bg:'night', cast:{ h:K('holmes',22), w:K('watson',8), niece:K('lady',72), gent:K('gent2',90,88,1.1,{hid:1}), crown:E('👑',58,60,1,{hid:1}) } },
           say:[ ['h',"我又看了一遍，皮鞋的腳印，是往窗邊走的。",['h inspect','h go 40']],
                 ['h',"我發現，窗邊的雪上，還有一雙小女生的腳印。",['h point','h emo ❗']],
                 ['n',"原來，那天半夜，霍爾德的姪女瑪麗，也出來過。",['niece tilt','niece emo 😰']],
-                ['n',"她把皇冠交給了一位先生，伯恩威爾爵士。",['gent show','crown show','crown go 100 70 2']],
+                ['n',"她把皇冠交給了一位先生，伯恩威爾爵士。",['gent show','crown show','crown go 86 60 2']],
                 ['n',"亞瑟看見，追上去搶回皇冠，皇冠就這樣被扯壞了。",['crown shake','h tilt']],
                 ['n',"他不說話，是因為不想讓瑪麗受罰。",['h nod','h emo 💡']] ] },
         { play:'choose', prompt:"福爾摩斯知道了亞瑟為什麼不說。亞瑟的做法，你覺得呢？",
@@ -3834,7 +3834,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { l:{ em:'🩹', t:"歪歪的嘴唇和疤" }, r:{ em:'🎭', t:"畫上去的假疤，一擦就掉" } },
             { l:{ em:'🪙', t:"口袋裡的硬幣" }, r:{ em:'🧥', t:"想讓外套沉到河底，不被發現" } } ] },
           win:"三個線索，連成一條線。" },
-        { scene:{ bg:'hall', cast:{ h:K('holmes',24), w:K('watson',44), man:K('lord',70), lady:K('lady',92), kid:K('kid',108), home:E('🏠',20,80,1.6,{hid:1}) } },
+        { scene:{ bg:'hall', cast:{ h:K('holmes',24), w:K('watson',44), man:K('lord',70), lady:K('lady',93), kid:K('kid',81), home:E('🏠',20,80,1.6,{hid:1}) } },
           say:[ ['n',"聖克萊爾先生說：我是一個記者，賺的錢不多。",['man nod','man emo 😔']],
                 ['n',"有一次工作，我裝成乞丐，發現在街角討錢，一天賺得比記者還多。",['man point','w tilt']],
                 ['h',"我愛面子，不敢讓太太知道，就每天偷偷去街角，扮成歪嘴男子。",['man shake','man emo 😟']],
@@ -3846,7 +3846,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🗣️', t:"對太太說實話，向家人道歉", ok:true, why:"對！家人是最重要的人，說實話、道歉，大家才能放心。" },
             { em:'🏃', t:"從此躲起來，不再回家", why:"那樣家人會更難過。" } ] },
           win:"說實話，向家人道歉。" },
-        { scene:{ bg:'hall', cast:{ h:K('holmes',22), w:K('watson',40), man:K('lord',64), lady:K('lady',84), kid:K('kid',100) } },
+        { scene:{ bg:'hall', cast:{ h:K('holmes',22), w:K('watson',40), man:K('lord',64), lady:K('lady',84), kid:K('kid',94) } },
           say:[ ['n',"後來，聖克萊爾先生回家了，太太和孩子都哭著抱住他。",['man go 70','lady hop','kid hop']],
                 ['n',"他答應從此不再裝乞丐，還去找了一份新的工作。",['man nod','lady nod']],
                 ['n',"警察也沒有再追究，因為他沒有傷害任何人。",['w nod','h nod']],
@@ -3971,7 +3971,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
         { scene:{ bg:'study', cast:{ h:K('holmes',26), w:K('watson',68), bt:K('butler',92), g:K('pax',112,88,1,{hid:1,look:{coat:0xC23B33,hair:0x8A5A2A,collar:0x7A1E1A,pants:0x2E3A5E,size:1.06,build:1.05}}) } },
           say:[ ['n',"班尼斯特低著頭說，他把鑰匙忘在門上了。",['bt shake','bt emo 😔']],
                 ['n',"他以前，在吉爾克里斯特家裡做過事。",['bt nod','h tilt']],
-                ['n',"吉爾克里斯特經過門口，看到鑰匙，一時糊塗，就進去了。",['g show','g go 80 88 1.4']],
+                ['n',"吉爾克里斯特經過門口，看到鑰匙，一時糊塗，就進去了。",['g show','g go 80 95 1.4']],
                 ['n',"他低下頭，說：對不起，我做錯了。",['g emo 😔','g shake']],
                 ['n',"他沒有再說謊，也沒有怪別人。",['g nod','w nod']] ] },
         { play:'choose', prompt:"吉爾克里斯特承認了。他接下來，應該怎麼做？",
@@ -3981,7 +3981,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'👉', t:"說是別人不小心害的", why:"把錯推給別人，只會讓事情更糟。" } ] },
           win:"說實話，需要很大的勇氣。" },
         { scene:{ bg:'day', cast:{ h:K('holmes',30), w:K('watson',62), prof:K('prof',92), g:K('pax',46,88,1,{look:{coat:0xC23B33,hair:0x8A5A2A,collar:0x7A1E1A,pants:0x2E3A5E,size:1.06,build:1.05}}) } },
-          say:[ ['n',"吉爾克里斯特，自己走去找教授，說明了一切。",['g go 80','prof nod']],
+          say:[ ['n',"吉爾克里斯特，自己走去找教授，說明了一切。",['g go 80 95','prof nod']],
                 ['n',"他決定，這次不參加考試。",['g nod','g emo 😔']],
                 ['n',"教授拍拍他的肩膀，說：你有勇氣承認，我很高興。",['prof nod','prof emo 😊']],
                 ['h',"我對華生說：一點泥、一些木屑，就能說出真相。",['h wave']],
@@ -4100,8 +4100,8 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'😠', t:"生氣地走開", why:"太太是因為害怕，才不敢說，生氣不能解決事情。" },
             { em:'🤐', t:"怪太太為什麼不早說", why:"她已經夠難過了，先抱抱她們比較重要。" } ] },
           win:"一家人，要在一起。" },
-        { scene:{ bg:'day', cast:{ h:K('holmes',26), w:K('watson',60), mu:K('client',84), ef:K('lady',100), kid:K('kid',116) } },
-          say:[ ['n',"孟羅先生走上前，把小女孩抱了起來。",['mu go 90','mu emo 😊']],
+        { scene:{ bg:'day', cast:{ h:K('holmes',22), w:K('watson',44), mu:K('client',74), ef:K('lady',60), kid:K('kid',92) } },
+          say:[ ['n',"孟羅先生走上前，把小女孩抱了起來。",['mu go 82','mu emo 😊']],
                 ['n',"他說：從今天起，我們一起住，不用再躲了。",['mu nod','ef emo 😭']],
                 ['n',"艾菲一邊笑，一邊擦眼淚。",['ef nod','kid hop']],
                 ['h',"我對華生說：下一次，我會先問清楚，再開口。",['h wave','w nod']],
@@ -4286,7 +4286,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
         { play:'simon', prompt:"看仔細，燈亮的順序，記起來！",
           cfg:{ seq:[0,2,1,1,0] },
           win:"咔嚓，小櫃子打開了！" },
-        { scene:{ bg:'hall', cast:{ l:K('lupin',54), box:E('🎁',54,60,1.2,{hid:1}), paper:E('📄',70,50,1,{hid:1}), bank:K('banker',100,88,1,{hid:1}) } },
+        { scene:{ bg:'hall', cast:{ l:K('lupin',54), box:E('🎁',54,60,1.2,{hid:1}), paper:E('📄',70,50,1,{hid:1}), bank:K('banker',90,88,1,{hid:1}) } },
           say:[ ['n',"櫃子裡面，放著一個小盒子。",['box show','box hop @300']],
                 ['l',"我打開一看，那張二十七個名字的名單，就在裡面。",['paper show','paper hop @300']],
                 ['n',"這時，門外傳來腳步聲，議員回來了。",['bank show','l grow']],
@@ -4535,7 +4535,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { h:'🧸', x:16, y:30, note:"一隻玩具熊，和案子沒關係。" },
             { h:'📚', x:84, y:64, note:"一疊舊書，和案子沒關係。" } ] },
           win:"鑰匙、扣子、鞋印，都找到了。" },
-        { scene:{ bg:'hall', cast:{ l:K('lupin',24), cop:K('inspector',70), serv:K('butler',100), button:E('🔘',50,64,1.2) } },
+        { scene:{ bg:'hall', cast:{ l:K('lupin',24), cop:K('inspector',70), serv:K('butler',90), button:E('🔘',50,64,1.2) } },
           say:[ ['n',"第二天，警察來了，探長也來了。",['cop go 60','cop nod']],
                 ['l',"我在遠處聽，他們問：誰有這種扣子的外套？",['button hop','l emo 💭']],
                 ['n',"家裡的傭人維克多，剛好少了一顆扣子。",['serv show','serv shake']],
@@ -4679,10 +4679,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
           cfg:{ cols:5, rows:5, who:'🚗', goal:'🚉',
             route:[[0,4],[1,4],[1,3],[2,3],[2,2],[3,2],[3,1],[4,1],[4,0]] },
           win:"車站到了！壞人應該就在這裡。" },
-        { scene:{ bg:'hall', cast:{ l:K('lupin',24), cop:K('police',52), cop2:K('police',70), man:K('stranger',100), train:E('🚂',100,86,1.4) } },
+        { scene:{ bg:'hall', cast:{ l:K('lupin',24), cop:K('police',52), cop2:K('police',94,88,1,{look:{coat:0x2E3A5A,hair:0xB8946A,mustache:0xB8946A,size:.94,build:1.15}}), man:K('stranger',74), train:E('🚂',40,86,1.4) } },
           say:[ ['l',"我們趕到車站，他正準備上車。",['man show','man grow']],
                 ['n',"他穿著我的灰大衣，手裡拿著夫人的傘。",['man shake','l point']],
-                ['n',"兩位警察一左一右，圍住了他。",['cop go 80','cop2 go 90']],
+                ['n',"兩位警察一左一右，圍住了他。",['cop go 56','cop2 go 90']],
                 ['n',"他想反抗，可是很快，就被抓住了。",['man fall','l hop']],
                 ['n',"他叫皮耶．翁弗雷，其實是個很危險的壞人。",['l nod','l emo 💡']] ] },
         { play:'choose', prompt:"錢包找回來了，夫人的首飾也找回來了。羅蘋要怎麼對待警察和夫人？",
@@ -4816,10 +4816,10 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'😠', t:"這裡誰最可疑", why:"還沒有線索，不能先怪人。" },
             { em:'💤', t:"明天再說", why:"舞會還沒結束，現在找最容易找到。" } ] },
           win:"先問清楚，最後在哪裡看到。" },
-        { scene:{ bg:'hall', cast:{ l:K('lupin',22), lady:K('lady',66), w1:K('gent',96), w2:K('countess',112,88,1,{hid:1}) } },
+        { scene:{ bg:'hall', cast:{ l:K('lupin',22), lady:K('lady',66), w1:K('gent',92), w2:K('countess',80,88,1,{hid:1}) } },
           say:[ ['n',"太太說：我在長桌邊，洗過手，戒指被我放在一旁。",['lady nod','lady point']],
                 ['n',"那時，只有兩個人，在我旁邊。",['w1 hop','w2 show']],
-                ['n',"一位是穿手套的紳士，一位是手指沾著麵粉的女士。",['w1 nod','w2 go 90 88 1.2']],
+                ['n',"一位是穿手套的紳士，一位是手指沾著麵粉的女士。",['w1 nod','w2 go 80 88 1.2']],
                 ['l',"我看了看，兩個人都很緊張。",['l inspect','l tilt']] ] },
         { play:'spot', prompt:"長桌上，有三個小線索。把它們找出來！",
           cfg:{ bg:'hall', items:[
@@ -4841,7 +4841,7 @@ if (typeof WHO !== 'undefined' && typeof SVG_WATSON !== 'undefined') { WHO.w = {
             { em:'🎒', t:"悄悄收進自己的口袋", why:"戒指是太太的，不能拿走。" },
             { em:'📢', t:"大聲說，剛才有人偷東西", why:"根本沒有人偷，這樣會害別人難過。" } ] },
           win:"還給主人，也不亂怪人。" },
-        { scene:{ bg:'hall', cast:{ l:K('lupin',24), lady:K('lady',70), w1:K('gent',96), ring:E('💍',50,64,1.1) } },
+        { scene:{ bg:'hall', cast:{ l:K('lupin',24), lady:K('lady',70), w1:K('gent',92), ring:E('💍',50,64,1.1) } },
           say:[ ['l',"我把戒指，輕輕放在太太的手心裡。",['l point','ring hop']],
                 ['n',"太太高興得流下眼淚，一直說謝謝。",['lady emo 😭','lady nod']],
                 ['n',"被懷疑的客人，也鬆了一口氣。",['w1 nod','w1 emo 😊']],
@@ -5431,7 +5431,7 @@ if (typeof module !== 'undefined') module.exports = CHAPTERS;
     const enters = {};
     (s.say || []).forEach(ln => (ln[2] || []).forEach(a => {
       const m = a.replace(/@\d+$/, '').trim().split(/\s+/);
-      if (m[1] === 'show' || (m[1] === 'go' && +m[2] >= 4 && +m[2] <= 96)) enters[m[0]] = true;
+      if ((m[1] === 'go' && +m[2] >= 4 && +m[2] <= 96)) enters[m[0]] = true;
     }));
     Object.entries(s.scene.cast).forEach(([id, a]) => {
       if (a.hid || enters[id]) return;
