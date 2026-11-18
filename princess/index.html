@@ -86,7 +86,29 @@ ruby{ruby-position:over;ruby-align:center}ruby rt{font-size:.45em;color:#8a5a9a}
 .opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .opt{min-height:72px;border-radius:14px;background:#efe3ff;color:#2b2040;font-size:clamp(17px,2.6vw,22px);padding:10px;border:3px solid transparent}
 .opt.ok{background:#c9f0c0;border-color:#4caf50}.opt.no{background:#ffd9d4;border-color:#e57373}
-.fb{margin-top:10px;min-height:28px;font-size:18px}
+#lv h3 .say{min-height:40px;padding:6px 12px;font-size:18px;vertical-align:middle}
+.pcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
+.pcard{background:#fff;border:4px solid #e3d6fb;border-radius:20px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:150px;color:#2b2040;transition:transform .15s}
+.pcard:active{transform:scale(.96)}
+.pcard .emo{font-size:clamp(52px,9vw,78px);line-height:1}
+.pcard .pic{height:clamp(100px,16vw,130px);aspect-ratio:.62;flex:none}
+.pcard .lbl{font-size:clamp(17px,2.6vw,22px);font-weight:700}
+.pcard.ok{border-color:#4caf50;background:#e8f8e2;animation:pop .5s}
+.pcard.no{opacity:.55}
+.pcard.sel{border-color:#f7c948;background:#fff6d6;transform:translateY(-4px)}
+.pcard.used{visibility:hidden}
+.pcard.small{min-height:84px;flex-direction:row;gap:12px;padding:6px 10px}
+.pcard.small .emo{font-size:46px}.pcard.small .pic{height:84px}
+.pcols{display:grid;grid-template-columns:1fr 1fr;gap:18px}.pcol{display:flex;flex-direction:column;gap:10px}
+.oslots{display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0 12px}
+.oslot{width:clamp(70px,14vw,110px);height:clamp(70px,14vw,110px);border:4px dashed #b9a5e0;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;font-size:28px;color:#b9a5e0}
+.oslot.ok{border-style:solid;border-color:#4caf50}.oslot .emo{font-size:clamp(40px,8vw,64px)}.oslot .pic{height:90%}
+.arr{color:#b9a5e0;font-size:22px}
+.nope{animation:nope .4s}@keyframes nope{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes pop{50%{transform:scale(1.08)}}
+.star{display:inline-block;animation:pop .6s 2}
+.tip{font-size:20px;margin:6px 0}
+.fb{margin-top:10px;min-height:32px;font-size:20px}
 .slots,.pool{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
 .slot{flex:1;min-width:120px;min-height:64px;border:3px dashed #b9a5e0;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;background:#fff}
 .card{min-height:56px;background:#efe3ff;border-radius:12px;padding:10px 14px;font-size:18px;border:3px solid transparent}
@@ -256,10 +278,10 @@ ruby{ruby-position:over;ruby-align:center}ruby rt{font-size:.45em;color:#8a5a9a}
   const T = t => CUR === 'en' ? `<span class="en">${esc(t)}</span>` : T0(t);
   const UI = {
     zh: { home: '公主故事屋', scenes: (a, b) => `${a} 幕故事・${b} 個小關卡`, start: '從頭開始', cont: '接著玩', prev: '◀ 上一句', next: '再一句 ▶', zhOnly: '(目前只有中文)',
-          ok: '答對了!', again: '再想一想,換一個試試。', slot: i => `第 ${i}`, orderOk: '順序對了!', orderNo: '順序不太對,點一下格子重新排。', matchOk: '全部配對成功!', tap: '點一點畫面,找找看。', found: '找到了!', notIt: '不是這個,再找找看。',
+          ok: '答對了!', again: '再想一想,換一個試試。', slot: i => `第 ${i}`, orderOk: '順序對了!', orderNo: '順序不太對,點一下格子重新排。', matchOk: '全部配對成功!', tap: '點一點畫面,找找看。', first: '先想一想,最先發生的是哪一個?', nextOne: '再想想,接下來是哪一個?', tryPair: '不是這一對,再試試看。', found: '找到了!', notIt: '不是這個,再找找看。',
           end: '故事結束了', endMsg: t => `你陪著${t}走完了整個故事!`, replay: '再玩一次', sw: 'EN' },
     en: { home: 'Princess Story House', scenes: (a, b) => `${a} scenes · ${b} mini games`, start: 'Start', cont: 'Continue', prev: '◀ Back', next: 'Next ▶', zhOnly: '(Chinese only for now)',
-          ok: 'Correct!', again: 'Think again and try another one.', slot: i => `#${i}`, orderOk: 'Great, that is the right order!', orderNo: 'Not quite. Tap a box to try again.', matchOk: 'You matched them all!', tap: 'Tap the picture to find it.', found: 'You found it!', notIt: 'Not that one. Look again.',
+          ok: 'Correct!', again: 'Think again and try another one.', slot: i => `#${i}`, orderOk: 'Great, that is the right order!', orderNo: 'Not quite. Tap a box to try again.', matchOk: 'You matched them all!', tap: 'Tap the picture to find it.', first: 'Think: which one happened first?', nextOne: 'Think again: what happened next?', tryPair: 'Not a pair. Try again.', found: 'You found it!', notIt: 'Not that one. Look again.',
           end: 'The End', endMsg: t => `You finished the story of ${t}!`, replay: 'Play again', sw: '中文' }
   };
   const U = k => UI[CUR][k];
@@ -302,8 +324,9 @@ STORIES.push({ id:'ariel', title:['小美人魚','The Little Mermaid'],
   scenes:[
     { bg:'reef', cast:{ fork:{k:'fork',x:40,y:236,s:.8,hid:1}, ariel:{k:'ariel',x:-8,y:236,name:['愛麗兒','Ariel']}, fish:{k:'fish',x:-14,y:220,s:.7,name:['小比目魚','Flounder']}, crab:{k:'crab',x:58,s:.75,name:['賽巴斯汀','Sebastian']}, triton:{k:'triton',x:110,y:240,face:-1,name:['崔頓國王','King Triton']} },
       say:[ ['n',['小美人魚愛麗兒住在海底,她最愛收集人類的東西。','Ariel the little mermaid lived under the sea. She loved collecting human things.'],['ariel glide 26 236','fish glide 14 210 .7','fork pop @人類|human','fx sparkle fork @人類|human']],
-            ['n',['她拿起一支叉子,好想知道陸地上是什麼樣子。','She held up a fork and wondered what life on land was like.'],['fork hide @叉子|fork','ariel lift @叉子|fork','ariel emo 💭 @陸地|land','crab shiver @陸地|land']],
-            ['triton',['不可以去水面!人類很危險!','You must not go up there! Humans are dangerous!'],['triton glide 78 236','triton face angry @不可以|not','triton point @危險|dangerous','ariel face sad @危險|dangerous','ariel crouch @危險|dangerous']],
+            ['n',['她拿起一支叉子,好想知道陸地上是什麼樣子。','She held up a fork and wondered what life on land was like.'],['fork hide @叉子|fork','ariel lift @叉子|fork','ariel emo 💭 @陸地|land','crab shiver @陸地|land']] ] },
+    { bg:'reef', cast:{ ariel:{k:'ariel',x:26,y:236,name:['愛麗兒','Ariel']}, fish:{k:'fish',x:14,y:210,s:.7,name:['小比目魚','Flounder']}, crab:{k:'crab',x:58,s:.75,name:['賽巴斯汀','Sebastian']}, triton:{k:'triton',x:110,y:240,face:-1,name:['崔頓國王','King Triton']} },
+      say:[ ['triton',['不可以去水面!人類很危險!','You must not go up there! Humans are dangerous!'],['triton glide 78 236','triton face angry @不可以|not','triton point @危險|dangerous','ariel face sad @危險|dangerous','ariel crouch @危險|dangerous']],
             ['n',['可是愛麗兒還是忍不住,偷偷往水面游上去。','But Ariel could not help it. She secretly swam up to the surface.'],['ariel stand','ariel face none @偷偷|secretly','ariel glide 44 120 @游上去|swam','fish glide 34 110 .7 @游上去|swam+300']] ] },
     { bg:'oceanN', fx:['sea 236 400'], cast:{ eric:{k:'eric',x:52,y:228,name:['艾力克王子','Prince Eric']}, boat:{k:'boat',x:54,y:248,s:1.5}, ariel:{k:'ariel',x:14,y:296,hid:1,name:['愛麗兒','Ariel']} },
       say:[ ['n',['海面上有一艘大船,船上有一位英俊的王子。','On the sea was a big ship, and on the ship was a handsome prince.'],['ariel show @大船|ship','ariel glide 18 296 @大船|ship','eric wave @王子|prince','ariel face wow @英俊|handsome','fx hearts ariel @英俊|handsome+400']],
@@ -315,8 +338,9 @@ STORIES.push({ id:'ariel', title:['小美人魚','The Little Mermaid'],
             ['eric',['是誰救了我?她的歌聲好美。','Who saved me? Her voice was so beautiful.'],['eric turn','eric emo ❓ @是誰|Who','eric turn @歌聲|voice','eric emo 🎵 @好美|beautiful']] ] },
     { bg:'lair', cast:{ shell:{k:'shell',x:50,y:200,hid:1}, ariel:{k:'ariel',x:-8,y:240,name:['愛麗兒','Ariel']}, arielh:{k:'arielh',x:30,hid:1,name:['愛麗兒','Ariel']}, ursula:{k:'ursula',x:76,face:-1,y:250,name:['烏蘇拉','Ursula']} },
       say:[ ['n',['愛麗兒好想再見到王子,就去找海巫婆烏蘇拉。','Ariel wanted to see the prince again, so she went to Ursula the sea witch.'],['ariel glide 30 240','ursula face angry @海巫婆|witch','ursula nod @海巫婆|witch']],
-            ['ursula',['我給你一雙腿,可是要拿你的聲音來換。','I will give you legs, but you must give me your voice.'],['ursula point @腿|legs','ariel face wow @聲音|voice','ariel fear @聲音|voice']],
-            ['n',['愛麗兒一答應,她的聲音就飛進了貝殼裡。','When Ariel said yes, her voice flew into a seashell.'],['ariel nod @答應|yes','shell show @聲音|voice','fx beam ariel.head shell #ffe08a @聲音|voice','fx glow on shell @貝殼|seashell','ariel face sad @貝殼|seashell']],
+            ['ursula',['我給你一雙腿,可是要拿你的聲音來換。','I will give you legs, but you must give me your voice.'],['ursula point @腿|legs','ariel face wow @聲音|voice','ariel fear @聲音|voice']] ] },
+    { bg:'lair', cast:{ shell:{k:'shell',x:50,y:200,hid:1}, ariel:{k:'ariel',x:30,y:240,ex:'wow',name:['愛麗兒','Ariel']}, arielh:{k:'arielh',x:30,hid:1,name:['愛麗兒','Ariel']}, ursula:{k:'ursula',x:76,face:-1,y:250,ex:'angry',name:['烏蘇拉','Ursula']} },
+      say:[ ['n',['愛麗兒一答應,她的聲音就飛進了貝殼裡。','When Ariel said yes, her voice flew into a seashell.'],['ariel nod @答應|yes','shell show @聲音|voice','fx beam ariel.head shell #ffe08a @聲音|voice','fx glow on shell @貝殼|seashell','ariel face sad @貝殼|seashell']],
             ['n',['她的魚尾巴,一下子變成了一雙腿!','Her fish tail turned into two legs!'],['ariel swap arielh @變成|turned','fx sparkle arielh @腿|legs','arielh face wow @腿|legs']] ] },
     { bg:'beach', cast:{ arielh:{k:'arielh',x:26,ex:'sleep',name:['愛麗兒','Ariel']}, eric:{k:'eric',x:108,face:-1,name:['艾力克王子','Prince Eric']} },
       say:[ ['n',['愛麗兒被沖到岸邊,王子剛好走過來。','Ariel washed up on the beach just as the prince walked by.'],['arielh crouch','arielh face none @岸邊|beach','eric go 56 @王子|prince']],
@@ -336,11 +360,11 @@ STORIES.push({ id:'ariel', title:['小美人魚','The Little Mermaid'],
             ['n',['愛麗兒和王子結婚了,海裡和陸地的朋友都來祝福。','Ariel married the prince, and friends from land and sea came to cheer.'],['arielh go 38','eric go 46','fx hearts arielh @結婚|married','fx confetti @祝福|cheer','crab jump @祝福|cheer','triton nod @祝福|cheer']] ] }
   ],
   levels:{
-    0:{ type:'find', q:['誰是小比目魚?點一點牠。','Who is Flounder? Tap him.'], hotspots:[{actor:'fish',ok:1,why:['對,是黃色的小比目魚!','Yes, the yellow fish is Flounder!']},{actor:'crab',ok:0,why:['這是紅色的螃蟹賽巴斯汀。','That is Sebastian, the red crab.']}] },
-    1:{ type:'choose', q:['愛麗兒在海上救了誰?','Who did Ariel save at sea?'], opts:[{t:['艾力克王子','Prince Eric'],ok:1,why:['對,她救了王子。','Yes, she saved the prince.']},{t:['小比目魚','Flounder'],ok:0,why:['不是小魚,再想想。','Not the fish. Think again.']},{t:['烏蘇拉','Ursula'],ok:0,why:['烏蘇拉是壞巫婆喔。','Ursula is the bad witch.']}] },
-    3:{ type:'choose', q:['愛麗兒拿什麼換雙腿?','What did Ariel give to get legs?'], opts:[{t:['她的聲音','Her voice'],ok:1,why:['對,她把聲音給了烏蘇拉。','Yes, she gave Ursula her voice.']},{t:['她的頭髮','Her hair'],ok:0,why:['不是頭髮,再想想。','Not her hair. Think again.']},{t:['她的叉子','Her fork'],ok:0,why:['不是叉子喔。','Not the fork.']}] },
-    5:{ type:'match', q:['翻牌配對:誰是誰?','Flip and match: who is who?'], pairs:[[['愛麗兒','Ariel'],['愛唱歌','Loves to sing']],[['烏蘇拉','Ursula'],['海巫婆','Sea witch']],[['崔頓','Triton'],['海底國王','Sea king']],[['賽巴斯汀','Sebastian'],['紅螃蟹','Red crab']]] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['愛麗兒救了王子','Ariel saves the prince'],['用聲音換雙腿','Voice for legs'],['烏蘇拉騙走王子','Ursula tricks the prince'],['打破貝殼','The shell breaks'],['變成真正的人類','She becomes human']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'find', q:['小比目魚在哪裡?點一點牠。','Where is Flounder? Tap him.'], hotspots:[{actor:'fish',ok:1,why:['對!黃色的小比目魚!','Yes! The yellow fish!']},{actor:'crab',ok:0,why:['這是螃蟹賽巴斯汀喔。','That is Sebastian the crab.']}] },
+    2:{ type:'pick', q:['愛麗兒在海上救了誰?','Who did Ariel save at sea?'], opts:[{a:'eric',t:['王子','The prince'],ok:1,why:['對!她救了王子。','Yes! She saved the prince.']},{a:'fish',t:['小比目魚','Flounder'],ok:0,why:['不是小魚喔。','Not the fish.']},{a:'ursula',t:['烏蘇拉','Ursula'],ok:0,why:['烏蘇拉是壞巫婆喔。','Ursula is the witch.']}] },
+    5:{ type:'pick', q:['愛麗兒用什麼換到雙腿?','What did Ariel trade for legs?'], opts:[{p:'💇‍♀️',t:['頭髮','Her hair'],ok:0,why:['不是頭髮,再想想。','Not her hair. Try again.']},{p:'🎵',t:['聲音','Her voice'],ok:1,why:['對!她把聲音給了烏蘇拉。','Yes! She gave away her voice.']},{p:'🍴',t:['叉子','Her fork'],ok:0,why:['不是叉子喔。','Not the fork.']}] },
+    6:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'ariel',t:['愛麗兒','Ariel']},{p:'🎵',t:['愛唱歌','Singing']}],[{a:'ursula',t:['烏蘇拉','Ursula']},{p:'🐙',t:['海巫婆','Sea witch']}],[{a:'crab',t:['賽巴斯汀','Sebastian']},{p:'🦀',t:['螃蟹','Crab']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🚢',t:['救王子','Saves the prince']},{p:'🐚',t:['聲音進貝殼','Voice in a shell']},{p:'💍',t:['結婚','The wedding']}] }
   } });
 
 // 美女與野獸:依迪士尼 1991 電影大綱,憑記憶撰寫。標 待核對:譯名、加斯頓攻城與屋頂打鬥的細節。
@@ -397,8 +421,9 @@ STORIES.push({ id:'belle', title:['美女與野獸','Beauty and the Beast'],
             ['n',['野獸答應了,爸爸回家,貝兒留了下來。','The Beast agreed. Papa went home, and Belle stayed.'],['beast nod @答應|agreed','cage fade @答應|agreed','maurice go 112 @回家|home','belle emo 😢 @留了|stayed','belle face sad @留了|stayed']] ] },
     { bg:'libraryB', cast:{ belle:{k:'belle',x:10,name:['貝兒','Belle']}, candle:{k:'candle',x:30,s:.8,name:['燭台','Candlestick']}, clock:{k:'clock',x:44,s:.8,name:['時鐘','Clock']}, teapot:{k:'teapot',x:58,s:.8,name:['茶壺','Teapot']}, beast:{k:'beast',x:108,face:-1,name:['野獸','Beast']} },
       say:[ ['n',['城堡裡的燭台、時鐘和茶壺,都會說話!','In the castle, the candlestick, the clock and the teapot could all talk!'],['candle jump @燭台|candlestick','fx sparkle candle @燭台|candlestick','clock jump @時鐘|clock','teapot jump @茶壺|teapot','belle face wow @說話|talk']],
-            ['n',['他們端出熱熱的晚餐,還唱歌跳舞給她看。','They served a warm dinner and sang and danced for her.'],['teapot glide 22 @晚餐|dinner','candle emo 🎵 @唱歌|sang','candle jump @跳舞|danced','clock jump @跳舞|danced+200','fx confetti @跳舞|danced','belle face none @唱歌|sang']],
-            ['n',['野獸帶她走進大圖書館,把所有的書送給她。','The Beast took her into a huge library and gave her all the books.'],['beast go 72 @野獸|Beast','beast point @圖書館|library','fx sparkle 50 60 @圖書館|library','fx sparkle 24 110 @送給|gave','belle face wow @送給|gave']],
+            ['n',['他們端出熱熱的晚餐,還唱歌跳舞給她看。','They served a warm dinner and sang and danced for her.'],['teapot glide 22 @晚餐|dinner','candle emo 🎵 @唱歌|sang','candle jump @跳舞|danced','clock jump @跳舞|danced+200','fx confetti @跳舞|danced','belle face none @唱歌|sang']] ] },
+    { bg:'libraryB', cast:{ belle:{k:'belle',x:10,name:['貝兒','Belle']}, candle:{k:'candle',x:30,s:.8,name:['燭台','Candlestick']}, clock:{k:'clock',x:44,s:.8,name:['時鐘','Clock']}, teapot:{k:'teapot',x:22,s:.8,name:['茶壺','Teapot']}, beast:{k:'beast',x:108,face:-1,name:['野獸','Beast']} },
+      say:[ ['n',['野獸帶她走進大圖書館,把所有的書送給她。','The Beast took her into a huge library and gave her all the books.'],['beast go 72 @野獸|Beast','beast point @圖書館|library','fx sparkle 50 60 @圖書館|library','fx sparkle 24 110 @送給|gave','belle face wow @送給|gave']],
             ['belle',['好多書!謝謝你!','So many books! Thank you!'],['belle jump','fx hearts belle @謝謝|Thank','beast face none @謝謝|Thank','beast nod @謝謝|Thank+300']] ] },
     { bg:'ballroom', fx:['night on'], cast:{ belleg:{k:'belleg',x:22,name:['貝兒','Belle']}, beast:{k:'beast',x:62,face:-1,name:['野獸','Beast']}, mirror:{k:'mirror',x:84,y:236,s:.7,hid:1} },
       say:[ ['n',['貝兒和野獸成了好朋友,一起在大廳裡跳舞。','Belle and the Beast became good friends and danced together in the great hall.'],['belleg go 38','beast go 50 @好朋友|friends','belleg turn @跳舞|danced','beast turn @跳舞|danced','belleg turn @跳舞|danced+600','beast turn @跳舞|danced+600','fx hearts belleg @跳舞|danced+300']],
@@ -406,8 +431,9 @@ STORIES.push({ id:'belle', title:['美女與野獸','Beauty and the Beast'],
             ['n',['看到爸爸生病了,野獸讓她回家去。','She saw Papa was sick, so the Beast let her go home.'],['belleg face wow @生病|sick','beast face sad @回家|home','beast nod @回家|home','belleg run 112 @回家|home+400']] ] },
     { bg:'roof', fx:['rain on'], cast:{ beast:{k:'beast',x:30,name:['野獸','Beast']}, gaston:{k:'gastont',x:112,face:-1,name:['加斯頓','Gaston']}, vil1:{k:'vil1',x:120,face:-1}, vil2:{k:'vil2',x:128,face:-1}, belle:{k:'belle',x:-8,hid:1,name:['貝兒','Belle']} },
       say:[ ['n',['加斯頓帶著村民,舉著火把要來抓野獸。','Gaston led the villagers with torches to catch the Beast.'],['gaston go 72 @加斯頓|Gaston','vil1 go 84 @村民|villagers','vil2 go 94 @村民|villagers+200','gaston point @抓|catch']],
-            ['n',['野獸好傷心,一點也不想打架。','The Beast was so sad. He did not want to fight at all.'],['beast face sad @傷心|sad','beast crouch @不想|want']],
-            ['n',['貝兒趕回來,加斯頓卻偷偷傷了野獸。','Belle rushed back, but Gaston sneaked up and hurt the Beast.'],['belle show @貝兒|Belle','belle run 14 @趕回來|rushed','gaston go 40 @偷偷|sneaked','fx flash @傷了|hurt','beast fall @傷了|hurt+200','belle face wow @傷了|hurt']],
+            ['n',['野獸好傷心,一點也不想打架。','The Beast was so sad. He did not want to fight at all.'],['beast face sad @傷心|sad','beast crouch @不想|want']] ] },
+    { bg:'roof', fx:['rain on'], cast:{ beast:{k:'beast',x:30,ex:'sad',name:['野獸','Beast']}, gaston:{k:'gastont',x:72,face:-1,name:['加斯頓','Gaston']}, vil1:{k:'vil1',x:84,face:-1}, vil2:{k:'vil2',x:94,face:-1}, belle:{k:'belle',x:-8,hid:1,name:['貝兒','Belle']} },
+      say:[ ['n',['貝兒趕回來,加斯頓卻偷偷傷了野獸。','Belle rushed back, but Gaston sneaked up and hurt the Beast.'],['beast crouch','belle show @貝兒|Belle','belle run 14 @趕回來|rushed','gaston go 40 @偷偷|sneaked','fx flash @傷了|hurt','beast fall @傷了|hurt+200','belle face wow @傷了|hurt']],
             ['n',['加斯頓沒站穩,從屋頂掉了下去。','Gaston lost his footing and fell off the roof.'],['gaston shiver @沒站穩|lost','gaston fall @掉了|fell','gaston glide 46 420 @掉了|fell+400','vil1 run 120 @掉了|fell','vil2 run 124 @掉了|fell']] ] },
     { bg:'ballroom', fx:['night on'], cast:{ belle:{k:'belle',x:22,name:['貝兒','Belle']}, beast:{k:'beast',x:44,face:-1,name:['野獸','Beast']}, adam:{k:'adam',x:44,face:-1,hid:1,name:['王子','Prince']}, rose:{k:'rose',x:78,y:276,s:.9} },
       say:[ ['n',['貝兒守在野獸身邊,魔法玫瑰的花瓣快掉光了。','Belle stayed by the Beast. The magic rose was losing its last petals.'],['beast fall','belle go 32','belle crouch @身邊|stayed','fx glow on rose @玫瑰|rose','rose shiver @花瓣|petals']],
@@ -416,11 +442,11 @@ STORIES.push({ id:'belle', title:['美女與野獸','Beauty and the Beast'],
             ['n',['貝兒和王子一起跳舞,從此過著幸福快樂的日子。','Belle and the prince danced together and lived happily ever after.'],['belle face none','belle go 36','adam go 48 @跳舞|danced','belle turn @跳舞|danced+500','fx hearts belle @幸福|happily','fx confetti @幸福|happily']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['貝兒最愛做什麼?','What does Belle love to do?'], opts:[{t:['看書','Read books'],ok:1,why:['對,貝兒最愛看書。','Yes, Belle loves reading.']},{t:['打獵','Go hunting'],ok:0,why:['打獵是加斯頓愛做的事。','Hunting is what Gaston likes.']},{t:['釣魚','Go fishing'],ok:0,why:['再想想,她常常拿著什麼?','Think again. What does she always carry?']}] },
-    3:{ type:'choose', q:['貝兒為什麼留在城堡?','Why did Belle stay in the castle?'], opts:[{t:['代替爸爸留下','To set Papa free'],ok:1,why:['對,她很愛爸爸。','Yes, she loves her papa.']},{t:['想當公主','To be a princess'],ok:0,why:['不是這個原因。','That is not the reason.']},{t:['迷路了','She got lost'],ok:0,why:['迷路的是爸爸喔。','It was Papa who got lost.']}] },
-    4:{ type:'find', q:['誰是會說話的燭台?點一點它。','Which one is the talking candlestick? Tap it.'], hotspots:[{actor:'candle',ok:1,why:['對,是燭台!','Yes, that is the candlestick!']},{actor:'clock',ok:0,why:['這是時鐘,再找找看。','That is the clock. Look again.']}] },
-    5:{ type:'match', q:['翻牌配對:誰是誰?','Flip and match: who is who?'], pairs:[[['貝兒','Belle'],['愛看書','Loves books']],[['野獸','Beast'],['城堡主人','Castle owner']],[['燭台','Candlestick'],['會說話','Can talk']],[['加斯頓','Gaston'],['驕傲的人','Proud man']]] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['貝兒愛看書','Belle loves books'],['代替爸爸留下','She stays for Papa'],['一起跳舞','They dance together'],['加斯頓攻城','Gaston attacks'],['魔法打破','The spell breaks']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['貝兒最愛做什麼?','What does Belle love to do?'], opts:[{p:'📚',t:['看書','Reading'],ok:1,why:['對!貝兒最愛看書。','Yes! Belle loves books.']},{p:'🏹',t:['打獵','Hunting'],ok:0,why:['打獵是加斯頓愛做的。','Gaston likes hunting.']},{p:'🎣',t:['釣魚','Fishing'],ok:0,why:['不是釣魚喔。','Not fishing.']}] },
+    3:{ type:'pick', q:['貝兒為什麼留在城堡?','Why did Belle stay at the castle?'], opts:[{a:'maurice',t:['救爸爸','To save Papa'],ok:1,why:['對!她代替爸爸留下來。','Yes! She stayed so Papa could go.']},{p:'👑',t:['當公主','To be a princess'],ok:0,why:['不是這個原因喔。','That is not why.']},{p:'🗺️',t:['迷路了','She got lost'],ok:0,why:['迷路的是爸爸喔。','Papa was the one who got lost.']}] },
+    4:{ type:'find', q:['會說話的燭台在哪裡?點一點它。','Where is the talking candlestick? Tap it.'], hotspots:[{actor:'candle',ok:1,why:['對!是燭台!','Yes, the candlestick!']},{actor:'clock',ok:0,why:['這是時鐘,再找找看。','That is the clock. Look again.']}] },
+    6:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'belle',t:['貝兒','Belle']},{p:'📚',t:['看書','Books']}],[{a:'beast',t:['野獸','Beast']},{p:'🌹',t:['魔法玫瑰','Magic rose']}],[{a:'gaston',t:['加斯頓','Gaston']},{p:'🏹',t:['打獵','Hunting']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'📚',t:['愛看書','Loves books']},{p:'💃',t:['一起跳舞','They dance']},{p:'✨',t:['魔法打破','Spell breaks']}] }
   } });
 
 // 灰姑娘:依迪士尼 1950 電影大綱,憑記憶撰寫。標 待核對:大臣、鎖房間、老鼠拿鑰匙、玻璃鞋摔碎的細節。
@@ -466,8 +492,9 @@ STORIES.push({ id:'cinderella', title:['灰姑娘','Cinderella'],
       say:[ ['n',['灰姑娘和壞心的繼母、兩個姊姊住在一起。','Cinderella lived with her mean stepmother and two stepsisters.'],['cr go 24','mom face angry @繼母|stepmother','sis1 face angry @姊姊|stepsisters','sis2 face angry @姊姊|stepsisters+200']],
             ['n',['她每天要掃地、洗衣服,有做不完的家事。','Every day she swept, washed and did chores that never ended.'],['cr knock @掃地|swept','fx poof cr.feet @掃地|swept','cr go 14 @洗衣服|washed','cr crouch @家事|chores','cr face sad @做不完|never']],
             ['mom',['灰姑娘,快去把地板擦乾淨!','Cinderella, go and scrub the floor right now!'],['mom point','cr stand @地板|floor','cr knock @擦乾淨|scrub']],
-            ['n',['小老鼠是她最好的朋友,常常陪著她。','A little mouse was her best friend and always kept her company.'],['mouse run 6','mouse jump @小老鼠|mouse','cr face none @朋友|friend','fx hearts cr @陪著|company']],
-            ['n',['這天,城堡送來一封信:王子要辦舞會!','One day, a letter came from the castle: the prince was having a ball!'],['letter pop @信|letter','fx sparkle letter @信|letter','sis1 jump @舞會|ball','sis2 jump @舞會|ball+200','mom face none @王子|prince']],
+            ['n',['小老鼠是她最好的朋友,常常陪著她。','A little mouse was her best friend and always kept her company.'],['mouse run 6','mouse jump @小老鼠|mouse','cr face none @朋友|friend','fx hearts cr @陪著|company']] ] },
+    { bg:'kitchenC', cast:{ cr:{k:'crb',x:14,name:['灰姑娘','Cinderella']}, mouse:{k:'mouse',x:6,s:.7,name:['小老鼠','Mouse']}, mom:{k:'mom',x:66,face:-1,ex:'angry',name:['繼母','Stepmother']}, sis1:{k:'sis1',x:80,face:-1,ex:'angry',name:['姊姊','Sister']}, sis2:{k:'sis2',x:94,face:-1,ex:'angry',name:['姊姊','Sister']}, letter:{k:'letter',x:50,y:200,s:.8,hid:1} },
+      say:[ ['n',['這天,城堡送來一封信:王子要辦舞會!','One day, a letter came from the castle: the prince was having a ball!'],['letter pop @信|letter','fx sparkle letter @信|letter','sis1 jump @舞會|ball','sis2 jump @舞會|ball+200','mom face none @王子|prince']],
             ['cr',['我也想去舞會!','I want to go to the ball too!'],['cr lift','cr emo ✨ @舞會|ball']],
             ['mom',['好啊,只要你做完家事,又有衣服穿。','Fine, if you finish your chores and have something to wear.'],['mom face angry','mom point @做完|finish','sis1 nod @衣服|wear','cr face sad @衣服|wear']] ] },
     { bg:'attic', cast:{ cr:{k:'crb',x:14,ex:'sad',name:['灰姑娘','Cinderella']}, crp:{k:'crp',x:14,hid:1,name:['灰姑娘','Cinderella']}, dress:{k:'dress',x:56,s:.9,hid:1}, mouse:{k:'mouse',x:44,s:.7,name:['小老鼠','Mouse']}, mouse2:{k:'mouse',x:70,s:.65,face:-1}, bird:{k:'bird',x:60,y:170,s:.8} },
@@ -498,8 +525,9 @@ STORIES.push({ id:'cinderella', title:['灰姑娘','Cinderella'],
     { bg:'parlor', cast:{ duke:{k:'duke',x:-8,name:['大臣','Duke']}, slipper:{k:'slipper',x:44,y:282,s:.7,hid:1}, mom:{k:'mom',x:62,face:-1,name:['繼母','Stepmother']}, sis1:{k:'sis1',x:76,face:-1,name:['姊姊','Sister']}, sis2:{k:'sis2',x:90,face:-1,name:['姊姊','Sister']}, cr:{k:'cr',x:-10,hid:1,name:['灰姑娘','Cinderella']}, mouse:{k:'mouse',x:-14,s:.7,hid:1}, key:{k:'key',x:-14,y:250,s:.7,hid:1}, slipper2:{k:'slipper',x:40,y:282,s:.7,hid:1} },
       say:[ ['n',['大臣拿著玻璃鞋,到每一家去找主人。','The Duke took the glass slipper to every house to find its owner.'],['duke go 28','slipper pop @玻璃鞋|slipper','fx sparkle slipper @玻璃鞋|slipper']],
             ['n',['繼母偷偷把灰姑娘鎖在樓上的房間裡。','The stepmother secretly locked Cinderella in her room upstairs.'],['mom face angry @偷偷|secretly','mom emo 🔒 @鎖在|locked']],
-            ['n',['兩個姊姊用力擠,可是腳太大,怎麼也穿不進去。','The stepsisters pushed and pushed, but their feet were too big.'],['sis1 go 48 @用力|pushed','sis1 crouch @擠|pushed','sis1 shiver @腳太大|big','sis1 emo 😣 @穿不進去|big','sis2 go 58 @怎麼|too','sis2 shiver @穿不進去|big']],
-            ['n',['這時,小老鼠拿來鑰匙,救出了灰姑娘!','Just then, the mice brought the key and set Cinderella free!'],['sis1 go 78','sis2 go 90','mouse show @小老鼠|mice','key show @鑰匙|key','mouse go 8 @拿來|brought','key glide 8 250 @拿來|brought','fx sparkle key @救出|free','cr show @灰姑娘|Cinderella','cr go 14 @灰姑娘|Cinderella','key hide @灰姑娘|Cinderella+300']],
+            ['n',['兩個姊姊用力擠,可是腳太大,怎麼也穿不進去。','The stepsisters pushed and pushed, but their feet were too big.'],['sis1 go 48 @用力|pushed','sis1 crouch @擠|pushed','sis1 shiver @腳太大|big','sis1 emo 😣 @穿不進去|big','sis2 go 58 @怎麼|too','sis2 shiver @穿不進去|big']] ] },
+    { bg:'parlor', cast:{ duke:{k:'duke',x:28,name:['大臣','Duke']}, slipper:{k:'slipper',x:44,y:282,s:.7}, mom:{k:'mom',x:62,face:-1,ex:'angry',name:['繼母','Stepmother']}, sis1:{k:'sis1',x:48,face:-1,name:['姊姊','Sister']}, sis2:{k:'sis2',x:58,face:-1,name:['姊姊','Sister']}, cr:{k:'cr',x:-10,hid:1,name:['灰姑娘','Cinderella']}, mouse:{k:'mouse',x:-14,s:.7,hid:1}, key:{k:'key',x:-14,y:250,s:.7,hid:1}, slipper2:{k:'slipper',x:40,y:282,s:.7,hid:1} },
+      say:[ ['n',['這時,小老鼠拿來鑰匙,救出了灰姑娘!','Just then, the mice brought the key and set Cinderella free!'],['sis1 go 78','sis2 go 90','mouse show @小老鼠|mice','key show @鑰匙|key','mouse go 8 @拿來|brought','key glide 8 250 @拿來|brought','fx sparkle key @救出|free','cr show @灰姑娘|Cinderella','cr go 14 @灰姑娘|Cinderella','key hide @灰姑娘|Cinderella+300']],
             ['n',['繼母故意絆倒大臣,玻璃鞋摔碎了!','The stepmother tripped the Duke, and the slipper smashed!'],['duke go 34','mom go 46','mom face angry @故意|tripped','duke fall @絆倒|tripped','fx sparkle slipper #bfe3ff @摔碎|smashed','fx shake @摔碎|smashed','slipper hide @摔碎|smashed','mom face none @摔碎|smashed+400']],
             ['cr',['沒關係,另一隻玻璃鞋在我這裡!','It is all right. I have the other slipper!'],['cr lift @另一隻|other','slipper2 pop @玻璃鞋|slipper','fx sparkle slipper2 @玻璃鞋|slipper','mom face wow @另一隻|other','sis1 face wow @另一隻|other']],
             ['n',['一穿上,剛剛好!大臣高興得跳了起來。','She tried it on, and it fit perfectly! The Duke jumped for joy.'],['duke stand','cr go 40','cr crouch @穿上|tried','slipper2 hide @剛剛好|perfectly','fx sparkle cr.feet @剛剛好|perfectly','cr stand @高興|joy','duke jump @高興|joy','mouse jump @跳了|jumped']] ] },
@@ -508,11 +536,11 @@ STORIES.push({ id:'cinderella', title:['灰姑娘','Cinderella'],
             ['n',['他們結婚了,從此過著幸福快樂的日子。','They were married and lived happily ever after.'],['fx confetti @結婚|married','cg turn @幸福|happily','prince nod @幸福|happily','mouse jump @幸福|happily','bird glide 46 120 @快樂|happily','fx hearts prince @快樂|happily+300']] ] }
   ],
   levels:{
-    1:{ type:'choose', q:['誰幫灰姑娘做了衣服?','Who made a dress for Cinderella?'], opts:[{t:['小老鼠和小鳥','Mice and birds'],ok:1,why:['對,他們是灰姑娘的好朋友。','Yes, they are her good friends.']},{t:['壞心的繼母','The stepmother'],ok:0,why:['繼母沒有幫她,再想想。','She did not help. Think again.']},{t:['兩個姊姊','The stepsisters'],ok:0,why:['姊姊還把衣服撕破了喔。','They tore the dress!']}] },
-    3:{ type:'find', q:['誰把南瓜變成馬車?點一點她。','Who turned the pumpkin into a carriage? Tap her.'], hotspots:[{actor:'fairy',ok:1,why:['對,是仙女教母的魔法!','Yes, it was the Fairy Godmother!']},{actor:'cg',ok:0,why:['這是灰姑娘,施魔法的是仙女。','That is Cinderella. The fairy did the magic.']}] },
-    4:{ type:'match', q:['翻牌配對:誰做了什麼?','Flip and match: who did what?'], pairs:[[['仙女','Fairy'],['施魔法','Magic']],[['小老鼠','Mice'],['縫衣服','Sewing']],[['王子','Prince'],['邀請跳舞','Asked to dance']],[['繼母','Stepmother'],['鎖住灰姑娘','Locked her in']]] },
-    5:{ type:'choose', q:['魔法什麼時候會消失?','When does the magic end?'], opts:[{t:['午夜十二點','At midnight'],ok:1,why:['對,鐘聲一響魔法就沒了。','Yes, when the clock strikes twelve.']},{t:['吃完晚飯','After dinner'],ok:0,why:['仙女說的不是這個時間。','That is not what she said.']},{t:['跳完舞以後','After dancing'],ok:0,why:['再想想,仙女說了幾點?','Think again. What time did she say?']}] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['做家事','Doing chores'],['仙女變出馬車','Magic carriage'],['舞會跳舞','Dancing at the ball'],['十二點掉了鞋','Lost slipper at midnight'],['玻璃鞋剛剛好','The slipper fits']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    2:{ type:'pick', q:['誰幫灰姑娘做衣服?','Who made Cinderella a dress?'], opts:[{a:'mouse',t:['小老鼠','The mice'],ok:1,why:['對!小老鼠是她的好朋友。','Yes! The mice are her friends.']},{a:'mom',t:['繼母','Stepmother'],ok:0,why:['繼母沒有幫她喔。','The stepmother did not help.']},{a:'sis1',t:['姊姊','Stepsister'],ok:0,why:['姊姊還把衣服撕破了。','The sisters tore it!']}] },
+    4:{ type:'find', q:['誰會變魔法?點一點她。','Who can do magic? Tap her.'], hotspots:[{actor:'fairy',ok:1,why:['對!是仙女教母!','Yes, the Fairy Godmother!']},{actor:'cg',ok:0,why:['這是灰姑娘喔。','That is Cinderella.']}] },
+    6:{ type:'pick', q:['魔法什麼時候會消失?','When does the magic end?'], opts:[{p:'🕛',t:['十二點','Midnight'],ok:1,why:['對!十二點鐘聲一響。','Yes! At twelve o\'clock.']},{p:'🍽️',t:['吃完飯','After dinner'],ok:0,why:['不是吃完飯喔。','Not after dinner.']},{p:'☀️',t:['早上','Morning'],ok:0,why:['再想想,仙女說幾點?','What time did she say?']}] },
+    8:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'fairy',t:['仙女','Fairy']},{p:'✨',t:['魔法','Magic']}],[{a:'mouse',t:['小老鼠','Mice']},{p:'🔑',t:['鑰匙','Key']}],[{a:'prince',t:['王子','Prince']},{p:'👠',t:['玻璃鞋','Glass slipper']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🎃',t:['南瓜馬車','Pumpkin coach']},{p:'👠',t:['掉了玻璃鞋','Lost slipper']},{p:'👑',t:['結婚','The wedding']}] }
   } });
 
 // 冰雪奇緣:依迪士尼 2013 電影大綱,憑記憶撰寫。標 待核對:譯名(艾莎/安娜/克里斯托夫/雪寶)、結尾細節。
@@ -523,8 +551,9 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
     { bg:'castleIn', cast:{ olaf:{k:'olaf',x:46,s:.55,hid:1,name:['雪人','Snowman']}, elsa:{k:'elsa',x:12,s:.72,name:['艾莎','Elsa']}, door:{k:'door',x:46,s:1.05,hid:1}, anna:{k:'anna',x:88,s:.64,face:-1,name:['安娜','Anna']} },
       say:[ ['n',['艾莎和安娜是一對姊妹,住在北方的王國裡。','Elsa and Anna were sisters. They lived in a kingdom far in the north.'],['elsa go 30','anna go 62 @300','anna jump @王國|kingdom','elsa wave @王國|kingdom']],
             ['n',['艾莎有一種魔法,手一揮就能變出雪花。','Elsa had magic. With a wave of her hand, she could make snow!'],['elsa lift @手一揮|wave','fx sparkle elsa.hand @手一揮|wave','fx snow on @雪花|snow','anna face wow @雪花|snow']],
-            ['n',['姊妹倆一起堆雪人,玩得好開心。','Together, the sisters built a snowman and had so much fun.'],['olaf pop @雪人|snowman','fx sparkle olaf @雪人|snowman','anna face none @雪人|snowman','anna jump @開心|fun','elsa jump @開心|fun+200']],
-            ['n',['安娜越跳越高,艾莎的魔法不小心打中了她!','Anna jumped higher and higher, and Elsa\'s magic hit her by accident!'],['anna go 70','anna jump @越跳|jumped','elsa lift @魔法|magic','fx beam elsa anna.head @打中|hit','anna fall @打中|hit+600','elsa face wow @打中|hit+600']],
+            ['n',['姊妹倆一起堆雪人,玩得好開心。','Together, the sisters built a snowman and had so much fun.'],['olaf pop @雪人|snowman','fx sparkle olaf @雪人|snowman','anna face none @雪人|snowman','anna jump @開心|fun','elsa jump @開心|fun+200']] ] },
+    { bg:'castleIn', fx:['snow on'], cast:{ olaf:{k:'olaf',x:46,s:.55,name:['雪人','Snowman']}, elsa:{k:'elsa',x:30,s:.72,name:['艾莎','Elsa']}, door:{k:'door',x:46,s:1.05,hid:1}, anna:{k:'anna',x:62,s:.64,face:-1,name:['安娜','Anna']} },
+      say:[ ['n',['安娜越跳越高,艾莎的魔法不小心打中了她!','Anna jumped higher and higher, and Elsa\'s magic hit her by accident!'],['anna go 70','anna jump @越跳|jumped','elsa lift @魔法|magic','fx beam elsa anna.head @打中|hit','anna fall @打中|hit+600','elsa face wow @打中|hit+600']],
             ['n',['從此艾莎把自己關在房間裡,不敢再見妹妹。','After that, Elsa shut herself in her room and stayed away from her sister.'],['olaf fade @從此|After','fx snow off @從此|After','anna stand @從此|After','anna turn -1 @從此|After','elsa go 24 @關在|shut','elsa turn 1 @房間|room','door pop @房間|room','elsa face sad @不敢|stayed','anna face sad @妹妹|sister']],
             ['anna',['姊姊,你要不要一起堆雪人?','Elsa, do you want to build a snowman?'],['anna go 62','anna knock @姊姊|Elsa','elsa crouch @堆雪人|snowman']] ] },
     { bg:'ballroom', cast:{ hans:{k:'hans',x:104,face:-1,hid:1,name:['漢斯','Hans']}, elsaq:{k:'elsaq',x:78,face:-1,name:['艾莎','Elsa']}, anna:{k:'anna',x:8,name:['安娜','Anna']} },
@@ -564,16 +593,18 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
       say:[ ['n',['原來漢斯是壞人,他根本不想救安娜。','Hans was a bad man after all. He did not want to save Anna.'],['hans face angry @壞人|bad','annaw fear @壞人|bad']],
             ['n',['暴風雪中,漢斯舉起劍,要傷害艾莎。','In the storm, Hans raised his sword to hurt Elsa.'],['hans go 68 @漢斯|Hans','hans lift @舉起劍|sword','elsa crouch @傷害|hurt','elsa face wow @傷害|hurt']],
             ['n',['安娜用盡力氣,衝過去擋在姊姊前面。','With all her strength, Anna ran in front of her sister.'],['annaw run 77 @衝過去|ran','annaw turn -1 @擋在|front']],
-            ['n',['就在這一刻,安娜整個人變成了冰!','At that very moment, Anna turned into ice!'],['annaw swap annaice @變成|turned','fx flash @變成|turned','fx shake @變成|turned','fx sparkle annaice @冰|ice','hans fall @冰|ice+400']],
-            ['n',['艾莎抱著妹妹大哭,真心的愛讓冰融化了。','Elsa hugged her sister and cried. True love melted the ice.'],['elsa stand','elsa go 84','elsa emo 😢 @大哭|cried','fx storm off @真心|True','annaice swap anna @融化|melted','anna face none @融化|melted','fx hearts anna @融化|melted+500']],
+            ['n',['就在這一刻,安娜整個人變成了冰!','At that very moment, Anna turned into ice!'],['annaw swap annaice @變成|turned','fx flash @變成|turned','fx shake @變成|turned','fx sparkle annaice @冰|ice','hans fall @冰|ice+400']] ] },
+    { bg:'fjord', fx:['winter on -8:140:26,52:140:26,112:140:26,540:72:16,508:96:12,608:92:12,182:150:12','freeze -20 110 200','storm on'], cast:{ hans:{k:'hanss',x:68,ex:'angry',name:['漢斯','Hans']}, annaice:{k:'annaice',x:77,face:-1,name:['安娜','Anna']}, anna:{k:'anna',x:77,face:-1,hid:1,name:['安娜','Anna']}, elsa:{k:'elsa',x:86,face:-1,ex:'wow',name:['艾莎','Elsa']} },
+      say:[ ['n',['艾莎抱著妹妹大哭,真心的愛讓冰融化了。','Elsa hugged her sister and cried. True love melted the ice.'],['hans fall','elsa stand','elsa go 84','elsa emo 😢 @大哭|cried','fx storm off @真心|True','annaice swap anna @融化|melted','anna face none @融化|melted','fx hearts anna @融化|melted+500']],
             ['n',['艾莎終於明白:愛,可以融化冬天。','Elsa finally understood: love can melt the winter.'],['fx thaw @融化|melt','elsa face none @明白|understood','elsa jump @冬天|winter','anna jump @冬天|winter','fx hearts elsa @冬天|winter+300']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['艾莎有什麼魔法?','What magic does Elsa have?'], opts:[{t:['變出冰和雪','Ice and snow'],ok:1,why:['對,她手一揮就能變出雪花。','Yes! She makes snow with a wave of her hand.']},{t:['變出火','Fire'],ok:0,why:['不是火,她的魔法是冷的。','Not fire. Her magic is cold.']},{t:['飛上天','Flying'],ok:0,why:['她不會飛喔。','She cannot fly.']}] },
-    2:{ type:'choose', q:['艾莎為什麼跑出城堡?','Why did Elsa run away?'], opts:[{t:['魔法被大家看見','Everyone saw her magic'],ok:1,why:['對,冰刺跑出來,她好害怕。','Yes. The ice spikes scared her.']},{t:['想去玩','To go and play'],ok:0,why:['不是去玩,她是嚇到了。','Not to play. She was scared.']},{t:['去找朋友','To find a friend'],ok:0,why:['再想想,她怕傷到別人。','Think again. She was afraid of hurting people.']}] },
-    4:{ type:'choose', q:['艾莎在雪山上蓋了什麼?','What did Elsa build on the mountain?'], opts:[{t:['冰宮殿','An ice palace'],ok:1,why:['對,一座閃亮亮的冰宮殿。','Yes, a sparkly ice palace!']},{t:['小木屋','A wooden cabin'],ok:0,why:['不是木頭做的喔。','It was not made of wood.']},{t:['大船','A big ship'],ok:0,why:['船在海邊,再想想。','Ships are on the sea. Try again.']}] },
-    5:{ type:'find', q:['誰是會說話的雪人?點一點他。','Who is the talking snowman? Tap him.'], hotspots:[{actor:'olaf',ok:1,why:['對,是雪寶!','Yes, it is Olaf!']},{actor:'sven',ok:0,why:['這是馴鹿斯文,再找找看。','That is Sven the reindeer. Look again.']}] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['魔法打中小安娜','Magic hits little Anna'],['冰刺冒出來','Ice spikes appear'],['蓋起冰宮殿','Elsa builds a palace'],['遇見雪寶','Anna meets Olaf'],['愛融化冬天','Love melts the winter']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['艾莎有什麼魔法?','What magic does Elsa have?'], opts:[{p:'❄️',t:['冰和雪','Ice and snow'],ok:1,why:['對!她手一揮就有雪花。','Yes! She makes snow with a wave.']},{p:'🔥',t:['火','Fire'],ok:0,why:['不是火喔,她的魔法是冷的。','Not fire. Her magic is cold.']},{p:'🌈',t:['彩虹','Rainbows'],ok:0,why:['不是彩虹,再想想。','Not rainbows. Try again.']}] },
+    3:{ type:'pick', q:['冰刺跑出來,艾莎覺得怎麼樣?','How did Elsa feel when the ice spikes came out?'], opts:[{p:'😨',t:['好害怕','Scared'],ok:1,why:['對,她好害怕,就跑走了。','Yes, she was scared and ran away.']},{p:'😄',t:['好開心','Happy'],ok:0,why:['她不開心喔,再想想。','She was not happy. Try again.']},{p:'😴',t:['想睡覺','Sleepy'],ok:0,why:['不是想睡覺喔。','Not sleepy.']}] },
+    5:{ type:'pick', q:['艾莎在雪山上蓋了什麼?','What did Elsa build on the mountain?'], opts:[{p:'🏠',t:['小木屋','A cabin'],ok:0,why:['不是木頭做的喔。','It was not made of wood.']},{p:'🏰',t:['冰宮殿','Ice palace'],ok:1,why:['對!閃亮亮的冰宮殿。','Yes! A sparkly ice palace.']},{p:'⛵',t:['大船','A ship'],ok:0,why:['船在海上,再想想。','Ships are at sea. Try again.']}] },
+    6:{ type:'find', q:['會說話的雪人在哪裡?點一點他。','Where is the talking snowman? Tap him.'], hotspots:[{actor:'olaf',ok:1,why:['找到了!是雪寶!','You found Olaf!']},{actor:'sven',ok:0,why:['這是馴鹿斯文,再找找看。','That is Sven the reindeer. Look again.']}] },
+    7:{ type:'pair', q:['誰喜歡什麼?把他們配起來。','Who likes what? Match them.'], pairs:[[{a:'elsa',t:['艾莎','Elsa']},{p:'❄️',t:['雪花','Snow']}],[{a:'olaf',t:['雪寶','Olaf']},{p:'🤗',t:['擁抱','Hugs']}],[{a:'sven',t:['斯文','Sven']},{p:'🦌',t:['馴鹿','Reindeer']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'❄️',t:['冰刺','Ice spikes']},{p:'🏰',t:['冰宮殿','Ice palace']},{p:'❤️',t:['愛融化冬天','Love melts winter']}] }
   } });
 
 // 茉莉公主(阿拉丁):依迪士尼 1992 電影大綱,憑記憶撰寫。標 待核對:市集蘋果、魔毯飛行與賈方變身的順序、譯名。
@@ -619,8 +650,9 @@ STORIES.push({ id:'jasmine', title:['茉莉公主','Princess Jasmine'],
     { bg:'bazaarA', cast:{ jasmine:{k:'jasmine',x:-8,name:['茉莉','Jasmine']}, apple:{k:'apple',x:30,y:200,s:.6}, kid:{k:'kid',x:48,s:.62,face:-1}, guard:{k:'guard',x:112,face:-1,hid:1,name:['衛兵','Guard']}, aladdin:{k:'aladdin',x:70,y:150,s:.85,face:-1,hid:1,name:['阿拉丁','Aladdin']}, abu:{k:'abu',x:80,y:150,s:.5,hid:1,name:['阿布','Abu']} },
       say:[ ['n',['茉莉偷偷溜出王宮,來到熱鬧的市集。','Jasmine sneaked out of the palace and came to the busy market.'],['jasmine go 22','jasmine face wow @市集|market','jasmine turn @熱鬧|busy','jasmine turn @熱鬧|busy+500']],
             ['n',['她看見小孩肚子餓,拿了一顆蘋果給他。','She saw a hungry child and gave him an apple.'],['kid crouch @肚子餓|hungry','jasmine go 30 @蘋果|apple','apple glide 44 220 @給他|gave','kid stand @給他|gave','apple hide @給他|gave+700','kid jump @給他|gave+700','fx hearts kid @給他|gave+800']],
-            ['n',['可是她沒付錢,衛兵生氣地追過來!','But she did not pay, so an angry guard came running!'],['guard show','guard run 64 @衛兵|guard','guard face angry @生氣|angry','jasmine fear @追過來|running','kid run -14 @追過來|running']],
-            ['aladdin',['別怕,跟我來!','Do not be afraid. Come with me!'],['aladdin show','abu show','aladdin glide 44 262 1 @別怕|afraid','abu glide 52 262 .6 @別怕|afraid','aladdin wave @跟我來|Come']],
+            ['n',['可是她沒付錢,衛兵生氣地追過來!','But she did not pay, so an angry guard came running!'],['guard show','guard run 64 @衛兵|guard','guard face angry @生氣|angry','jasmine fear @追過來|running','kid run -14 @追過來|running']] ] },
+    { bg:'bazaarA', cast:{ jasmine:{k:'jasmine',x:30,ex:'wow',name:['茉莉','Jasmine']}, guard:{k:'guard',x:64,face:-1,ex:'angry',name:['衛兵','Guard']}, aladdin:{k:'aladdin',x:70,y:150,s:.85,face:-1,hid:1,name:['阿拉丁','Aladdin']}, abu:{k:'abu',x:80,y:150,s:.5,hid:1,name:['阿布','Abu']} },
+      say:[ ['aladdin',['別怕,跟我來!','Do not be afraid. Come with me!'],['aladdin show','abu show','aladdin glide 44 262 1 @別怕|afraid','abu glide 52 262 .6 @別怕|afraid','aladdin wave @跟我來|Come']],
             ['n',['阿拉丁和小猴子阿布,帶她跳上屋頂逃走了。','Aladdin and his monkey, Abu, helped her leap onto the roofs and escape.'],['aladdin glide 30 150 .85 @跳上|leap','jasmine glide 20 150 .85 @跳上|leap','abu glide 40 150 .5 @跳上|leap','guard face wow @逃走|escape','guard shiver @逃走|escape']] ] },
     { bg:'desertN', cast:{ aladdin:{k:'aladdin',x:-8,name:['阿拉丁','Aladdin']}, abu:{k:'abu',x:-14,s:.6,name:['阿布','Abu']}, jafar:{k:'jafars',x:20,name:['賈方','Jafar']} },
       say:[ ['n',['後來,賈方抓住了阿拉丁,把他帶到沙漠。','Later, Jafar captured Aladdin and took him to the desert.'],['jafar go 34','aladdin go 20 @抓住|captured','abu go 12','aladdin face sad @沙漠|desert']],
@@ -642,8 +674,9 @@ STORIES.push({ id:'jasmine', title:['茉莉公主','Princess Jasmine'],
             ['n',['他把茉莉和蘇丹都抓了起來。','He locked up Jasmine and the Sultan.'],['jafar point @抓了|locked','cage pop @抓了|locked','jasmine face sad @茉莉|Jasmine','sultan face wow @蘇丹|Sultan','fx shake @抓了|locked']] ] },
     { bg:'palaceA', fx:['night on','dim on .3'], cast:{ jasmine:{k:'jasmine',x:16,ex:'sad',name:['茉莉','Jasmine']}, sultan:{k:'sultan',x:32,ex:'wow',name:['蘇丹','Sultan']}, cage:{k:'cage',x:24,s:1.1}, ali:{k:'aladdin',x:-10,name:['阿拉丁','Aladdin']}, jafar:{k:'jafars',x:72,s:1.4,face:-1,name:['賈方','Jafar']}, jafarg:{k:'jafarg2',x:72,face:-1,hid:1,name:['賈方','Jafar']}, lamp:{k:'lamp',x:56,y:280,s:.8,hid:1} },
       say:[ ['n',['阿拉丁趕回來救大家,賈方變得好可怕。','Aladdin rushed back to save everyone, but Jafar was so scary.'],['ali run 44 @趕回來|rushed','jafar face angry @可怕|scary','fx glow on jafar.head 0 80 #ff6a6a @可怕|scary']],
-            ['ali',['你還沒有精靈那麼強!','You are still not as strong as the Genie!'],['ali point @精靈|Genie','jafar face wow @強|strong']],
-            ['n',['賈方好貪心,許願變成了最強的精靈。','Greedy Jafar wished to become the most powerful genie.'],['jafar lift @許願|wished','fx boom jafar @變成|become','jafar swap jafarg @變成|become+200','fx glow off jafar.head @變成|become','jafarg grow 1.6 @精靈|genie']],
+            ['ali',['你還沒有精靈那麼強!','You are still not as strong as the Genie!'],['ali point @精靈|Genie','jafar face wow @強|strong']] ] },
+    { bg:'palaceA', fx:['night on','dim on .3'], cast:{ jasmine:{k:'jasmine',x:16,ex:'sad',name:['茉莉','Jasmine']}, sultan:{k:'sultan',x:32,ex:'wow',name:['蘇丹','Sultan']}, cage:{k:'cage',x:24,s:1.1}, ali:{k:'aladdin',x:44,name:['阿拉丁','Aladdin']}, jafar:{k:'jafars',x:72,s:1.4,face:-1,ex:'wow',name:['賈方','Jafar']}, jafarg:{k:'jafarg2',x:72,face:-1,hid:1,name:['賈方','Jafar']}, lamp:{k:'lamp',x:56,y:280,s:.8,hid:1} },
+      say:[ ['n',['賈方好貪心,許願變成了最強的精靈。','Greedy Jafar wished to become the most powerful genie.'],['jafar lift @許願|wished','fx boom jafar @變成|become','jafar swap jafarg @變成|become+200','fx glow off jafar.head @變成|become','jafarg grow 1.6 @精靈|genie']],
             ['n',['可是精靈要住在燈裡,他一下子被吸進了神燈!','But genies must live in lamps, so he got sucked into a lamp!'],['lamp pop @燈裡|lamps','jafarg glide 56 280 .1 900 @吸進|sucked','jafarg fade @吸進|sucked+500','fx poof lamp @神燈|lamp','cage fade @神燈|lamp+600','jasmine face none @神燈|lamp+700','sultan face none @神燈|lamp+700']] ] },
     { bg:'agrabah', cast:{ jasmine:{k:'jasmine',x:22,name:['茉莉','Jasmine']}, aladdin:{k:'aladdin',x:38,name:['阿拉丁','Aladdin']}, sultan:{k:'sultan',x:64,face:-1,name:['蘇丹','Sultan']}, genie:{k:'genief',x:86,face:-1,name:['精靈','Genie']} },
       say:[ ['n',['阿拉丁用最後一個願望,讓精靈自由了!','With his last wish, Aladdin set the Genie free!'],['aladdin point @最後|last','fx sparkle genie @自由|free','genie jump @自由|free','fx confetti @自由|free','genie emo 🎉 @自由|free+300']],
@@ -651,11 +684,11 @@ STORIES.push({ id:'jasmine', title:['茉莉公主','Princess Jasmine'],
             ['n',['茉莉和阿拉丁,過著幸福快樂的日子。','Jasmine and Aladdin lived happily ever after.'],['jasmine go 28','aladdin go 36','fx hearts aladdin @幸福|happily','jasmine turn @快樂|happily','genie wave @快樂|happily']] ] }
   ],
   levels:{
-    1:{ type:'choose', q:['茉莉在市集裡做了什麼?','What did Jasmine do at the market?'], opts:[{t:['送蘋果給小孩','Gave a child an apple'],ok:1,why:['對,茉莉很善良。','Yes, Jasmine is kind.']},{t:['買了新衣服','Bought new clothes'],ok:0,why:['不是喔,再想想。','No. Think again.']},{t:['偷走了珠寶','Took some jewels'],ok:0,why:['茉莉沒有這樣做。','Jasmine did not do that.']}] },
-    3:{ type:'find', q:['誰是從神燈裡出來的?點一點他。','Who came out of the lamp? Tap him.'], hotspots:[{actor:'genie',ok:1,why:['對,是藍色的神燈精靈!','Yes, the big blue Genie!']},{actor:'abu',ok:0,why:['這是小猴子阿布。','That is Abu the monkey.']}] },
-    4:{ type:'choose', q:['阿拉丁帶茉莉去哪裡玩?','Where did Aladdin take Jasmine?'], opts:[{t:['坐魔毯飛上天','A magic carpet ride'],ok:1,why:['對,他們一起飛在夜空中。','Yes, they flew in the night sky.']},{t:['坐船去海上','A boat trip'],ok:0,why:['不是船,再想想。','Not a boat. Think again.']},{t:['騎駱駝去沙漠','A camel ride'],ok:0,why:['他們是飛的喔。','They flew!']}] },
-    6:{ type:'match', q:['翻牌配對:誰做了什麼?','Flip and match: who did what?'], pairs:[[['茉莉','Jasmine'],['想自己決定','Makes her own choice']],[['精靈','Genie'],['實現願望','Grants wishes']],[['賈方','Jafar'],['想搶王位','Wants the throne']],[['阿布','Abu'],['小猴子','Little monkey']]] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['茉莉溜出王宮','Jasmine sneaks out'],['找到神燈','Finding the lamp'],['坐魔毯飛行','Magic carpet ride'],['賈方被關進燈','Jafar trapped in a lamp'],['精靈得到自由','The Genie is free']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    1:{ type:'pick', q:['茉莉把什麼送給小孩?','What did Jasmine give the child?'], opts:[{p:'🍎',t:['蘋果','An apple'],ok:1,why:['對!茉莉好善良。','Yes! Jasmine is kind.']},{p:'💎',t:['寶石','A jewel'],ok:0,why:['不是寶石喔。','Not a jewel.']},{p:'👗',t:['衣服','A dress'],ok:0,why:['不是衣服,再想想。','Not a dress. Try again.']}] },
+    4:{ type:'find', q:['神燈精靈在哪裡?點一點他。','Where is the Genie? Tap him.'], hotspots:[{actor:'genie',ok:1,why:['對!藍色的精靈!','Yes, the big blue Genie!']},{actor:'abu',ok:0,why:['這是小猴子阿布。','That is Abu the monkey.']}] },
+    5:{ type:'pick', q:['他們坐什麼飛上天?','What did they fly on?'], opts:[{a:'carpet',t:['魔毯','Magic carpet'],ok:1,why:['對!魔毯飛上夜空。','Yes! The magic carpet.']},{a:'boat',t:['小船','A boat'],ok:0,why:['船不會飛喔。','Boats cannot fly.']},{a:'horse',t:['馬','A horse'],ok:0,why:['不是騎馬喔。','Not a horse.']}] },
+    8:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'aladdin',t:['阿拉丁','Aladdin']},{a:'abu',t:['阿布','Abu']}],[{a:'jasmine',t:['茉莉','Jasmine']},{a:'rajah',t:['老虎','Rajah']}],[{a:'genief',t:['精靈','Genie']},{a:'lamp',t:['神燈','Lamp']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🍎',t:['市集','The market']},{a:'lamp',t:['找到神燈','The lamp']},{p:'🎉',t:['精靈自由','Genie is free']}] }
   } });
 
 // 莫娜(海洋奇緣):依迪士尼 2016 電影大綱,憑記憶撰寫。標 待核對:譯名(莫娜/毛伊/特菲蒂/特卡)、奶奶化成魟魚的細節。
@@ -691,8 +724,9 @@ STORIES.push({ id:'moana', title:['莫娜','Moana'],
             ['tala',['那是島神特菲蒂的心,很久以前被偷走了。','That is the heart of Te Fiti. It was stolen long ago.'],['tala go 62','tala point @特菲蒂|Fiti','fx glow on heart 0 30 #7dffb0 @心|heart','moana face none @偷走|stolen']] ] },
     { bg:'motunui', fx:['dim on .2'], cast:{ coconut:{k:'coconut',x:44,y:270,hid:1}, moana:{k:'moana',x:22,name:['莫娜','Moana']}, heihei:{k:'heihei',x:8,s:.6,name:['黑黑','Heihei']}, pua:{k:'pua',x:34,s:.6,name:['小豬','Pua']}, tui:{k:'tui',x:72,face:-1,name:['爸爸','Chief Tui']}, tala:{k:'tala',x:108,face:-1,name:['奶奶','Gramma Tala']} },
       say:[ ['n',['莫娜長大了,可是島上的魚和椰子都不見了。','Moana grew up, but the fish and coconuts on the island were disappearing.'],['moana face sad @不見|disappearing','coconut pop @椰子|coconuts','fx poof coconut @不見|disappearing','pua shiver @不見|disappearing']],
-            ['moana',['爸爸,我們出海去找魚吧!','Papa, let us sail out and find fish!'],['moana face none','moana go 40','moana point @出海|sail']],
-            ['tui',['不可以!海上太危險了!','No! The ocean is too dangerous!'],['tui face angry @不可以|No','tui point @危險|dangerous','moana face sad @危險|dangerous','moana crouch @危險|dangerous']],
+            ['moana',['爸爸,我們出海去找魚吧!','Papa, let us sail out and find fish!'],['moana face none','moana go 40','moana point @出海|sail']] ] },
+    { bg:'motunui', fx:['dim on .2'], cast:{ moana:{k:'moana',x:40,name:['莫娜','Moana']}, heihei:{k:'heihei',x:8,s:.6,name:['黑黑','Heihei']}, pua:{k:'pua',x:24,s:.6,name:['小豬','Pua']}, tui:{k:'tui',x:72,face:-1,name:['爸爸','Chief Tui']}, tala:{k:'tala',x:108,face:-1,name:['奶奶','Gramma Tala']} },
+      say:[ ['tui',['不可以!海上太危險了!','No! The ocean is too dangerous!'],['tui face angry @不可以|No','tui point @危險|dangerous','moana face sad @危險|dangerous','moana crouch @危險|dangerous']],
             ['n',['奶奶悄悄說:去找半神毛伊,把心還回去。','Gramma whispered: find the demigod Maui and return the heart.'],['moana stand','tala go 54','tala nod @悄悄|whispered','fx sparkle moana.hand @心|heart','moana face wow @毛伊|Maui']] ] },
     { bg:'oceanN', fx:['sea 236 400'], cast:{ boat:{k:'boat',x:-20,y:248,s:1.2}, moana:{k:'moana',x:-20,y:232,name:['莫娜','Moana']}, heihei:{k:'heihei',x:-26,y:236,s:.55,name:['黑黑','Heihei']} },
       say:[ ['n',['夜裡,莫娜帶著小雞黑黑,划著小船出海了。','At night, Moana and Heihei the rooster sailed out in a small boat.'],['boat glide 30 248 1.2 3000','moana glide 30 232 1 3000','heihei glide 24 236 .55 3000']],
@@ -705,8 +739,9 @@ STORIES.push({ id:'moana', title:['莫娜','Moana'],
             ['n',['毛伊不情願,還是跳上了莫娜的船。','Maui grumbled, but he jumped onto Moana\'s boat.'],['maui face angry @不情願|grumbled','maui jump @跳上|jumped','maui go 112 @船|boat','moana go 112 @船|boat+300','heihei go 112 @船|boat+500','fx glow off moana.hand @船|boat']] ] },
     { bg:'lavaSea', fx:['sea 236 400 -60 160 #2a3a6a'], cast:{ teka:{k:'teka',x:82,y:250,s:1.5,face:-1,hid:1,name:['特卡','Te Ka']}, boat:{k:'boat',x:30,y:248,s:1.2}, moana:{k:'moana',x:24,y:232,name:['莫娜','Moana']}, maui:{k:'mauih',x:38,y:232,name:['毛伊','Maui']} },
       say:[ ['n',['海上出現了岩漿怪特卡,她好生氣!','Te Ka, the lava monster, rose up from the sea. She was furious!'],['teka pop @特卡|Ka','fx shake @生氣|furious','fx fire teka @生氣|furious','moana fear @岩漿|lava']],
-            ['maui',['別怕,我用神奇魚鉤打她!','Do not worry! I will hit her with my magic hook!'],['maui lift @魚鉤|hook','fx sparkle maui.hand @神奇|magic']],
-            ['n',['毛伊一擊,魚鉤卻裂開了,他們被打了回來!','Maui struck, but his hook cracked, and they were knocked back!'],['maui glide 64 200 1.35 500 @一擊|struck','fx boom teka @一擊|struck','maui glide 38 232 1.35 600 @裂開|cracked','maui fall @打了|knocked','boat glide 18 248 1.2 800 @打了|knocked','moana glide 12 232 1 800 @打了|knocked']],
+            ['maui',['別怕,我用神奇魚鉤打她!','Do not worry! I will hit her with my magic hook!'],['maui lift @魚鉤|hook','fx sparkle maui.hand @神奇|magic']] ] },
+    { bg:'lavaSea', fx:['sea 236 400 -60 160 #2a3a6a'], cast:{ teka:{k:'teka',x:82,y:250,s:1.5,face:-1,name:['特卡','Te Ka']}, boat:{k:'boat',x:30,y:248,s:1.2}, moana:{k:'moana',x:24,y:232,ex:'wow',name:['莫娜','Moana']}, maui:{k:'mauih',x:38,y:232,name:['毛伊','Maui']} },
+      say:[ ['n',['毛伊一擊,魚鉤卻裂開了,他們被打了回來!','Maui struck, but his hook cracked, and they were knocked back!'],['maui glide 64 200 1.35 500 @一擊|struck','fx boom teka @一擊|struck','maui glide 38 232 1.35 600 @裂開|cracked','maui fall @打了|knocked','boat glide 18 248 1.2 800 @打了|knocked','moana glide 12 232 1 800 @打了|knocked']],
             ['n',['毛伊好難過,丟下莫娜,自己飛走了。','Maui was so upset that he left Moana and flew away.'],['maui stand','maui face sad @難過|upset','maui emo 🦅 @飛走|flew','maui glide 40 -60 1.35 1500 @飛走|flew','moana face sad @丟下|left']] ] },
     { bg:'oceanN', fx:['sea 236 400'], cast:{ boat:{k:'boat',x:36,y:248,s:1.2}, moana:{k:'moana',x:36,y:232,ex:'sad',name:['莫娜','Moana']}, tala:{k:'talag',x:66,y:226,face:-1,hid:1,name:['奶奶','Gramma Tala']} },
       say:[ ['n',['莫娜一個人坐在船上,覺得自己好沒用。','Alone on the boat, Moana felt she had failed.'],['moana crouch','moana emo 😢 @沒用|failed']],
@@ -724,11 +759,11 @@ STORIES.push({ id:'moana', title:['莫娜','Moana'],
             ['n',['莫娜回到家鄉,成了最棒的航海家。','Moana went home and became the best wayfinder of all.'],['moana jump @家鄉|home','maui wave @航海家|wayfinder','fx confetti @最棒|best','heihei jump @最棒|best']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['大海送給莫娜什麼?','What did the ocean give Moana?'], opts:[{t:['綠色的寶石','A green stone'],ok:1,why:['對,那是特菲蒂的心。','Yes, the heart of Te Fiti.']},{t:['一條魚','A fish'],ok:0,why:['不是魚,再想想。','Not a fish. Think again.']},{t:['一艘船','A boat'],ok:0,why:['船是後來的事喔。','The boat came later.']}] },
-    1:{ type:'find', q:['誰陪著莫娜出海?點一點牠。','Who sailed with Moana? Tap him.'], hotspots:[{actor:'heihei',ok:1,why:['對,是小雞黑黑!','Yes, Heihei the rooster!']},{actor:'pua',ok:0,why:['小豬留在島上喔。','Pua the pig stayed home.']}] },
-    3:{ type:'match', q:['翻牌配對:誰做了什麼?','Flip and match: who did what?'], pairs:[[['莫娜','Moana'],['出海找毛伊','Sails to find Maui']],[['毛伊','Maui'],['神奇魚鉤','Magic hook']],[['大海','Ocean'],['選中莫娜','Chose Moana']],[['黑黑','Heihei'],['小雞','Rooster']]] },
-    6:{ type:'choose', q:['莫娜怎麼讓島神醒過來?','How did Moana wake Te Fiti?'], opts:[{t:['把綠寶石還給她','Gave back the heart'],ok:1,why:['對,心回到胸口,島神就醒了。','Yes, the heart woke her up.']},{t:['和她打架','Fought her'],ok:0,why:['莫娜沒有打架喔。','Moana did not fight.']},{t:['唱歌給她聽','Sang to her'],ok:0,why:['再想想,莫娜拿著什麼?','Think again. What was she holding?']}] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['大海選中莫娜','The ocean chooses Moana'],['莫娜出海','Moana sets sail'],['找到毛伊','She finds Maui'],['還回綠寶石','She returns the heart'],['大地開滿花','The land blooms']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['大海送給莫娜什麼?','What did the ocean give Moana?'], opts:[{p:'💚',t:['綠寶石','Green stone'],ok:1,why:['對!那是特菲蒂的心。','Yes! The heart of Te Fiti.']},{p:'🐟',t:['魚','A fish'],ok:0,why:['不是魚喔。','Not a fish.']},{p:'⛵',t:['船','A boat'],ok:0,why:['船是後來的事喔。','The boat came later.']}] },
+    2:{ type:'find', q:['小雞黑黑在哪裡?點一點牠。','Where is Heihei the rooster? Tap him.'], hotspots:[{actor:'heihei',ok:1,why:['對!是小雞黑黑!','Yes, Heihei!']},{actor:'pua',ok:0,why:['這是小豬噗噗喔。','That is Pua the pig.']}] },
+    4:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'moana',t:['莫娜','Moana']},{p:'⛵',t:['航海','Sailing']}],[{a:'mauih',t:['毛伊','Maui']},{p:'🎣',t:['魚鉤','Hook']}],[{a:'tefiti',t:['特菲蒂','Te Fiti']},{p:'🌸',t:['花朵','Flowers']}]] },
+    8:{ type:'pick', q:['莫娜怎麼讓島神醒來?','How did Moana wake Te Fiti?'], opts:[{p:'💚',t:['還回心','Return the heart'],ok:1,why:['對!心回來,島神就醒了。','Yes! The heart woke her.']},{p:'⚔️',t:['打架','Fight'],ok:0,why:['莫娜沒有打架喔。','Moana did not fight.']},{p:'🎵',t:['唱歌','Sing'],ok:0,why:['再想想,她手上拿著什麼?','What was in her hand?']}] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'💚',t:['大海送寶石','The green stone']},{p:'⛵',t:['出海','Setting sail']},{p:'🌸',t:['大地開花','The land blooms']}] }
   } });
 
 // 花木蘭:依迪士尼 1998 電影大綱,憑記憶撰寫。標 待核對:譯名(單于/李翔/木須)、雪崩與皇宮決戰的細節。
@@ -779,13 +814,15 @@ STORIES.push({ id:'mulan', title:['花木蘭','Mulan'],
             ['n',['祖先們派了小龍木須,去保護她。','The ancestors sent a little dragon named Mushu to protect her.'],['mushu pop @木須|Mushu','fx fire mushu @小龍|dragon','mushu jump @保護|protect','mushu glide 112 200 .8 1400 @保護|protect+500']] ] },
     { bg:'campC', cast:{ shang:{k:'shang',x:74,face:-1,name:['李翔','Shang']}, sold1:{k:'sold',x:20}, sold2:{k:'sold',x:88,face:-1}, mulans:{k:'mulans',x:36,name:['木蘭','Mulan']}, mushu:{k:'mushu',x:8,s:.7,name:['木須','Mushu']} },
       say:[ ['n',['軍營裡的長官李翔,對新兵好嚴格。','Captain Shang was very strict with the new soldiers.'],['shang face angry @嚴格|strict','shang point @新兵|soldiers','sold1 shiver @嚴格|strict']],
-            ['n',['木蘭一開始什麼都做不好,常常跌倒。','At first Mulan could not do anything right and kept falling down.'],['mulans go 44','mulans fall @跌倒|falling','mulans emo 😣 @跌倒|falling','sold2 emo 😂 @跌倒|falling']],
-            ['n',['可是她不放棄,爬上了高高的木柱頂端!','But she did not give up and climbed to the top of the tall pole!'],['mulans stand @不放棄|give','mulans go 50 @爬上|climbed','mulans glide 50 120 .6 2000 @爬上|climbed','fx sparkle 50 40 @頂端|top','sold1 jump @頂端|top','sold2 jump @頂端|top']],
+            ['n',['木蘭一開始什麼都做不好,常常跌倒。','At first Mulan could not do anything right and kept falling down.'],['mulans go 44','mulans fall @跌倒|falling','mulans emo 😣 @跌倒|falling','sold2 emo 😂 @跌倒|falling']] ] },
+    { bg:'campC', cast:{ shang:{k:'shang',x:74,face:-1,ex:'angry',name:['李翔','Shang']}, sold1:{k:'sold',x:20}, sold2:{k:'sold',x:88,face:-1}, mulans:{k:'mulans',x:44,name:['木蘭','Mulan']}, mushu:{k:'mushu',x:8,s:.7,name:['木須','Mushu']} },
+      say:[ ['n',['可是她不放棄,爬上了高高的木柱頂端!','But she did not give up and climbed to the top of the tall pole!'],['mulans stand @不放棄|give','mulans go 50 @爬上|climbed','mulans glide 50 120 .6 2000 @爬上|climbed','fx sparkle 50 40 @頂端|top','sold1 jump @頂端|top','sold2 jump @頂端|top']],
             ['shang',['做得好!','Well done!'],['shang face none','shang nod','mushu jump']] ] },
     { bg:'pass', cast:{ shanyu:{k:'shanyu',x:76,y:150,s:.9,face:-1,hid:1,name:['單于','Shan Yu']}, cannon:{k:'cannon',x:40,s:.9}, shang:{k:'shang',x:14,name:['李翔','Shang']}, mulans:{k:'mulans',x:26,name:['木蘭','Mulan']}, mulan:{k:'mulanw',x:26,hid:1,name:['木蘭','Mulan']} },
       say:[ ['n',['軍隊在雪山上,遇見了匈奴的大軍!','On the snowy mountain, the army met the huge Hun army!'],['shanyu pop @匈奴|Hun','fx shake @大軍|army','shang fear @大軍|army','shanyu face angry @匈奴|Hun']],
-            ['n',['木蘭搶過大砲,對準了山上的積雪。','Mulan grabbed a cannon and aimed it at the snow on the mountain.'],['mulans go 36 @大砲|cannon','cannon shiver @對準|aimed','mulans face angry @對準|aimed']],
-            ['n',['轟!雪崩衝下來,把敵人都蓋住了!','Boom! An avalanche crashed down and buried the enemy!'],['fx fire cannon @轟|Boom','fx boom 66 60 @轟|Boom','fx sweep #ffffff 150 @雪崩|avalanche','shanyu fade @蓋住|buried','shang face wow @雪崩|avalanche']],
+            ['n',['木蘭搶過大砲,對準了山上的積雪。','Mulan grabbed a cannon and aimed it at the snow on the mountain.'],['mulans go 36 @大砲|cannon','cannon shiver @對準|aimed','mulans face angry @對準|aimed']] ] },
+    { bg:'pass', cast:{ shanyu:{k:'shanyu',x:76,y:150,s:.9,face:-1,ex:'angry',name:['單于','Shan Yu']}, cannon:{k:'cannon',x:40,s:.9}, shang:{k:'shang',x:14,ex:'wow',name:['李翔','Shang']}, mulans:{k:'mulans',x:36,ex:'angry',name:['木蘭','Mulan']}, mulan:{k:'mulanw',x:36,hid:1,name:['木蘭','Mulan']} },
+      say:[ ['n',['轟!雪崩衝下來,把敵人都蓋住了!','Boom! An avalanche crashed down and buried the enemy!'],['fx fire cannon @轟|Boom','fx boom 66 60 @轟|Boom','fx sweep #ffffff 150 @雪崩|avalanche','shanyu fade @蓋住|buried','shang face wow @雪崩|avalanche']],
             ['n',['可是木蘭受傷了,大家發現她是女孩。','But Mulan was hurt, and everyone found out she was a girl.'],['mulans crouch @受傷|hurt','mulans swap mulan @女孩|girl','mulan crouch @女孩|girl','shang face wow @發現|found']] ] },
     { bg:'pass', fx:['sweep #ffffff 150'], cast:{ mulan:{k:'mulanw',x:30,ex:'sad',name:['木蘭','Mulan']}, mushu:{k:'mushu',x:18,s:.7,name:['木須','Mushu']}, shang:{k:'shang',x:56,face:-1,name:['李翔','Shang']}, shanyu:{k:'shanyu',x:90,y:200,s:.5,hid:1,name:['單于','Shan Yu']} },
       say:[ ['n',['李翔沒有懲罰她,但把她留在雪地裡。','Shang did not punish her, but he left her behind in the snow.'],['shang face sad','shang go 112 @留在|left','mulan crouch @雪地|snow']],
@@ -793,8 +830,9 @@ STORIES.push({ id:'mulan', title:['花木蘭','Mulan'],
             ['mulan',['我一定要去救皇帝!','I have to save the Emperor!'],['mulan face angry','mulan lift @救|save','mushu jump @皇帝|Emperor','mulan run 112 @皇帝|Emperor+300','mushu glide 112 200 .7 1200 @皇帝|Emperor+400']] ] },
     { bg:'cityPalace', cast:{ emperor:{k:'emperor',x:62,face:-1,name:['皇帝','Emperor']}, shanyu:{k:'shanyu',x:84,face:-1,name:['單于','Shan Yu']}, mulan:{k:'mulanw',x:-8,name:['木蘭','Mulan']}, shang:{k:'shang',x:-14,name:['李翔','Shang']}, mushu:{k:'mushu',x:-20,y:200,s:.7,name:['木須','Mushu']} },
       say:[ ['n',['單于抓住了皇帝,木蘭趕來救他。','Shan Yu captured the Emperor, and Mulan rushed in to save him.'],['shanyu go 72 @抓住|captured','emperor face wow @抓住|captured','mulan run 30 @趕來|rushed','shang run 18 @趕來|rushed+200']],
-            ['n',['木蘭用聰明的辦法,搶走了單于的劍。','Mulan used a clever trick and took Shan Yu\'s sword.'],['mulan go 50 @辦法|trick','fx sparkle shanyu.hand @搶走|took','shanyu face wow @劍|sword','mulan go 42 @劍|sword+400']],
-            ['n',['木須點燃煙火,把單于打敗了!','Mushu lit the fireworks and defeated Shan Yu!'],['mushu glide 60 180 .7 900 @點燃|lit','fx fire mushu @點燃|lit+600','fx boom shanyu @打敗|defeated','fx confetti @煙火|fireworks','shanyu fade @打敗|defeated+300']],
+            ['n',['木蘭用聰明的辦法,搶走了單于的劍。','Mulan used a clever trick and took Shan Yu\'s sword.'],['mulan go 50 @辦法|trick','fx sparkle shanyu.hand @搶走|took','shanyu face wow @劍|sword','mulan go 42 @劍|sword+400']] ] },
+    { bg:'cityPalace', cast:{ emperor:{k:'emperor',x:62,face:-1,ex:'wow',name:['皇帝','Emperor']}, shanyu:{k:'shanyu',x:72,face:-1,ex:'wow',name:['單于','Shan Yu']}, mulan:{k:'mulanw',x:42,name:['木蘭','Mulan']}, shang:{k:'shang',x:18,name:['李翔','Shang']}, mushu:{k:'mushu',x:-20,y:200,s:.7,name:['木須','Mushu']} },
+      say:[ ['n',['木須點燃煙火,把單于打敗了!','Mushu lit the fireworks and defeated Shan Yu!'],['mushu glide 60 180 .7 900 @點燃|lit','fx fire mushu @點燃|lit+600','fx boom shanyu @打敗|defeated','fx confetti @煙火|fireworks','shanyu fade @打敗|defeated+300']],
             ['emperor',['謝謝你,木蘭,你是中國的英雄!','Thank you, Mulan. You are a hero of China!'],['emperor nod @謝謝|Thank','fx sparkle mulan @英雄|hero','mulan face none @英雄|hero','shang nod @英雄|hero']] ] },
     { bg:'chinaHome', cast:{ mulan:{k:'mulan',x:-8,name:['木蘭','Mulan']}, fazhou:{k:'fazhou',x:56,face:-1,name:['爸爸','Father']}, shang:{k:'shang',x:112,face:-1,name:['李翔','Shang']} },
       say:[ ['n',['木蘭回到家,爸爸緊緊抱住了她。','Mulan came home, and Father hugged her tight.'],['mulan go 40','fazhou go 48 @抱住|hugged','fx hearts fazhou @抱住|hugged']],
@@ -802,11 +840,11 @@ STORIES.push({ id:'mulan', title:['花木蘭','Mulan'],
             ['n',['後來李翔也來看她,他們成了好朋友。','Later Shang came to see her, and they became good friends.'],['shang go 70 @李翔|Shang','mulan turn 1 @李翔|Shang','shang nod @好朋友|friends','mulan wave @好朋友|friends','fx sparkle 50 60 @好朋友|friends']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['木蘭為什麼去當兵?','Why did Mulan join the army?'], opts:[{t:['代替爸爸去','To go in Father\'s place'],ok:1,why:['對,她很愛爸爸。','Yes, she loves her father.']},{t:['想去玩','For fun'],ok:0,why:['不是去玩,是為了保護爸爸。','Not for fun. To protect Father.']},{t:['皇帝請她去','The Emperor asked her'],ok:0,why:['不是皇帝請的喔。','The Emperor did not ask her.']}] },
-    1:{ type:'find', q:['誰是小龍木須?點一點牠。','Who is Mushu the dragon? Tap him.'], hotspots:[{actor:'mushu',ok:1,why:['對,是紅色的小龍木須!','Yes, the little red dragon!']},{actor:'horse',ok:0,why:['這是大黑馬,再找找看。','That is the black horse. Look again.']}] },
-    2:{ type:'choose', q:['李翔是什麼人?','Who is Shang?'], opts:[{t:['軍營長官','The army captain'],ok:1,why:['對,他訓練新兵。','Yes, he trains the soldiers.']},{t:['皇帝','The Emperor'],ok:0,why:['皇帝在皇宮裡。','The Emperor lives in the palace.']},{t:['木蘭的哥哥','Mulan\'s brother'],ok:0,why:['不是哥哥喔。','Not her brother.']}] },
-    3:{ type:'match', q:['翻牌配對:誰是誰?','Flip and match: who is who?'], pairs:[[['木蘭','Mulan'],['女英雄','Hero']],[['木須','Mushu'],['小龍','Little dragon']],[['李翔','Shang'],['長官','Captain']],[['單于','Shan Yu'],['匈奴首領','Hun leader']]] },
-    6:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['代替爸爸從軍','Joins for Father'],['軍營訓練','Army training'],['雪崩打敗敵人','The avalanche'],['皇宮救皇帝','Saves the Emperor'],['回家見爸爸','Home to Father']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['木蘭為什麼去當兵?','Why did Mulan join the army?'], opts:[{a:'fazhou',t:['保護爸爸','To protect Father'],ok:1,why:['對!她很愛爸爸。','Yes! She loves her father.']},{p:'🎈',t:['好玩','For fun'],ok:0,why:['不是去玩喔。','Not for fun.']},{p:'👑',t:['當皇帝','To be Emperor'],ok:0,why:['不是這個原因喔。','That is not why.']}] },
+    2:{ type:'find', q:['小龍木須在哪裡?點一點牠。','Where is Mushu the dragon? Tap him.'], hotspots:[{actor:'mushu',ok:1,why:['對!紅色的小龍木須!','Yes, little red Mushu!']},{actor:'sold1',ok:0,why:['這是士兵喔,再找找看。','That is a soldier. Look again.']}] },
+    3:{ type:'pick', q:['誰是軍營的長官?','Who is the army captain?'], opts:[{a:'shang',t:['李翔','Shang'],ok:1,why:['對!他訓練新兵。','Yes! He trains the soldiers.']},{a:'emperor',t:['皇帝','Emperor'],ok:0,why:['皇帝住在皇宮喔。','The Emperor lives in the palace.']},{a:'fazhou',t:['爸爸','Father'],ok:0,why:['爸爸留在家裡喔。','Father stayed home.']}] },
+    5:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'mulanw',t:['木蘭','Mulan']},{p:'⚔️',t:['寶劍','Sword']}],[{a:'mushu',t:['木須','Mushu']},{p:'🔥',t:['噴火','Fire']}],[{a:'emperor',t:['皇帝','Emperor']},{p:'👑',t:['皇冠','Crown']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'✂️',t:['剪頭髮','Cuts her hair']},{p:'❄️',t:['雪崩','Avalanche']},{p:'🎆',t:['煙火','Fireworks']}] }
   } });
 
 // 長髮公主:依迪士尼 2010 電影大綱,憑記憶撰寫。標 待核對:譯名(樂佩/費林/葛索)、最後頭髮與眼淚的細節。
@@ -844,8 +882,9 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
             ['rapun',['我只想在生日那天,去看天上的燈。','I just want to see the floating lights on my birthday.'],['rapun stand','rapun point @燈|lights','fx sparkle 50 90 @燈|lights','gothel shiver @燈|lights']] ] },
     { bg:'towerIn', cast:{ rapun:{k:'rapun',x:20,name:['樂佩','Rapunzel']}, pan:{k:'pan',x:28,y:226,s:.7,hid:1}, flynn:{k:'flynn',x:50,y:150,s:.7,hid:1,face:-1,name:['費林','Flynn']} },
       say:[ ['n',['有一天,小偷費林從窗戶爬進了塔裡。','One day, a thief named Flynn climbed in through the window.'],['flynn show @窗戶|window','flynn glide 64 262 1.03 1200 @爬進|climbed','flynn emo 👑 @小偷|thief','rapun face wow @小偷|thief']],
-            ['n',['樂佩拿起平底鍋,咚!把他打昏了。','Rapunzel grabbed a frying pan and bonk! Knocked him out.'],['pan pop @平底鍋|pan','rapun go 50 @咚|bonk','pan glide 58 200 .7 300 @咚|bonk','fx shake @咚|bonk','flynn fall @打昏|Knocked','flynn emo 💫 @打昏|Knocked','pan hide @打昏|Knocked+500']],
-            ['n',['費林醒來,樂佩請他帶她去看天燈。','When Flynn woke up, Rapunzel asked him to take her to see the lights.'],['flynn stand @醒來|woke','rapun point @天燈|lights','rapun face none @請他|asked']],
+            ['n',['樂佩拿起平底鍋,咚!把他打昏了。','Rapunzel grabbed a frying pan and bonk! Knocked him out.'],['pan pop @平底鍋|pan','rapun go 50 @咚|bonk','pan glide 58 200 .7 300 @咚|bonk','fx shake @咚|bonk','flynn fall @打昏|Knocked','flynn emo 💫 @打昏|Knocked','pan hide @打昏|Knocked+500']] ] },
+    { bg:'towerIn', cast:{ rapun:{k:'rapun',x:50,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:64,face:-1,name:['費林','Flynn']} },
+      say:[ ['n',['費林醒來,樂佩請他帶她去看天燈。','When Flynn woke up, Rapunzel asked him to take her to see the lights.'],['flynn fall','flynn stand @醒來|woke','rapun point @天燈|lights','rapun face none @請他|asked']],
             ['flynn',['好吧,我帶你去,不過別再打我!','Fine, I will take you. Just do not hit me again!'],['flynn face wow @別再|not','flynn lift @打我|hit','rapun jump @帶你去|take']] ] },
     { bg:'towerOut', cast:{ rope:{k:'hairrope',x:35,y:262,hid:1}, flynn:{k:'flynn',x:50,name:['費林','Flynn']}, rapun:{k:'rapun',x:35,y:60,s:.4,hid:1,name:['樂佩','Rapunzel']}, pascal:{k:'pascal',x:35,y:60,s:.3,hid:1} },
       say:[ ['n',['樂佩順著長頭髮,從塔上滑了下來。','Rapunzel slid down from the tower on her long hair.'],['rope show','rapun show','pascal show','rapun glide 35 262 1 2200 @滑了|slid','pascal glide 30 262 .6 2200 @滑了|slid']],
@@ -861,11 +900,13 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
             ['n',['兩個人互相看著對方,心裡都好開心。','They looked at each other and felt so happy.'],['rapun turn 1','flynn turn -1 @看著|looked','rapun face none','fx hearts rapun @開心|happy','fx hearts flynn @開心|happy+300']] ] },
     { bg:'towerIn', fx:['night on'], cast:{ rapun:{k:'rapun',x:20,name:['樂佩','Rapunzel']}, rapun2:{k:'rapun2',x:20,hid:1,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:-10,hid:1,name:['費林','Flynn']}, gothel:{k:'gothel',x:70,face:-1,name:['葛索','Gothel']}, gothelold:{k:'gothelold',x:70,face:-1,hid:1,name:['葛索','Gothel']} },
       say:[ ['n',['樂佩發現,自己就是王國失蹤的公主!','Rapunzel realized she was the kingdom\'s lost princess!'],['rapun face wow @公主|princess','fx sparkle rapun.head #ffe08a @公主|princess','rapun emo 👑 @失蹤|lost']],
-            ['n',['葛索騙了她,只想用她的頭髮讓自己變年輕。','Gothel had tricked her, using her hair just to stay young.'],['gothel face angry @騙了|tricked','gothel go 50 @頭髮|hair','rapun face angry @騙了|tricked']],
-            ['n',['費林衝進來救她,卻被葛索刺傷了。','Flynn rushed in to save her, but Gothel hurt him.'],['flynn show','flynn run 36 @衝進來|rushed','gothel go 42 @刺傷|hurt','fx flash @刺傷|hurt','flynn fall @刺傷|hurt+200','rapun face sad @刺傷|hurt']],
+            ['n',['葛索騙了她,只想用她的頭髮讓自己變年輕。','Gothel had tricked her, using her hair just to stay young.'],['gothel face angry @騙了|tricked','gothel go 50 @頭髮|hair','rapun face angry @騙了|tricked']] ] },
+    { bg:'towerIn', fx:['night on'], cast:{ rapun:{k:'rapun',x:20,ex:'angry',name:['樂佩','Rapunzel']}, rapun2:{k:'rapun2',x:20,hid:1,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:-10,hid:1,name:['費林','Flynn']}, gothel:{k:'gothel',x:50,face:-1,ex:'angry',name:['葛索','Gothel']}, gothelold:{k:'gothelold',x:50,face:-1,hid:1,name:['葛索','Gothel']} },
+      say:[ ['n',['費林衝進來救她,卻被葛索刺傷了。','Flynn rushed in to save her, but Gothel hurt him.'],['flynn show','flynn run 36 @衝進來|rushed','gothel go 42 @刺傷|hurt','fx flash @刺傷|hurt','flynn fall @刺傷|hurt+200','rapun face sad @刺傷|hurt']],
             ['n',['費林剪斷了樂佩的頭髮,魔法一下子不見了!','Flynn cut Rapunzel\'s hair, and the magic was gone!'],['fx poof rapun.head @剪斷|cut','rapun swap rapun2 @剪斷|cut+200','fx sparkle rapun2 #F2C94C @魔法|magic']],
-            ['n',['葛索一下子變老,化成灰塵不見了。','Gothel suddenly grew old and crumbled into dust.'],['gothel swap gothelold @變老|old','gothelold shiver @化成|crumbled','fx poof gothelold @灰塵|dust','gothelold fade @灰塵|dust']],
-            ['n',['樂佩抱著費林大哭,一滴眼淚發出了金光。','Rapunzel held Flynn and cried. One tear began to glow golden.'],['rapun2 go 30','rapun2 crouch @抱著|held','rapun2 emo 😢 @大哭|cried','fx glow on flynn 0 70 #ffe08a @金光|golden','fx sparkle flynn #ffe08a @眼淚|tear']],
+            ['n',['葛索一下子變老,化成灰塵不見了。','Gothel suddenly grew old and crumbled into dust.'],['gothel swap gothelold @變老|old','gothelold shiver @化成|crumbled','fx poof gothelold @灰塵|dust','gothelold fade @灰塵|dust']] ] },
+    { bg:'towerIn', fx:['night on'], cast:{ rapun2:{k:'rapun2',x:20,ex:'sad',name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:36,name:['費林','Flynn']} },
+      say:[ ['n',['樂佩抱著費林大哭,一滴眼淚發出了金光。','Rapunzel held Flynn and cried. One tear began to glow golden.'],['flynn fall','rapun2 go 30','rapun2 crouch @抱著|held','rapun2 emo 😢 @大哭|cried','fx glow on flynn 0 70 #ffe08a @金光|golden','fx sparkle flynn #ffe08a @眼淚|tear']],
             ['flynn',['樂佩……我好像好起來了。','Rapunzel... I think I am all better.'],['flynn stand','fx glow off flynn','rapun2 stand @好起來|better','fx hearts rapun2 @好起來|better','fx hearts flynn @好起來|better+300']] ] },
     { bg:'castleDay', cast:{ rapun2:{k:'rapun2',x:14,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:28,name:['費林','Flynn']}, king:{k:'king',x:72,face:-1,name:['國王','King']}, queen:{k:'queenR',x:88,face:-1,name:['王后','Queen']} },
       say:[ ['n',['樂佩回到王宮,見到了真正的爸爸媽媽。','Rapunzel returned to the palace and met her real parents.'],['rapun2 go 52','queen go 62 @爸爸媽媽|parents','fx hearts queen @見到|met','king nod @爸爸|parents']],
@@ -873,11 +914,11 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
             ['n',['樂佩和費林在一起,從此過著幸福快樂的日子。','Rapunzel and Flynn were together and lived happily ever after.'],['flynn go 40','rapun2 turn -1 @費林|Flynn','fx hearts rapun2 @幸福|happily','fx hearts flynn @快樂|happily']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['樂佩最想看什麼?','What does Rapunzel want to see?'], opts:[{t:['天上的燈','The floating lights'],ok:1,why:['對,她想看生日的天燈。','Yes, the lights on her birthday.']},{t:['大海','The sea'],ok:0,why:['不是大海,再想想。','Not the sea. Think again.']},{t:['下雪','Snow'],ok:0,why:['不是下雪喔。','Not snow.']}] },
-    1:{ type:'choose', q:['樂佩用什麼打昏費林?','What did Rapunzel use to knock out Flynn?'], opts:[{t:['平底鍋','A frying pan'],ok:1,why:['對,咚一聲就打昏了。','Yes, bonk!']},{t:['長頭髮','Her hair'],ok:0,why:['頭髮是用來綁人的,再想想。','She tied him with her hair later. Think again.']},{t:['小石頭','A rock'],ok:0,why:['不是石頭喔。','Not a rock.']}] },
-    3:{ type:'find', q:['誰是樂佩的變色龍朋友?點一點牠。','Who is Rapunzel\'s chameleon friend? Tap him.'], hotspots:[{actor:'pascal',ok:1,why:['對,是變色龍小綠!','Yes, that is Pascal!']},{actor:'flynn',ok:0,why:['這是費林,不是變色龍。','That is Flynn, not the chameleon.']}] },
-    4:{ type:'match', q:['翻牌配對:誰是誰?','Flip and match: who is who?'], pairs:[[['樂佩','Rapunzel'],['長髮公主','Long-haired princess']],[['費林','Flynn'],['小偷','Thief']],[['葛索','Gothel'],['壞媽媽','Bad mother']],[['天燈','Lanterns'],['生日願望','Birthday wish']]] },
-    6:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['被關在塔裡','Stuck in the tower'],['打昏費林','Bonk! Flynn'],['看見天燈','Seeing the lights'],['剪斷頭髮','The hair is cut'],['回到王宮','Home to the palace']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['樂佩最想看什麼?','What does Rapunzel want to see?'], opts:[{p:'🏮',t:['天燈','Floating lights'],ok:1,why:['對!生日的天燈。','Yes! The birthday lights.']},{p:'🌊',t:['大海','The sea'],ok:0,why:['不是大海喔。','Not the sea.']},{p:'❄️',t:['下雪','Snow'],ok:0,why:['不是下雪喔。','Not snow.']}] },
+    1:{ type:'pick', q:['樂佩用什麼打昏費林?','What did Rapunzel use to bonk Flynn?'], opts:[{p:'🍳',t:['平底鍋','Frying pan'],ok:1,why:['對!咚一聲!','Yes! Bonk!']},{a:'rock',t:['石頭','A rock'],ok:0,why:['不是石頭喔。','Not a rock.']},{p:'🧸',t:['玩具','A toy'],ok:0,why:['不是玩具,再想想。','Not a toy. Try again.']}] },
+    4:{ type:'find', q:['變色龍在哪裡?點一點牠。','Where is the chameleon? Tap him.'], hotspots:[{actor:'pascal',ok:1,why:['對!是小綠帕斯卡!','Yes, it is Pascal!']},{actor:'flynn',ok:0,why:['這是費林喔。','That is Flynn.']}] },
+    5:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'rapun',t:['樂佩','Rapunzel']},{p:'🍳',t:['平底鍋','Frying pan']}],[{a:'flynn',t:['費林','Flynn']},{p:'👑',t:['皇冠','Crown']}],[{a:'gothel',t:['葛索','Gothel']},{p:'🗼',t:['高塔','Tower']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🍳',t:['打昏費林','Bonk!']},{p:'🏮',t:['看天燈','The lights']},{p:'🏰',t:['回到王宮','Home at last']}] }
   } });
 
 // 睡美人:依迪士尼 1959 電影大綱,憑記憶撰寫。標 待核對:譯名(奧蘿拉/黑魔女)、仙女改詛咒與抓王子的細節。
@@ -911,8 +952,9 @@ STORIES.push({ id:'sleeping', title:['睡美人','Sleeping Beauty'],
   scenes:[
     { bg:'throneHall', cast:{ cradle:{k:'cradle',x:50,y:250,s:1.1}, king:{k:'king',x:30,name:['國王','King']}, queen:{k:'queenR',x:70,face:-1,name:['王后','Queen']}, flora:{k:'flora',x:-10,y:150,name:['花仙子','Flora']}, fauna:{k:'fauna',x:-18,y:150,name:['翠仙子','Fauna']}, merry:{k:'merry',x:-26,y:150,name:['藍仙子','Merryweather']}, mal:{k:'malS',x:88,face:-1,hid:1,name:['黑魔女','Maleficent']} },
       say:[ ['n',['很久以前,國王和王后生了一位小公主,叫奧蘿拉。','Long ago, a king and queen had a baby princess named Aurora.'],['fx glow on cradle 0 50 #fff3b0 @小公主|princess','fx hearts king @生了|had','fx hearts queen @奧蘿拉|Aurora','fx confetti @公主|princess']],
-            ['n',['三位仙女飛來,送給她美麗和好聽的歌聲。','Three good fairies flew in and gave her beauty and a lovely voice.'],['flora glide 14 230 .82 1400 @飛來|flew','fauna glide 6 220 .82 1600 @飛來|flew','merry glide -2 236 .82 1800 @飛來|flew','fx beam flora cradle #ff9ab8 @美麗|beauty','fx beam fauna cradle #8fe08a @歌聲|voice']],
-            ['n',['忽然一陣綠色的火,黑魔女出現了!','Suddenly, in a burst of green fire, Maleficent appeared!'],['fx flash #8fff8a @綠色|green','mal pop @黑魔女|Maleficent','fx dim on .35 @出現|appeared','fx glow on mal.hand 0 30 #7dff6a @出現|appeared','king fear @出現|appeared','queen face wow @出現|appeared']],
+            ['n',['三位仙女飛來,送給她美麗和好聽的歌聲。','Three good fairies flew in and gave her beauty and a lovely voice.'],['flora glide 14 230 .82 1400 @飛來|flew','fauna glide 6 220 .82 1600 @飛來|flew','merry glide -2 236 .82 1800 @飛來|flew','fx beam flora cradle #ff9ab8 @美麗|beauty','fx beam fauna cradle #8fe08a @歌聲|voice']] ] },
+    { bg:'throneHall', cast:{ cradle:{k:'cradle',x:50,y:250,s:1.1}, king:{k:'king',x:30,name:['國王','King']}, queen:{k:'queenR',x:70,face:-1,name:['王后','Queen']}, flora:{k:'flora',x:14,y:230,s:.82,name:['花仙子','Flora']}, fauna:{k:'fauna',x:6,y:220,s:.82,name:['翠仙子','Fauna']}, merry:{k:'merry',x:-2,y:236,s:.82,name:['藍仙子','Merryweather']}, mal:{k:'malS',x:88,face:-1,hid:1,name:['黑魔女','Maleficent']} },
+      say:[ ['n',['忽然一陣綠色的火,黑魔女出現了!','Suddenly, in a burst of green fire, Maleficent appeared!'],['fx flash #8fff8a @綠色|green','mal pop @黑魔女|Maleficent','fx dim on .35 @出現|appeared','fx glow on mal.hand 0 30 #7dff6a @出現|appeared','king fear @出現|appeared','queen face wow @出現|appeared']],
             ['mal',['公主十六歲時,會被紡錘刺到,倒地不起!','When the princess turns sixteen, she will prick her finger on a spindle and fall!'],['mal lift @十六歲|sixteen','fx shake @紡錘|spindle','fx beam mal cradle #7dff6a @倒地|fall','queen crouch @倒地|fall']],
             ['n',['藍仙子改了詛咒:公主只會睡著,真愛的吻能叫醒她。','The blue fairy changed the curse: she would only sleep until true love\'s kiss woke her.'],['mal fade @改了|changed','fx poof mal @改了|changed','fx glow off mal.hand','fx dim off @改了|changed','merry lift @詛咒|curse','fx beam merry cradle #9fc8ff @睡著|sleep','fx sparkle cradle @吻|kiss','queen stand @吻|kiss']] ] },
     { bg:'cottageWood', cast:{ briar:{k:'briar',x:30,s:.6,name:['玫瑰','Briar Rose']}, flora:{k:'flora',x:54,name:['花仙子','Flora']}, fauna:{k:'fauna',x:66,name:['翠仙子','Fauna']}, merry:{k:'merry',x:78,name:['藍仙子','Merryweather']}, bird:{k:'bird',x:10,y:170,s:.8}, bunny:{k:'bunny',x:14,s:.6} },
@@ -927,8 +969,9 @@ STORIES.push({ id:'sleeping', title:['睡美人','Sleeping Beauty'],
             ['n',['玫瑰好傷心,她不想離開心愛的人。','Rose was heartbroken. She did not want to leave the one she loved.'],['briar face sad @傷心|heartbroken','briar crouch @離開|leave','briar emo 😢 @心愛|loved','fauna face sad @心愛|loved']] ] },
     { bg:'spinRoom', cast:{ wheel:{k:'wheel',x:62,s:1,hid:1}, aurora:{k:'aurora',x:-8,ex:'sleep',name:['奧蘿拉','Aurora']}, mal:{k:'malS',x:84,face:-1,hid:1,name:['黑魔女','Maleficent']} },
       say:[ ['n',['回到王宮,黑魔女用綠光把公主引上高塔。','Back at the palace, Maleficent used a green light to lure the princess up the tower.'],['fx glow on 62 160 60 #7dff6a @綠光|green','aurora glide 34 262 1 2400 @引上|lure']],
-            ['mal',['來吧孩子,摸一摸那個紡錘。','Come, child. Touch the spindle.'],['mal pop @來吧|Come','fx poof mal @來吧|Come','wheel pop @紡錘|spindle','mal point @摸一摸|Touch']],
-            ['n',['公主伸出手指,被針刺到了!','The princess reached out her finger and pricked it!'],['aurora go 50 @伸出|reached','aurora lift @手指|finger','fx flash #c8ffc8 @刺到|pricked','fx sparkle aurora.hand #7dff6a @刺到|pricked']],
+            ['mal',['來吧孩子,摸一摸那個紡錘。','Come, child. Touch the spindle.'],['mal pop @來吧|Come','fx poof mal @來吧|Come','wheel pop @紡錘|spindle','mal point @摸一摸|Touch']] ] },
+    { bg:'spinRoom', fx:['glow on 62 160 60 #7dff6a'], cast:{ wheel:{k:'wheel',x:62,s:1}, aurora:{k:'aurora',x:34,ex:'sleep',name:['奧蘿拉','Aurora']}, mal:{k:'malS',x:84,face:-1,name:['黑魔女','Maleficent']} },
+      say:[ ['n',['公主伸出手指,被針刺到了!','The princess reached out her finger and pricked it!'],['aurora go 50 @伸出|reached','aurora lift @手指|finger','fx flash #c8ffc8 @刺到|pricked','fx sparkle aurora.hand #7dff6a @刺到|pricked']],
             ['n',['公主倒在地上,沉沉地睡著了。','The princess fell to the floor in a deep sleep.'],['aurora fall @倒在|fell','fx zz aurora @睡著|sleep','mal emo 😈 @沉沉|deep','fx glow off 62 @睡著|sleep']] ] },
     { bg:'thorns', cast:{ prince:{k:'phillip',x:-8,name:['王子','Prince Phillip']}, flora:{k:'flora',x:-16,y:200,s:.7,name:['花仙子','Flora']}, mal:{k:'malS',x:72,face:-1,name:['黑魔女','Maleficent']}, dragon:{k:'dragon',x:72,face:1,s:1.5,hid:1} },
       say:[ ['n',['仙女讓整個王宮都睡著了,一起等公主醒來。','The fairies put the whole palace to sleep to wait for the princess.'],['fx sparkle 70 80 #CECBF6 @睡著|sleep','fx zz 70 100 @睡著|sleep','fx zz 80 120 @等|wait']],
@@ -944,11 +987,11 @@ STORIES.push({ id:'sleeping', title:['睡美人','Sleeping Beauty'],
             ['n',['他們從此過著幸福快樂的日子。','And they lived happily ever after.'],['fx hearts aurora @幸福|happily','fx hearts prince @快樂|ever','aurora turn @快樂|ever']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['黑魔女下了什麼詛咒?','What curse did Maleficent cast?'], opts:[{t:['被紡錘刺到','Prick a spindle'],ok:1,why:['對,十六歲會被紡錘刺到。','Yes, at sixteen, on a spindle.']},{t:['變成青蛙','Turn into a frog'],ok:0,why:['不是青蛙,再想想。','Not a frog. Think again.']},{t:['掉光頭髮','Lose her hair'],ok:0,why:['不是這個喔。','Not that one.']}] },
-    1:{ type:'choose', q:['仙女為什麼把公主藏起來?','Why did the fairies hide the princess?'], opts:[{t:['保護她','To protect her'],ok:1,why:['對,仙女要保護她。','Yes, to keep her safe.']},{t:['想玩捉迷藏','To play hide and seek'],ok:0,why:['不是玩遊戲喔。','Not a game.']},{t:['公主迷路了','She got lost'],ok:0,why:['不是迷路,再想想。','She was not lost. Think again.']}] },
-    4:{ type:'find', q:['公主是被什麼刺到的?點一點它。','What did the princess prick her finger on? Tap it.'], hotspots:[{actor:'wheel',ok:1,why:['對,是紡車上的紡錘。','Yes, the spinning wheel.']},{actor:'mal',ok:0,why:['這是黑魔女,再找找看。','That is Maleficent. Look again.']}] },
-    5:{ type:'match', q:['翻牌配對:誰做了什麼?','Flip and match: who did what?'], pairs:[[['仙女','Fairies'],['保護公主','Protect her']],[['黑魔女','Maleficent'],['下詛咒','Casts a curse']],[['王子','Prince'],['打敗巨龍','Beats the dragon']],[['奧蘿拉','Aurora'],['睡著了','Falls asleep']]] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['仙女祝福公主','Fairy gifts'],['公主躲進森林','Hiding in the forest'],['被紡錘刺到','The spindle'],['王子打敗巨龍','The dragon falls'],['真愛的吻','True love\'s kiss']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    1:{ type:'pick', q:['公主會被什麼刺到手指?','What will prick the princess\'s finger?'], opts:[{a:'wheel',t:['紡車','Spinning wheel'],ok:1,why:['對!紡車上的針。','Yes! The spinning wheel.']},{p:'🌹',t:['玫瑰','A rose'],ok:0,why:['不是玫瑰喔。','Not a rose.']},{p:'🍎',t:['蘋果','An apple'],ok:0,why:['蘋果是白雪公主的故事喔。','The apple is from Snow White.']}] },
+    2:{ type:'pick', q:['仙女為什麼把公主藏起來?','Why did the fairies hide the princess?'], opts:[{p:'🛡️',t:['保護她','To keep her safe'],ok:1,why:['對!保護她不被詛咒。','Yes! To keep her safe.']},{p:'🙈',t:['玩遊戲','A game'],ok:0,why:['不是玩遊戲喔。','Not a game.']},{p:'🗺️',t:['迷路了','She got lost'],ok:0,why:['不是迷路喔。','She was not lost.']}] },
+    6:{ type:'find', q:['刺到公主的東西在哪裡?點一點它。','What pricked her finger? Tap it.'], hotspots:[{actor:'wheel',ok:1,why:['對!是紡車。','Yes, the spinning wheel!']},{actor:'mal',ok:0,why:['這是黑魔女,再找找看。','That is Maleficent. Look again.']}] },
+    7:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'phillip',t:['王子','Prince']},{p:'⚔️',t:['寶劍','Sword']}],[{a:'malS',t:['黑魔女','Maleficent']},{p:'🐉',t:['大黑龍','Dragon']}],[{a:'aurora',t:['奧蘿拉','Aurora']},{p:'😴',t:['睡著了','Sleeping']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🧚',t:['仙女祝福','Fairy gifts']},{p:'😴',t:['睡著了','Deep sleep']},{p:'❤️',t:['真愛的吻','True love\'s kiss']}] }
   } });
 
 // 白雪公主:依迪士尼 1937 電影大綱,憑記憶撰寫。標 待核對:譯名、獵人與王子騎馬的細節。
@@ -1001,8 +1044,9 @@ STORIES.push({ id:'snow', title:['白雪公主','Snow White'],
             ['n',['推開小門,她走了進去。','She pushed open the little door and went inside.'],['snow go 52 @推開|pushed','bunny go 50 @走了|went','snow fade @走了|went+700','bunny fade @走了|went+800']] ] },
     { bg:'cottageIn', cast:{ snow:{k:'snowb',x:30,name:['白雪公主','Snow White']}, ...DWARFS(110, 9, { face:-1, s:.62 }) },
       say:[ ['n',['屋裡有七張小床,又亂又髒,公主動手打掃。','There were seven little beds. It was messy, so she started cleaning.'],['snow face wow @七張|seven','snow knock @打掃|cleaning','fx poof snow.feet @打掃|cleaning','snow go 44 @打掃|cleaning+600','fx sparkle 40 200 @打掃|cleaning+1200']],
-            ['n',['打掃完,她累得睡著了。','When she was done, she was so tired that she fell asleep.'],['snow crouch @累得|tired','snow face sleep @睡著|asleep','fx zz snow @睡著|asleep']],
-            ['n',['天黑了,七個小矮人唱著歌回到家。','At night, the seven dwarfs came home singing.'],['d1 go 58 @小矮人|dwarfs','d2 go 66 @小矮人|dwarfs+200','d3 go 74 @小矮人|dwarfs+400','d4 go 82 @唱著歌|singing','d5 go 90 @唱著歌|singing+200','d6 go 98 @回到家|home','d7 go 106 @回到家|home+200','d1 emo 🎵 @唱著歌|singing']],
+            ['n',['打掃完,她累得睡著了。','When she was done, she was so tired that she fell asleep.'],['snow crouch @累得|tired','snow face sleep @睡著|asleep','fx zz snow @睡著|asleep']] ] },
+    { bg:'cottageIn', fx:['night on'], cast:{ snow:{k:'snowb',x:44,ex:'sleep',name:['白雪公主','Snow White']}, ...DWARFS(110, 9, { face:-1, s:.62 }) },
+      say:[ ['n',['天黑了,七個小矮人唱著歌回到家。','At night, the seven dwarfs came home singing.'],['snow crouch','fx zz snow','d1 go 58 @小矮人|dwarfs','d2 go 66 @小矮人|dwarfs+200','d3 go 74 @小矮人|dwarfs+400','d4 go 82 @唱著歌|singing','d5 go 90 @唱著歌|singing+200','d6 go 98 @回到家|home','d7 go 106 @回到家|home+200','d1 emo 🎵 @唱著歌|singing']],
             ['d1',['是誰睡在我們的床上?','Who is sleeping in our bed?'],['d1 face wow','d2 fear @誰|Who','d3 face wow @床上|bed','d4 emo ❓ @床上|bed']],
             ['n',['公主醒來了,大家成了好朋友。','Snow White woke up, and they all became good friends.'],['snow stand','snow face none @醒來|woke','d1 jump @好朋友|friends','d3 jump @好朋友|friends+200','d5 jump @好朋友|friends+400','fx hearts snow @好朋友|friends']] ] },
     { bg:'queenRoom', cast:{ potion:{k:'potion',x:46,y:220,s:.9,hid:1}, apple:{k:'apple',x:44,y:200,s:.7,hid:1}, queen:{k:'queen',x:30,ex:'angry',name:['皇后','Queen']}, witch:{k:'witch',x:30,hid:1,name:['老婆婆','Old Woman']} },
@@ -1014,16 +1058,17 @@ STORIES.push({ id:'snow', title:['白雪公主','Snow White'],
             ['n',['七個小矮人趕回來,把老婆婆趕走了。','The seven dwarfs rushed back and chased the old woman away.'],['d1 run 8 @趕回來|rushed','d2 run 0 @趕回來|rushed','d3 run -6 @趕回來|rushed','fx lightning 80 @趕走|chased','witch face wow @趕走|chased','witch run 116 @趕走|chased+200','d1 run 60 @趕走|chased+300','fx glow off snow']] ] },
     { bg:'glade', cast:{ coffin:{k:'coffin',x:44,y:262,s:1.1}, snow:{k:'snow',x:44,y:246,ex:'sleep',name:['白雪公主','Snow White']}, ...DWARFS(6, 4.5, { ex:'sad', s:.62 }), prince:{k:'prince',x:112,face:-1,name:['王子','Prince']} },
       say:[ ['n',['小矮人叫不醒公主,好傷心。','The dwarfs could not wake her, and they were very sad.'],['snow fall','d1 emo 😢 @傷心|sad','d4 emo 😢 @傷心|sad+300','d2 crouch @叫不醒|wake','d6 crouch @叫不醒|wake']],
-            ['n',['有一天,一位王子經過這裡。','One day, a prince came by.'],['prince go 66 @王子|prince','d3 face wow @經過|came','d5 face wow @經過|came']],
-            ['n',['他輕輕吻了公主,公主醒過來了!','He gently kissed her, and she woke up!'],['prince go 56','prince crouch @吻|kissed','fx hearts prince @吻|kissed','snow stand @醒|woke','snow face none @醒|woke','fx sparkle snow #ffe08a @醒|woke','prince stand @醒|woke']],
+            ['n',['有一天,一位王子經過這裡。','One day, a prince came by.'],['prince go 66 @王子|prince','d3 face wow @經過|came','d5 face wow @經過|came']] ] },
+    { bg:'glade', cast:{ coffin:{k:'coffin',x:44,y:262,s:1.1}, snow:{k:'snow',x:44,y:246,ex:'sleep',name:['白雪公主','Snow White']}, ...DWARFS(6, 4.5, { ex:'sad', s:.62 }), prince:{k:'prince',x:66,face:-1,name:['王子','Prince']} },
+      say:[ ['n',['他輕輕吻了公主,公主醒過來了!','He gently kissed her, and she woke up!'],['snow fall','prince go 56','prince crouch @吻|kissed','fx hearts prince @吻|kissed','snow stand @醒|woke','snow face none @醒|woke','fx sparkle snow #ffe08a @醒|woke','prince stand @醒|woke']],
             ['n',['王子帶公主回到城堡,從此過著幸福快樂的日子。','The prince took her to his castle, and they lived happily ever after.'],['coffin fade','snow go 50 262 @回到|took','d1 face none','d2 stand','d6 stand','d1 jump @幸福|happily','d3 jump @幸福|happily','d5 jump @幸福|happily','fx confetti @幸福|happily','fx hearts snow @快樂|ever']] ] }
   ],
   levels:{
-    1:{ type:'choose', q:['獵人最後怎麼做?','What did the Huntsman do?'], opts:[{t:['把公主帶回城堡','Took her to the castle'],ok:0,why:['不是喔,皇后想傷害公主。','No. The Queen wanted to hurt her.']},{t:['放走了公主','Let her run away'],ok:1,why:['對,獵人心軟,放公主逃走。','Yes, he let her escape.']},{t:['把公主丟在森林','Left her in the woods'],ok:0,why:['獵人沒有那樣做,再想想。','He did not do that. Think again.']}] },
-    2:{ type:'find', q:['誰帶公主去小屋?點一點牠。','Who led her to the cottage? Tap it.'], hotspots:[{actor:'bird',ok:1,why:['對,是小鳥帶路!','Yes, the little bird showed the way!']},{actor:'bunny',ok:0,why:['小兔子也在,但帶路的是小鳥。','The bunny came too, but the bird led the way.']}] },
-    4:{ type:'match', q:['翻牌配對:誰做了什麼?','Flip and match: who did what?'], pairs:[[['獵人','Huntsman'],['放走公主','Let her go']],[['小鳥','Bird'],['帶路','Showed the way']],[['小矮人','Dwarfs'],['唱歌回家','Sang going home']],[['魔鏡','Mirror'],['說實話','Tells the truth']]] },
-    6:{ type:'choose', q:['陌生人給你蘋果,該怎麼辦?','A stranger offers you an apple. What should you do?'], opts:[{t:['馬上吃掉','Eat it right away'],ok:0,why:['先等一下,她是陌生人。','Wait! She is a stranger.']},{t:['不吃,先問大人','Ask a grown-up first'],ok:1,why:['對,不認識的人給的東西要小心。','Yes. Be careful with things from strangers.']},{t:['把蘋果丟掉','Throw it away'],ok:0,why:['不用丟,但不要亂吃喔。','No need to throw it. Just do not eat it.']}] },
-    7:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['獵人放走公主','The Huntsman lets her go'],['小動物帶路','Animals show the way'],['遇到小矮人','Meeting the dwarfs'],['吃了毒蘋果','The poison apple'],['王子吻醒公主','The prince\'s kiss']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    1:{ type:'pick', q:['獵人最後怎麼做?','What did the Huntsman do?'], opts:[{p:'🏃‍♀️',t:['放她逃走','Let her run'],ok:1,why:['對!獵人心軟了。','Yes! He let her go.']},{p:'🏰',t:['帶回城堡','Took her back'],ok:0,why:['不是喔,皇后想傷害她。','No. The Queen wanted to hurt her.']},{p:'🌲',t:['丟在森林','Left her'],ok:0,why:['再想想,他叫她快逃。','He told her to run.']}] },
+    2:{ type:'find', q:['帶路的小鳥在哪裡?點一點牠。','Where is the little bird? Tap it.'], hotspots:[{actor:'bird',ok:1,why:['對!小鳥帶路!','Yes, the bird led the way!']},{actor:'bunny',ok:0,why:['這是小兔子喔。','That is the bunny.']}] },
+    5:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'snow',t:['白雪公主','Snow White']},{p:'🧹',t:['打掃','Cleaning']}],[{a:'dwarf',t:['小矮人','Dwarf']},{p:'⛏️',t:['挖礦','Mining']}],[{a:'queen',t:['皇后','Queen']},{a:'mirror',t:['魔鏡','Mirror']}]] },
+    7:{ type:'pick', q:['陌生人給你蘋果,該怎麼做?','A stranger gives you an apple. What do you do?'], opts:[{p:'😋',t:['馬上吃','Eat it'],ok:0,why:['等一下!她是陌生人。','Wait! She is a stranger.']},{p:'🙋',t:['先問大人','Ask a grown-up'],ok:1,why:['對!先問爸爸媽媽。','Yes! Ask a grown-up first.']},{p:'🗑️',t:['丟掉','Throw it away'],ok:0,why:['不用丟,但不要亂吃喔。','Just do not eat it.']}] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🌲',t:['逃進森林','Into the woods']},{p:'🏠',t:['遇到小矮人','The dwarfs']},{p:'🍎',t:['毒蘋果','Poison apple']}] }
   } });
 
 // 公主與青蛙:依迪士尼 2009 電影大綱,憑記憶撰寫。標 待核對:譯名(蒂安娜/納文/路易/雷/歐蒂奶奶/法西里耶)、結尾細節。
@@ -1055,6 +1100,11 @@ EXT.push(A => {
   A.PROP.talisman = () => `<g class="flip"><g class="body"><circle cx="60" cy="150" r="26" fill="#7dff6a" opacity=".3"/><path d="M48 120 Q60 140 72 120" stroke="#c9962a" stroke-width="2" fill="none"/><path d="M60 136 L72 150 L60 168 L48 150Z" fill="#3a2a4a" stroke="#c9962a" stroke-width="2"/><circle cx="60" cy="150" r="5" fill="#7dff6a"/></g></g>`;
   A.PROP.shadow = () => `<g class="flip"><g class="body"><path d="M30 184 Q20 110 50 70 Q60 50 72 70 Q100 110 92 184 Q76 170 62 184 Q48 170 30 184Z" fill="#14101e" opacity=".85"/><ellipse cx="54" cy="96" rx="4" ry="3" fill="#7dff6a"/><ellipse cx="68" cy="96" rx="4" ry="3" fill="#7dff6a"/><path d="M40 70 L30 40 L52 60Z" fill="#14101e" opacity=".85"/></g></g>`;
   A.PROP.ray = () => `<g class="flip"><g class="body"><circle class="amb-tw" cx="60" cy="150" r="16" fill="#ffee66" opacity=".45"/><ellipse cx="60" cy="152" rx="6" ry="9" fill="#ffee66"/><ellipse cx="60" cy="140" rx="5" ry="4" fill="#6a4a2a"/><ellipse cx="52" cy="144" rx="6" ry="3" fill="#dff" opacity=".7"/><ellipse cx="68" cy="144" rx="6" ry="3" fill="#dff" opacity=".7"/></g></g>`;
+  A.OPT.charlotte = { skin:'#F5C4B3', hair:'#F2C94C', top:'#f6a5c8', sleeve:'#f6a5c8', skirt:'#f6a5c8', shoe:'#f4b6cc', collar:'#fff', bow:'#ED93B1', s:1 };
+  A.PROP.beignet = () => `<g class="flip"><g class="body"><ellipse cx="60" cy="176" rx="40" ry="8" fill="#fff" stroke="#cfd8e8" stroke-width="2"/>${[[44,166],[60,162],[76,166],[52,152],[68,152]].map(p => `<rect x="${p[0]-9}" y="${p[1]-7}" width="18" height="14" rx="6" fill="#e8b46a"/><circle cx="${p[0]-3}" cy="${p[1]-3}" r="2" fill="#fff"/><circle cx="${p[0]+4}" cy="${p[1]}" r="2" fill="#fff"/>`).join('')}</g></g>`;
+  A.PROP.star = () => `<g class="flip"><g class="body"><circle cx="60" cy="120" r="34" fill="#fff6b0" opacity=".35"/><path d="M60 92 L67 112 L88 112 L71 125 L77 146 L60 133 L43 146 L49 125 L32 112 L53 112Z" fill="#fff6b0"/></g></g>`;
+  A.PROP.hollow = () => `<g class="flip"><g class="body"><path d="M10 184 Q14 60 60 40 Q106 60 110 184Z" fill="#3a2a1a"/><ellipse cx="60" cy="150" rx="26" ry="34" fill="#140c06"/><path d="M10 184 Q0 170 -6 184 M110 184 Q120 168 128 184" stroke="#3a2a1a" stroke-width="8"/></g></g>`;
+  A.VP.charlotte = ['f', 1.55, 1.08]; A.VP.star = ['f', 1.2, .9];
   A.OPT.tianaG = { skin:'#a0674a', hair:'#2a1a12', top:'#f4f0e0', sleeve:'#a0674a', skirt:'#f4f0e0', shoe:'#f4f0e0', collar:'#fff', crown:'#cfeeff', s:1 };
   A.OPT.tianaW = { skin:'#a0674a', hair:'#2a1a12', top:'#5cb85c', sleeve:'#5cb85c', skirt:'#9ad06a', shoe:'#3a6a3a', collar:'#fff', crown:'#FAC775', s:1 };
   A.OPT.odie = { skin:'#7a5a4a', hair:'#eee', top:'#c0392b', sleeve:'#c0392b', skirt:'#e8b44a', shoe:'#5a3a1a', turban:'#3aa0e0', s:.85 };
@@ -1067,6 +1117,10 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       say:[ ['n',['蒂安娜住在紐奧良,她最會煮好喝的秋葵湯。','Tiana lived in New Orleans. She made the best gumbo in town.'],['tiana go 32','tiana knock @秋葵湯|gumbo','fx sparkle pot @好喝|best','fx hearts pot @好喝|best+300']],
             ['n',['她有一個大夢想:開一家自己的餐廳!','She had a big dream: to open her very own restaurant!'],['tiana emo 💭 @夢想|dream','sign pop @餐廳|restaurant','fx sparkle sign @餐廳|restaurant','tiana face wow @自己|own']],
             ['n',['為了存錢,她每天辛苦工作,很少休息。','To save money, she worked hard every day and hardly rested.'],['sign fade @存錢|save','tiana go 20 @辛苦|hard','tiana knock @工作|worked','tiana go 50 @每天|every+600','tiana face sad @很少|hardly','tiana shiver @休息|rested']] ] },
+    { bg:'diner', cast:{ plate:{k:'beignet',x:36,y:236,s:.8,hid:1}, tiana:{k:'tiana',x:50,ex:'sad',name:['蒂安娜','Tiana']}, charlotte:{k:'charlotte',x:110,face:-1,name:['夏洛特','Charlotte']} },
+      say:[ ['n',['好朋友夏洛特跑進餐館,開心得又叫又跳。','Her best friend Charlotte ran into the diner, squealing with joy.'],['charlotte run 66 @夏洛特|Charlotte','charlotte jump @又叫又跳|squealing','tiana face none @好朋友|friend']],
+            ['charlotte',['蒂安娜,今晚舞會,請你做好多甜甜圈!','Tiana, please make lots of beignets for my party tonight!'],['charlotte lift @舞會|party','plate pop @甜甜圈|beignets','fx sparkle plate @甜甜圈|beignets']],
+            ['n',['蒂安娜好高興,這樣就能存到開餐廳的錢了!','Tiana was thrilled. Now she could save enough for her restaurant!'],['tiana jump @高興|thrilled','tiana emo 💰 @存到|save','fx hearts tiana @餐廳|restaurant']] ] },
     { bg:'streetNO', cast:{ naveen:{k:'naveen',x:-8,name:['納文王子','Prince Naveen']}, frogN:{k:'frogN',x:40,y:276,hid:1,name:['青蛙納文','Frog Naveen']}, facilier:{k:'facilier',x:76,face:-1,hid:1,name:['法西里耶','Dr. Facilier']} },
       say:[ ['n',['納文王子來到城裡,他很愛玩音樂,口袋卻空空的。','Prince Naveen came to town. He loved music, but his pockets were empty.'],['naveen go 36','naveen jump @音樂|music','naveen emo 🎵 @音樂|music','naveen emo 💸 @空空|empty']],
             ['n',['壞心的巫師法西里耶,請他進店裡算命。','The wicked Dr. Facilier invited him in to have his fortune told.'],['facilier pop @巫師|Facilier','fx poof facilier @巫師|Facilier','fx glow on facilier.hand 0 30 #7dff6a @算命|fortune','facilier point @請他|invited','naveen face wow @算命|fortune']],
@@ -1079,10 +1133,16 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       say:[ ['n',['兩隻青蛙逃進沼澤,遇見了愛吹小號的鱷魚路易。','The two frogs escaped into the swamp and met Louis, an alligator who played the trumpet.'],['tianaF glide 24 276 1 1600','frogN glide 36 276 1 1600','louis show @鱷魚|alligator','louis glide 72 262 1.1 900 @鱷魚|alligator','tianaF fear @鱷魚|alligator','louis emo 🎺 @小號|trumpet']],
             ['n',['螢火蟲雷亮著光帶路,大家一起唱歌。','Ray the firefly lit the way, and everyone sang together.'],['ray show @螢火蟲|firefly','ray glide 52 170 .9 1600 @帶路|lit','fx sparkle ray #ffee66 @亮著|lit','louis emo 🎵 @唱歌|sang','tianaF emo 🎵 @唱歌|sang+300','frogN jump @一起|together']],
             ['n',['一路上,兩隻青蛙學會了互相幫忙。','Along the way, the two frogs learned to help each other.'],['frogN glide 30 276 1 @互相|help','tianaF turn 1 @互相|help','fx hearts tianaF @幫忙|help','fx hearts frogN @幫忙|help+300']] ] },
+    { bg:'bayouR', cast:{ star:{k:'star',x:70,y:120,s:.9,name:['伊凡潔琳','Evangeline']}, tianaF:{k:'frogT',x:24,y:276,name:['青蛙蒂安娜','Frog Tiana']}, frogN:{k:'frogN',x:36,y:276,name:['青蛙納文','Frog Naveen']}, ray:{k:'ray',x:52,y:170,s:.9,name:['雷','Ray']}, louis:{k:'louis',x:76,y:262,s:1.1,face:-1,name:['路易','Louis']} },
+      say:[ ['n',['夜裡,螢火蟲雷指著天上最亮的星星。','At night, Ray the firefly pointed at the brightest star.'],['ray glide 56 150 .9 @星星|star','fx glow on star 0 40 #fff6b0 @最亮|brightest','fx sparkle star @星星|star']],
+            ['ray',['她叫伊凡潔琳,是我最愛的人!','Her name is Evangeline. She is my one true love!'],['ray jump','fx hearts ray @最愛|love','louis emo 🎺 @伊凡潔琳|Evangeline']],
+            ['n',['蒂安娜看著納文,心裡暖暖的。','Tiana looked at Naveen and felt warm inside.'],['tianaF turn 1','frogN turn -1 @看著|looked','fx hearts tianaF @暖暖|warm','fx hearts frogN @暖暖|warm+300']] ] },
     { bg:'bayouR', fx:['dim on .25'], cast:{ odie:{k:'odie',x:70,face:-1,hid:1,name:['歐蒂奶奶','Mama Odie']}, tianaF:{k:'frogT',x:24,y:276,name:['青蛙蒂安娜','Frog Tiana']}, frogN:{k:'frogN',x:34,y:276,name:['青蛙納文','Frog Naveen']}, shadow:{k:'shadow',x:-14,s:1.2,hid:1} },
       say:[ ['n',['他們找到神奇的歐蒂奶奶,她可以幫忙。','They found the magical Mama Odie, who could help them.'],['odie pop @歐蒂|Odie','fx sparkle odie @神奇|magical','tianaF jump @幫忙|help']],
-            ['odie',['想一想,你真正需要的是什麼?','Think hard: what do you really need?'],['odie point @需要|need','tianaF emo 💭 @真正|really','frogN emo ❤️ @需要|need']],
-            ['n',['這時,巫師的黑影追了過來!','Just then, the witch doctor\'s shadows came after them!'],['shadow show @黑影|shadows','shadow glide 14 262 1.2 900 @追了|came','fx shake @黑影|shadows','tianaF fear @追了|came','frogN fear @追了|came','tianaF glide 60 276 1 600 @追了|came+400','frogN glide 70 276 1 600 @追了|came+500']] ] },
+            ['odie',['想一想,你真正需要的是什麼?','Think hard: what do you really need?'],['odie point @需要|need','tianaF emo 💭 @真正|really','frogN emo ❤️ @需要|need']] ] },
+    { bg:'bayouR', fx:['dim on .35'], cast:{ tree:{k:'hollow',x:88,y:270,s:1.2}, tianaF:{k:'frogT',x:24,y:276,name:['青蛙蒂安娜','Frog Tiana']}, frogN:{k:'frogN',x:34,y:276,name:['青蛙納文','Frog Naveen']}, shadow:{k:'shadow',x:-14,s:1.2,hid:1} },
+      say:[ ['n',['這時,巫師的黑影追了過來!','Just then, the witch doctor\'s shadows came after them!'],['shadow show @黑影|shadows','shadow glide 14 262 1.2 900 @追了|came','fx shake @黑影|shadows','tianaF fear @追了|came','frogN fear @追了|came','tianaF glide 60 276 1 600 @追了|came+400','frogN glide 70 276 1 600 @追了|came+500']],
+            ['n',['兩隻青蛙拚命跳,躲進了大樹洞裡。','The frogs hopped as fast as they could and hid in a hollow tree.'],['tianaF glide 84 262 .8 900 @躲進|hid','frogN glide 88 262 .8 900 @躲進|hid','tianaF fade @樹洞|tree','frogN fade @樹洞|tree','shadow fade @樹洞|tree+400']] ] },
     { bg:'streetNO', fx:['dim on .3'], cast:{ talisman:{k:'talisman',x:64,y:190,s:.8,hid:1}, tianaF:{k:'frogT',x:28,y:276,name:['青蛙蒂安娜','Frog Tiana']}, facilier:{k:'facilier',x:72,face:-1,name:['法西里耶','Dr. Facilier']}, shadow:{k:'shadow',x:110,s:1.3,face:-1,hid:1} },
       say:[ ['facilier',['乖乖聽話,我馬上給你一間大餐廳!','Do as I say, and I will give you a big restaurant right now!'],['facilier lift @餐廳|restaurant','fx glow on facilier.hand 0 30 #7dff6a @馬上|right','talisman pop @聽話|say','fx sparkle 40 120 #ffd27a @餐廳|restaurant']],
             ['n',['蒂安娜不上當,用力打碎了巫師的護身符!','Tiana did not fall for it. She smashed his magic charm!'],['tianaF face angry @不上當|fall','tianaF glide 60 190 1 700 @打碎|smashed','fx boom talisman @打碎|smashed+400','talisman hide @打碎|smashed+500','fx glow off facilier.hand @護身符|charm','tianaF glide 44 276 1 600 @護身符|charm']],
@@ -1092,11 +1152,11 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
             ['n',['他們一起開了餐廳,客人天天都來吃飯。','Together they opened their restaurant, and guests came every day.'],['tiana jump @餐廳|restaurant','naveen emo 🎵 @一起|Together','louis emo 🎺 @客人|guests','louis jump @天天|every','fx confetti @天天|every','fx hearts tiana @吃飯|day']] ] }
   ],
   levels:{
-    0:{ type:'choose', q:['蒂安娜的夢想是什麼?','What is Tiana\'s dream?'], opts:[{t:['開餐廳','Open a restaurant'],ok:1,why:['對,她最愛做菜。','Yes, she loves to cook.']},{t:['當公主','Be a princess'],ok:0,why:['她想的是餐廳喔。','She dreams of a restaurant.']},{t:['去旅行','Travel the world'],ok:0,why:['不是旅行,再想想。','Not travel. Think again.']}] },
-    1:{ type:'choose', q:['納文王子被變成了什麼?','What did Prince Naveen turn into?'], opts:[{t:['青蛙','A frog'],ok:1,why:['對,他變成了青蛙。','Yes, he became a frog.']},{t:['小鳥','A bird'],ok:0,why:['不是小鳥。','Not a bird.']},{t:['鱷魚','An alligator'],ok:0,why:['鱷魚是路易喔。','Louis is the alligator.']}] },
-    3:{ type:'find', q:['誰是愛吹小號的鱷魚?點一點牠。','Who is the alligator who plays trumpet? Tap him.'], hotspots:[{actor:'louis',ok:1,why:['對,是鱷魚路易!','Yes, that is Louis!']},{actor:'frogN',ok:0,why:['這是青蛙納文,再找找看。','That is Frog Naveen. Look again.']}] },
-    5:{ type:'match', q:['翻牌配對:誰是誰?','Flip and match: who is who?'], pairs:[[['蒂安娜','Tiana'],['愛做菜','Loves to cook']],[['納文','Naveen'],['王子','Prince']],[['路易','Louis'],['鱷魚','Alligator']],[['法西里耶','Facilier'],['壞巫師','Bad witch doctor']]] },
-    6:{ type:'order', q:['故事的順序是什麼?','Put the story in order.'], items:[['蒂安娜有夢想','Tiana\'s dream'],['王子變青蛙','The prince becomes a frog'],['兩人變成青蛙','Both are frogs'],['遇見路易','Meeting Louis'],['開餐廳','The restaurant opens']], hint:['順序不太對,點一下格子重新排。','Not quite. Tap a box to try again.'] }
+    0:{ type:'pick', q:['蒂安娜的夢想是什麼?','What is Tiana\'s dream?'], opts:[{p:'🍽️',t:['開餐廳','A restaurant'],ok:1,why:['對!她最愛做菜。','Yes! She loves to cook.']},{p:'👑',t:['當公主','Be a princess'],ok:0,why:['她想的是餐廳喔。','She dreams of a restaurant.']},{p:'✈️',t:['去旅行','Travel'],ok:0,why:['不是旅行喔。','Not travel.']}] },
+    2:{ type:'pick', q:['納文王子變成了什麼?','What did Prince Naveen turn into?'], opts:[{a:'frogN',t:['青蛙','A frog'],ok:1,why:['對!他變成了青蛙。','Yes! A frog.']},{a:'bird',t:['小鳥','A bird'],ok:0,why:['不是小鳥喔。','Not a bird.']},{a:'louis',t:['鱷魚','An alligator'],ok:0,why:['鱷魚是路易喔。','Louis is the alligator.']}] },
+    4:{ type:'find', q:['愛吹小號的鱷魚在哪裡?點一點牠。','Where is the alligator who plays trumpet? Tap him.'], hotspots:[{actor:'louis',ok:1,why:['對!是鱷魚路易!','Yes, it is Louis!']},{actor:'frogN',ok:0,why:['這是青蛙納文喔。','That is Frog Naveen.']}] },
+    5:{ type:'pair', q:['把他們配起來。','Match them up.'], pairs:[[{a:'tiana',t:['蒂安娜','Tiana']},{p:'🍲',t:['煮湯','Gumbo']}],[{a:'louis',t:['路易','Louis']},{p:'🎺',t:['小號','Trumpet']}],[{a:'ray',t:['雷','Ray']},{p:'⭐',t:['星星','Star']}]] },
+    9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'🍩',t:['做甜甜圈','Beignets']},{p:'🐸',t:['變成青蛙','Frogs']},{p:'🍽️',t:['開餐廳','The restaurant']}] }
   } });
 
 
@@ -1588,57 +1648,76 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     return Promise.all(ps);
   }
 
-  /* ====== 關卡 ====== */
+  /* ====== 關卡:全部用圖案,題目會念出來,點到的卡片也會念名字 ====== */
+  const pic = o => o.a ? `<svg class="pic" viewBox="-6 -14 132 204">${build({ k: o.a }).html}</svg>` : `<span class="emo">${o.p || '❓'}</span>`;
+  const card = (o, cls) => `<button class="pcard ${cls || ''}">${pic(o)}${o.t ? `<span class="lbl">${T(tx(o.t))}</span>` : ''}</button>`;
+  const say = t => { try { Player.speak(t, null, estMs(t, null)); } catch (e) {} };
+  /* 每個故事、每一關的排列都不同,但同一關每次一樣(固定種子洗牌) */
+  const mix = (n, seed) => { const idx = Array.from({ length: n }, (_, i) => i); for (let i = n - 1; i > 0; i--) { const j = Math.floor(RND(seed * 13 + i) * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; } if (idx.every((v, i) => v === i)) idx.push(idx.shift()); return idx; };
+  /* 角色圖自動放大到剛好填滿卡片 */
+  const fitPics = root => root.querySelectorAll('svg.pic:not([data-fit])').forEach(sv => { try { const b = sv.querySelector('.body').getBBox(), m = 6, w = Math.max(b.width, b.height * .62) + m * 2, cx = b.x + b.width / 2; sv.setAttribute('viewBox', `${cx - w / 2} ${b.y - m} ${w} ${b.height + m * 2}`); sv.dataset.fit = 1; } catch (e) {} });
+  const wiggle = el => { el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope'); };
   const Levels = {
-    run(cfg, host, done) {
-      host.innerHTML = `<h3>${T(tx(cfg.q))}</h3><div id="lb"></div><div class="fb" id="fb"></div>`;
+    run(cfg, host, done, seed) {
+      this.seed = seed || 0; const q = tx(cfg.q);
+      host.innerHTML = `<h3><button class="ghost say" title="再聽一次">🔊</button> ${T(q)}</h3><div id="lb"></div><div class="fb" id="fb"></div>`;
+      $('.say', host).onclick = () => say(q); say(q);
       const lb = $('#lb', host), fb = $('#fb', host);
-      this[cfg.type](cfg, lb, fb, done);
+      const win = (msg) => { fb.innerHTML = '<span class="star">🌟</span> ' + T(msg); say(msg); setTimeout(done, 1900); };
+      const hint = (msg) => { fb.innerHTML = T(msg); say(msg); };
+      (this[cfg.type] || this.pick).call(this, cfg, lb, win, hint); fitPics(lb);
     },
-    choose(cfg, lb, fb, done) {
-      lb.className = 'opts';
-      cfg.opts.forEach(o => { const b = document.createElement('button'); b.className = 'opt'; b.innerHTML = T(tx(o.t));
-        b.onclick = () => { if (o.ok) { b.classList.add('ok'); fb.innerHTML = '🌟 ' + T(tx(o.why) || U('ok')); setTimeout(done, 1400); } else { b.classList.add('no'); fb.innerHTML = T(tx(o.why) || U('again')); } };
-        lb.appendChild(b); });
+    /* 選一張圖 */
+    pick(cfg, lb, win, hint) {
+      lb.className = 'pcards';
+      mix(cfg.opts.length, this.seed).map(i => cfg.opts[i]).forEach(o => { const d = document.createElement('div'); d.innerHTML = card(o); const b = d.firstChild; lb.appendChild(b);
+        b.onclick = () => { if (lb.dataset.done) return;
+          if (o.ok) { lb.dataset.done = 1; b.classList.add('ok'); win(tx(o.why) || U('ok')); }
+          else { wiggle(b); b.classList.add('no'); hint(tx(o.why) || U('again')); } }; });
     },
-    order(cfg, lb, fb, done) {
-      const n = cfg.items.length, slots = document.createElement('div'), pool = document.createElement('div'); slots.className = 'slots'; pool.className = 'pool';
-      lb.append(slots, pool); const picked = [];
-      const idx = cfg.items.map((_, i) => i).sort((a, b) => ((a * 7 + 3) % n) - ((b * 7 + 3) % n) || a - b);
-      if (idx.every((v, i) => v === i)) idx.reverse();
-      const draw = () => { slots.innerHTML = ''; for (let i = 0; i < n; i++) { const d = document.createElement('div'); d.className = 'slot'; d.innerHTML = picked[i] != null ? T(tx(cfg.items[picked[i]])) : U('slot')(i+1); if (picked[i] != null) d.onclick = () => { picked.splice(i); fb.textContent = ''; draw(); }; slots.appendChild(d); }
-        pool.innerHTML = ''; idx.forEach(i => { const c = document.createElement('button'); c.className = 'card' + (picked.includes(i) ? ' used' : ''); c.innerHTML = T(tx(cfg.items[i])); c.onclick = () => { if (picked.includes(i)) return; picked.push(i); draw(); check(); }; pool.appendChild(c); }); };
-      const check = () => { if (picked.length < n) return; if (picked.every((v, i) => v === i)) { fb.innerHTML = '🌟 ' + T(U('orderOk')); setTimeout(done, 1400); } else { fb.innerHTML = T(tx(cfg.hint) || U('orderNo')); } };
-      draw();
+    /* 照故事順序點三張圖 */
+    order(cfg, lb, win, hint) {
+      const n = cfg.items.length; let next = 0;
+      lb.innerHTML = `<div class="oslots">${cfg.items.map((_, i) => `<div class="oslot"><b>${i + 1}</b></div>`).join('<span class="arr">➜</span>')}</div><div class="pcards"></div>`;
+      const slots = lb.querySelectorAll('.oslot'), pool = lb.querySelector('.pcards');
+      mix(n, this.seed + 1).forEach(i => { const o = cfg.items[i], d = document.createElement('div'); d.innerHTML = card(o); const b = d.firstChild; pool.appendChild(b);
+        b.onclick = () => { if (b.classList.contains('used')) return;
+          if (i === next) { b.classList.add('used'); slots[next].innerHTML = pic(o); fitPics(slots[next]); slots[next].classList.add('ok'); say(tx(o.t) || ''); next++; if (next === n) win(U('orderOk')); }
+          else { wiggle(b); hint(next === 0 ? U('first') : U('nextOne')); } }; });
     },
-    match(cfg, lb, fb, done) {
-      lb.className = 'grid'; const cards = [];
-      cfg.pairs.forEach((p, i) => { cards.push({ p: i, t: tx(p[0]) }, { p: i, t: tx(p[1]) }); });
-      cards.sort((a, b) => ((a.t.charCodeAt(0) * 31) % 17) - ((b.t.charCodeAt(0) * 31) % 17));
-      let first = null, lock = false, left = cfg.pairs.length;
-      cards.forEach(c => { const b = document.createElement('button'); b.className = 'mc'; b.textContent = '?'; c.el = b;
-        b.onclick = () => { if (lock || b.classList.contains('done') || b.classList.contains('up')) return; b.classList.add('up'); b.innerHTML = T(c.t);
-          if (!first) { first = c; return; }
-          if (first.p === c.p) { first.el.classList.replace('up', 'done'); b.classList.replace('up', 'done'); first = null; if (--left === 0) { fb.innerHTML = '🌟 ' + T(U('matchOk')); setTimeout(done, 1400); } }
-          else { lock = true; const f = first; first = null; setTimeout(() => { f.el.classList.remove('up'); f.el.textContent = '?'; b.classList.remove('up'); b.textContent = '?'; lock = false; }, 900); } };
-        lb.appendChild(b); });
+    /* 把角色和他的東西配起來 */
+    pair(cfg, lb, win, hint) {
+      lb.innerHTML = `<div class="pcols"><div class="pcol L"></div><div class="pcol R"></div></div>`;
+      const L = lb.querySelector('.L'), R = lb.querySelector('.R'); let sel = null, left = cfg.pairs.length;
+      const mk = (o, side, i) => { const d = document.createElement('div'); d.innerHTML = card(o, 'small'); const b = d.firstChild; b.dataset.i = i; b.dataset.side = side; return b; };
+      cfg.pairs.forEach((p, i) => L.appendChild(mk(p[0], 'L', i)));
+      mix(cfg.pairs.length, this.seed + 2).forEach(i => R.appendChild(mk(cfg.pairs[i][1], 'R', i)));
+      lb.querySelectorAll('.pcard').forEach(b => b.onclick = () => {
+        if (b.classList.contains('ok')) return;
+        const o = cfg.pairs[+b.dataset.i][b.dataset.side === 'L' ? 0 : 1]; if (o.t) say(tx(o.t));
+        if (!sel || sel.dataset.side === b.dataset.side) { if (sel) sel.classList.remove('sel'); sel = b; b.classList.add('sel'); return; }
+        if (sel.dataset.i === b.dataset.i) { sel.classList.replace('sel', 'ok'); b.classList.add('ok'); sel = null; if (--left === 0) win(U('matchOk')); }
+        else { wiggle(b); wiggle(sel); sel.classList.remove('sel'); sel = null; hint(U('tryPair')); }
+      });
     },
-    find(cfg, lb, fb, done) {
-      const box = $('#stagebox'); const hs = [];
-      lb.innerHTML = '<span>' + T(U('tap')) + '</span>';
+    /* 在畫面上點角色 */
+    find(cfg, lb, win, hint) {
+      const box = $('#stagebox'); const hs = []; box.querySelectorAll('.hot').forEach(h => h.remove());
+      lb.innerHTML = '<p class="tip">👆 ' + T(U('tap')) + '</p>';
       const clear = () => hs.forEach(h => h.remove());
       cfg.hotspots.forEach(h => { const d = document.createElement('div'); d.className = 'hot';
         const br = box.getBoundingClientRect(), r = Stage.actors[h.actor].el.getBoundingClientRect(), pad = 12;
         d.style.cssText = `left:${r.left - br.left - pad}px;top:${r.top - br.top - pad}px;width:${r.width + pad*2}px;height:${r.height + pad*2}px`;
-        d.onclick = () => { if (h.ok) { fb.innerHTML = '🌟 ' + T(tx(h.why) || U('found')); clear(); setTimeout(done, 1400); } else { fb.innerHTML = T(tx(h.why) || U('notIt')); } };
+        d.onclick = () => { if (h.ok) { clear(); win(tx(h.why) || U('found')); } else { wiggle(d); hint(tx(h.why) || U('notIt')); } };
         box.appendChild(d); hs.push(d); });
-      setTimeout(() => hs.forEach(h => h.classList.add('show')), 15000);
+      setTimeout(() => hs.forEach(h => h.classList.add('show')), 6000);
     }
   };
+  Levels.choose = Levels.pick; Levels.match = Levels.pair;
 
   /* ====== 播放器 ====== */
   const Player = {
-    S: null, si: 0, li: -1, busy: false,
+    S: null, si: 0, li: -1, busy: false, lvTok: 0,
     /* 念完(或估計時間到)才放行下一句,避免小朋友一直點把聲音切掉 */
     speak(t, k, est) {
       return new Promise(res => {
@@ -1655,7 +1734,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     start(S, from, li) {
       this.S = S; CUR = LANG === 'en' && hasEn(S) ? 'en' : 'zh'; const app = $('#app');
       app.innerHTML = `<div class="top"><button class="ghost" id="home">←</button><div class="dots" id="dots"></div>${langBtn()}</div><div id="stagebox"></div><div id="cap"></div><div id="lv" style="display:none"></div><div class="nav"><button class="ghost" id="prev">${U('prev')}</button><button id="next">${U('next')}</button></div>`;
-      $('#home').onclick = () => { try { speechSynthesis.cancel(); } catch (e) {} Home.show(); };
+      $('#home').onclick = () => { this.lvTok++; try { speechSynthesis.cancel(); } catch (e) {} Home.show(); };
       $('#prev').onclick = () => this.prev(); $('#next').onclick = () => this.next();
       $('#lang').onclick = () => { setLang(LANG === 'en' ? 'zh' : 'en'); const si = this.si, li = Math.max(0, this.li), lv = $('#lv').style.display !== 'none';
         try { speechSynthesis.cancel(); } catch (e) {} this.start(this.S, si, lv ? this.S.scenes[si].say.length : li); };
@@ -1663,6 +1742,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     },
     dots() { $('#dots').innerHTML = this.S.scenes.map((_, i) => `<i class="${i < this.si ? 'on' : ''} ${i === this.si ? 'cur on' : ''}"></i>`).join(''); },
     async go(si, li) {
+      this.lvTok++; const nav = $('.nav'); if (nav) nav.style.visibility = '';
       this.busy = false; this.si = si; this.dots(); store.set('princess_' + this.S.id, si);
       Stage.mount($('#stagebox'), this.S.scenes[si], li === 0); $('#lv').style.display = 'none'; $('#cap').style.display = '';
       for (let j = 0; j < li; j++) await runActs(this.S.scenes[si].say[j][2], true);
@@ -1687,7 +1767,10 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       const lv = (this.S.levels || {})[this.si];
       const after = () => { if (this.si + 1 < this.S.scenes.length) this.go(this.si + 1, 0); else Home.finish(this.S); };
       if (!lv) return after();
-      $('#cap').style.display = 'none'; const host = $('#lv'); host.style.display = ''; Levels.run(lv, host, () => { $('#lv').style.display = 'none'; document.querySelectorAll('.hot').forEach(h => h.remove()); after(); });
+      /* 關卡進行中藏起上一句/再一句;過關只算一次,中途換頁或換語言就作廢 */
+      const tok = ++this.lvTok, seed = [...this.S.id].reduce((a, c) => a + c.charCodeAt(0), 0) + this.si * 7 + 8;
+      $('#cap').style.display = 'none'; $('.nav').style.visibility = 'hidden'; const host = $('#lv'); host.style.display = '';
+      Levels.run(lv, host, () => { if (tok !== this.lvTok) return; this.lvTok++; $('#lv').style.display = 'none'; $('.nav').style.visibility = ''; document.querySelectorAll('.hot').forEach(h => h.remove()); after(); }, seed);
     }
   };
 
@@ -1703,7 +1786,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     finish(S) { $('#app').innerHTML = `<div class="home"><div style="font-size:64px">🌟</div><h1>${U('end')}</h1><div class="card2"><p>${T(U('endMsg')(tx(S.title)))}</p><p>${T(tx(S.parent) || '')}</p><button id="again">${U('replay')}</button></div></div>`; $('#again').onclick = () => Home.show(); }
   };
   window.__open = (si, li, st) => Player.start(STORIES[st || 0], si, li || 0);
-  window.__stories = STORIES; window.__test = { Stage, runActs, estMs };
+  window.__stories = STORIES; window.__test = { Stage, runActs, estMs, Levels };
   const hm = location.hash.match(/#(\d+),(\d+)(?:,(\d+))?(?:,(en|zh))?/);
   if (hm && hm[4]) { LANG = hm[4]; CUR = LANG; }
   const hmOk = hm && STORIES[+(hm[3] || 0)] && STORIES[+(hm[3] || 0)].scenes[+hm[1]];  // 網址數字不存在就回首頁
