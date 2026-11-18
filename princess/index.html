@@ -49,6 +49,57 @@ button.ghost{background:#4b3a7a;color:#fff}
 .lift .armR,.lift .armL{transition:transform .4s}
 .lift .armR{transform:rotate(-150deg);transform-origin:82px 88px}
 .lift .armL{transform:rotate(150deg);transform-origin:38px 88px}
+/* 細部動作:呼吸、走路擺手、跑步前傾、說話點頭比手勢 */
+.life{animation:br 3.4s ease-in-out infinite;transform-origin:60px 182px}
+@keyframes br{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,1.024)}}
+.walking:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armL{animation:as .5s ease-in-out infinite;transform-origin:38px 88px}
+.walking:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armR{animation:as .5s ease-in-out infinite reverse;transform-origin:82px 88px}
+@keyframes as{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-14deg)}}
+.running .legL{animation:lg .28s ease-in-out infinite;transform-origin:50px 156px}
+.running .legR{animation:lg .28s ease-in-out infinite reverse;transform-origin:71px 156px}
+.running:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armL{animation:as2 .28s ease-in-out infinite;transform-origin:38px 88px}
+.running:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armR{animation:as2 .28s ease-in-out infinite reverse;transform-origin:82px 88px}
+.running:not(.jump):not(.fear):not(.shiver) .body{animation:rb .28s ease-in-out infinite;transform-origin:60px 182px}
+.running .skirt{animation:sway .28s ease-in-out infinite;transform-origin:60px 118px}
+@keyframes as2{0%,100%{transform:rotate(34deg)}50%{transform:rotate(-34deg)}}
+@keyframes rb{0%,100%{transform:rotate(7deg) translateY(0)}50%{transform:rotate(7deg) translateY(-5px)}}
+.talking:not(.nod):not(.laugh):not(.no):not(.bow):not(.think):not(.cry) .head{animation:tl 2.2s ease-in-out infinite}
+@keyframes tl{0%,100%{transform:rotate(0)}30%{transform:rotate(-4deg)}70%{transform:rotate(3deg) translateY(1px)}}
+.talking:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think):not(.walking):not(.running) .armR{animation:gs 2.6s ease-in-out infinite;transform-origin:82px 88px}
+@keyframes gs{0%,100%{transform:rotate(0)}35%{transform:rotate(-42deg)}55%{transform:rotate(-30deg)}75%{transform:rotate(-8deg)}}
+.spin:not(.crouchd):not(.fallen) .body{animation:spn .9s ease-in-out 1;transform-origin:60px 120px}
+@keyframes spn{0%{transform:scaleX(1)}25%{transform:scaleX(.05)}50%{transform:scaleX(-1)}75%{transform:scaleX(.05)}100%{transform:scaleX(1)}}
+.spin .skirt{animation:flr .9s ease-in-out 1;transform-origin:60px 118px}
+@keyframes flr{50%{transform:scaleX(1.25)}}
+.bow:not(.crouchd):not(.fallen) .body{animation:bw 1.2s ease-in-out 1;transform-origin:60px 182px}
+@keyframes bw{40%,65%{transform:translateY(12px) scaleY(.93)}}
+.bow .head{animation:bwh 1.2s ease-in-out 1}
+@keyframes bwh{40%,65%{transform:rotate(16deg) translateY(4px)}}
+.clap .armR{animation:clR .3s ease-in-out 4;transform-origin:82px 88px}
+.clap .armL{animation:clL .3s ease-in-out 4;transform-origin:38px 88px}
+@keyframes clR{0%,100%{transform:rotate(28deg)}50%{transform:rotate(42deg)}}
+@keyframes clL{0%,100%{transform:rotate(-46deg)}50%{transform:rotate(-64deg)}}
+.hug .armR{animation:hgR 1.6s ease-in-out 1;transform-origin:82px 88px}
+.hug .armL{animation:hgL 1.6s ease-in-out 1;transform-origin:38px 88px}
+@keyframes hgR{20%,80%{transform:rotate(-72deg)}}
+@keyframes hgL{20%,80%{transform:rotate(-96deg)}}
+.think .armR{animation:thk 1.8s ease-in-out 1;transform-origin:82px 88px}
+@keyframes thk{20%,80%{transform:rotate(141deg)}}
+.think .head{animation:thh 1.8s ease-in-out 1}
+@keyframes thh{20%,80%{transform:rotate(-7deg)}}
+.laugh .head{animation:lf .22s ease-in-out 6}
+@keyframes lf{50%{transform:translateY(-3px) rotate(-5deg)}}
+.laugh .m0{display:none}.laugh .m-talk{display:inline;animation:none}
+.no .head{animation:nh .28s ease-in-out 3}
+@keyframes nh{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.tears{display:none}
+.pic .mx,.pic .brow{display:none}
+.cry .tears,.cry .b-sad{display:inline}
+.cry .tears ellipse{animation:td .7s ease-in infinite}.cry .tears ellipse+ellipse{animation-delay:.35s}
+@keyframes td{0%{transform:translateY(0);opacity:1}100%{transform:translateY(22px);opacity:0}}
+.cry:not(.laugh):not(.no):not(.bow):not(.nod) .head{animation:sb .6s ease-in-out 3}
+@keyframes sb{50%{transform:translateY(2px) rotate(3deg)}}
+.cam{transform-origin:0 0}
 .amb-fall{animation:fall var(--d,6s) linear infinite;animation-delay:var(--dl,0s)}
 @keyframes fall{from{transform:translate(0,-60px)}to{transform:translate(var(--dx,20px),400px)}}
 .amb-rise{animation:rise var(--d,6s) linear infinite;animation-delay:var(--dl,0s)}@keyframes rise{from{transform:translateY(40px);opacity:0}20%{opacity:.9}80%{opacity:.9}to{transform:translateY(-300px);opacity:0}}
@@ -349,7 +400,7 @@ STORIES.push({ id:'ariel', title:['小美人魚','The Little Mermaid'],
     { bg:'ballroom', cast:{ arielh:{k:'arielh',x:14,name:['愛麗兒','Ariel']}, eric:{k:'eric',x:46,face:-1,name:['艾力克王子','Prince Eric']}, vanessa:{k:'vanessa',x:84,face:-1,hid:1,name:['烏蘇拉','Ursula']}, shell:{k:'shell',x:84,y:178,s:.5,hid:1} },
       say:[ ['n',['烏蘇拉變成美麗的女孩,用愛麗兒的聲音迷住了王子。','Ursula became a pretty girl and used Ariel\'s voice to trick the prince.'],['vanessa pop @變成|became','fx poof vanessa @變成|became','shell show @聲音|voice','vanessa emo 🎵 @聲音|voice','eric turn 1 @迷住|trick','eric emo 💫 @迷住|trick']],
             ['n',['王子以為就是她救了自己,決定要娶她。','The prince thought she was the one who saved him, so he chose to marry her.'],['eric go 70 @以為|thought','vanessa face angry @娶她|marry','arielh face wow @娶她|marry']],
-            ['n',['愛麗兒好傷心,只能躲在一旁哭。','Ariel was so sad. She could only hide and cry.'],['arielh face sad @傷心|sad','arielh crouch @躲|hide','arielh emo 😢 @哭|cry']] ] },
+            ['n',['愛麗兒好傷心,只能躲在一旁哭。','Ariel was so sad. She could only hide and cry.'],['arielh face sad @傷心|sad','arielh crouch @躲|hide','arielh emo 😢 @哭|cry','arielh cry @哭|cry']] ] },
     { bg:'oceanN', fx:['dim on .25','sea 236 400'], cast:{ ursula:{k:'ursula',x:86,y:284,s:1.5,face:-1,hid:1,name:['烏蘇拉','Ursula']}, eric:{k:'eric',x:30,y:228,name:['艾力克王子','Prince Eric']}, arielh:{k:'arielh',x:44,y:228,name:['愛麗兒','Ariel']}, boat:{k:'boat',x:36,y:248,s:1.5}, shell:{k:'shell',x:60,y:190,s:.6} },
       say:[ ['n',['朋友們打破了貝殼,愛麗兒的聲音回來了!','Her friends broke the seashell, and Ariel\'s voice came back!'],['fx boom shell @打破|broke','shell hide @打破|broke+200','fx beam 60 arielh.head #ffe08a @聲音|voice','arielh emo 🎵 @回來|back','arielh face none @回來|back']],
             ['n',['王子醒了過來,可是烏蘇拉變成了大巨人!','The prince woke up, but Ursula turned into a giant!'],['eric face wow @醒了|woke','ursula pop @巨人|giant','fx lightning 80 @巨人|giant','fx rain on @巨人|giant','arielh fear @巨人|giant']],
@@ -421,12 +472,12 @@ STORIES.push({ id:'belle', title:['美女與野獸','Beauty and the Beast'],
             ['n',['野獸答應了,爸爸回家,貝兒留了下來。','The Beast agreed. Papa went home, and Belle stayed.'],['beast nod @答應|agreed','cage fade @答應|agreed','maurice go 112 @回家|home','belle emo 😢 @留了|stayed','belle face sad @留了|stayed']] ] },
     { bg:'libraryB', cast:{ belle:{k:'belle',x:10,name:['貝兒','Belle']}, candle:{k:'candle',x:30,s:.8,name:['燭台','Candlestick']}, clock:{k:'clock',x:44,s:.8,name:['時鐘','Clock']}, teapot:{k:'teapot',x:58,s:.8,name:['茶壺','Teapot']}, beast:{k:'beast',x:108,face:-1,name:['野獸','Beast']} },
       say:[ ['n',['城堡裡的燭台、時鐘和茶壺,都會說話!','In the castle, the candlestick, the clock and the teapot could all talk!'],['candle jump @燭台|candlestick','fx sparkle candle @燭台|candlestick','clock jump @時鐘|clock','teapot jump @茶壺|teapot','belle face wow @說話|talk']],
-            ['n',['他們端出熱熱的晚餐,還唱歌跳舞給她看。','They served a warm dinner and sang and danced for her.'],['teapot glide 22 @晚餐|dinner','candle emo 🎵 @唱歌|sang','candle jump @跳舞|danced','clock jump @跳舞|danced+200','fx confetti @跳舞|danced','belle face none @唱歌|sang']] ] },
+            ['n',['他們端出熱熱的晚餐,還唱歌跳舞給她看。','They served a warm dinner and sang and danced for her.'],['teapot glide 22 @晚餐|dinner','candle emo 🎵 @唱歌|sang','candle spin @跳舞|danced','clock jump @跳舞|danced+200','fx confetti @跳舞|danced','belle face none @唱歌|sang']] ] },
     { bg:'libraryB', cast:{ belle:{k:'belle',x:10,name:['貝兒','Belle']}, candle:{k:'candle',x:30,s:.8,name:['燭台','Candlestick']}, clock:{k:'clock',x:44,s:.8,name:['時鐘','Clock']}, teapot:{k:'teapot',x:22,s:.8,name:['茶壺','Teapot']}, beast:{k:'beast',x:108,face:-1,name:['野獸','Beast']} },
       say:[ ['n',['野獸帶她走進大圖書館,把所有的書送給她。','The Beast took her into a huge library and gave her all the books.'],['beast go 72 @野獸|Beast','beast point @圖書館|library','fx sparkle 50 60 @圖書館|library','fx sparkle 24 110 @送給|gave','belle face wow @送給|gave']],
-            ['belle',['好多書!謝謝你!','So many books! Thank you!'],['belle jump','fx hearts belle @謝謝|Thank','beast face none @謝謝|Thank','beast nod @謝謝|Thank+300']] ] },
+            ['belle',['好多書!謝謝你!','So many books! Thank you!'],['belle jump','belle clap @謝謝|Thank','fx hearts belle @謝謝|Thank','beast face none @謝謝|Thank','beast nod @謝謝|Thank+300']] ] },
     { bg:'ballroom', fx:['night on'], cast:{ belleg:{k:'belleg',x:22,name:['貝兒','Belle']}, beast:{k:'beast',x:62,face:-1,name:['野獸','Beast']}, mirror:{k:'mirror',x:84,y:236,s:.7,hid:1} },
-      say:[ ['n',['貝兒和野獸成了好朋友,一起在大廳裡跳舞。','Belle and the Beast became good friends and danced together in the great hall.'],['belleg go 38','beast go 50 @好朋友|friends','belleg turn @跳舞|danced','beast turn @跳舞|danced','belleg turn @跳舞|danced+600','beast turn @跳舞|danced+600','fx hearts belleg @跳舞|danced+300']],
+      say:[ ['n',['貝兒和野獸成了好朋友,一起在大廳裡跳舞。','Belle and the Beast became good friends and danced together in the great hall.'],['belleg go 38','beast go 50 @好朋友|friends','belleg spin @跳舞|danced','beast turn @跳舞|danced','belleg turn @跳舞|danced+600','beast turn @跳舞|danced+600','fx hearts belleg @跳舞|danced+300']],
             ['n',['貝兒好想爸爸,野獸給她一面魔鏡看一看。','Belle missed Papa, so the Beast let her look in a magic mirror.'],['belleg face sad @想爸爸|missed','mirror pop @魔鏡|mirror','fx glow on mirror @魔鏡|mirror','belleg go 70 @看一看|look']],
             ['n',['看到爸爸生病了,野獸讓她回家去。','She saw Papa was sick, so the Beast let her go home.'],['belleg face wow @生病|sick','beast face sad @回家|home','beast nod @回家|home','belleg run 112 @回家|home+400']] ] },
     { bg:'roof', fx:['rain on'], cast:{ beast:{k:'beast',x:30,name:['野獸','Beast']}, gaston:{k:'gastont',x:112,face:-1,name:['加斯頓','Gaston']}, vil1:{k:'vil1',x:120,face:-1}, vil2:{k:'vil2',x:128,face:-1}, belle:{k:'belle',x:-8,hid:1,name:['貝兒','Belle']} },
@@ -439,7 +490,7 @@ STORIES.push({ id:'belle', title:['美女與野獸','Beauty and the Beast'],
       say:[ ['n',['貝兒守在野獸身邊,魔法玫瑰的花瓣快掉光了。','Belle stayed by the Beast. The magic rose was losing its last petals.'],['beast fall','belle go 32','belle crouch @身邊|stayed','fx glow on rose @玫瑰|rose','rose shiver @花瓣|petals']],
             ['belle',['不要走,我愛你。','Please don\'t go. I love you.'],['belle face sad','belle emo 😢 @不要走|go','fx hearts belle @愛你|love']],
             ['n',['魔法被打破了,野獸變回了英俊的王子!','The spell was broken, and the Beast turned back into a handsome prince!'],['fx sparkle beast @魔法|spell','fx flash @打破|broken','beast swap adam @變回|turned','fx night off @打破|broken','belle stand @王子|prince','belle face wow @王子|prince']],
-            ['n',['貝兒和王子一起跳舞,從此過著幸福快樂的日子。','Belle and the prince danced together and lived happily ever after.'],['belle face none','belle go 36','adam go 48 @跳舞|danced','belle turn @跳舞|danced+500','fx hearts belle @幸福|happily','fx confetti @幸福|happily']] ] }
+            ['n',['貝兒和王子一起跳舞,從此過著幸福快樂的日子。','Belle and the prince danced together and lived happily ever after.'],['belle face none','belle go 36','adam go 48 @跳舞|danced','belle spin @跳舞|danced+500','adam bow @跳舞|danced','fx hearts belle @幸福|happily','fx confetti @幸福|happily']] ] }
   ],
   levels:{
     0:{ type:'pick', q:['貝兒最愛做什麼?','What does Belle love to do?'], opts:[{p:'📚',t:['看書','Reading'],ok:1,why:['對!貝兒最愛看書。','Yes! Belle loves books.']},{p:'🏹',t:['打獵','Hunting'],ok:0,why:['打獵是加斯頓愛做的。','Gaston likes hunting.']},{p:'🎣',t:['釣魚','Fishing'],ok:0,why:['不是釣魚喔。','Not fishing.']}] },
@@ -495,24 +546,24 @@ STORIES.push({ id:'cinderella', title:['灰姑娘','Cinderella'],
             ['n',['小老鼠是她最好的朋友,常常陪著她。','A little mouse was her best friend and always kept her company.'],['mouse run 6','mouse jump @小老鼠|mouse','cr face none @朋友|friend','fx hearts cr @陪著|company']] ] },
     { bg:'kitchenC', cast:{ cr:{k:'crb',x:14,name:['灰姑娘','Cinderella']}, mouse:{k:'mouse',x:6,s:.7,name:['小老鼠','Mouse']}, mom:{k:'mom',x:66,face:-1,ex:'angry',name:['繼母','Stepmother']}, sis1:{k:'sis1',x:80,face:-1,ex:'angry',name:['姊姊','Sister']}, sis2:{k:'sis2',x:94,face:-1,ex:'angry',name:['姊姊','Sister']}, letter:{k:'letter',x:50,y:200,s:.8,hid:1} },
       say:[ ['n',['這天,城堡送來一封信:王子要辦舞會!','One day, a letter came from the castle: the prince was having a ball!'],['letter pop @信|letter','fx sparkle letter @信|letter','sis1 jump @舞會|ball','sis2 jump @舞會|ball+200','mom face none @王子|prince']],
-            ['cr',['我也想去舞會!','I want to go to the ball too!'],['cr lift','cr emo ✨ @舞會|ball']],
+            ['cr',['我也想去舞會!','I want to go to the ball too!'],['cr think','cr lift @舞會|ball+600','cr emo ✨ @舞會|ball']],
             ['mom',['好啊,只要你做完家事,又有衣服穿。','Fine, if you finish your chores and have something to wear.'],['mom face angry','mom point @做完|finish','sis1 nod @衣服|wear','cr face sad @衣服|wear']] ] },
     { bg:'attic', cast:{ cr:{k:'crb',x:14,ex:'sad',name:['灰姑娘','Cinderella']}, crp:{k:'crp',x:14,hid:1,name:['灰姑娘','Cinderella']}, dress:{k:'dress',x:56,s:.9,hid:1}, mouse:{k:'mouse',x:44,s:.7,name:['小老鼠','Mouse']}, mouse2:{k:'mouse',x:70,s:.65,face:-1}, bird:{k:'bird',x:60,y:170,s:.8} },
       say:[ ['n',['小老鼠和小鳥一起,幫她縫了一件粉紅色的衣服。','The mice and the birds sewed her a pink dress.'],['mouse jump @小老鼠|mice','mouse2 jump @小老鼠|mice+200','bird glide 52 150 @小鳥|birds','dress pop @衣服|dress','fx sparkle dress @衣服|dress','cr face wow @粉紅色|pink']],
-            ['n',['灰姑娘穿上新衣服,開心得轉圈圈!','Cinderella put on the new dress and spun around happily!'],['dress hide @穿上|put','cr swap crp @穿上|put','crp turn @轉圈圈|spun','crp turn @轉圈圈|spun+400','fx hearts crp @開心|happily','crp face none']] ] },
+            ['n',['灰姑娘穿上新衣服,開心得轉圈圈!','Cinderella put on the new dress and spun around happily!'],['dress hide @穿上|put','cr swap crp @穿上|put','crp spin @轉圈圈|spun','crp spin @轉圈圈|spun+950','fx hearts crp @開心|happily','crp face none']] ] },
     { bg:'kitchenC', cast:{ cr:{k:'crb',x:20,hid:1,ex:'sad',name:['灰姑娘','Cinderella']}, crp:{k:'crp',x:20,name:['灰姑娘','Cinderella']}, mom:{k:'mom',x:70,face:-1,name:['繼母','Stepmother']}, sis1:{k:'sis1',x:84,face:-1,name:['姊姊','Sister']}, sis2:{k:'sis2',x:96,face:-1,name:['姊姊','Sister']} },
       say:[ ['n',['可是兩個姊姊一看,氣得把衣服撕破了!','But the stepsisters got jealous and tore the dress apart!'],['sis1 face angry @氣得|jealous','sis2 face angry @氣得|jealous','sis1 go 32 @撕破|tore','sis2 go 42 @撕破|tore','fx poof crp @撕破|tore+400','crp swap cr @撕破|tore+600']],
-            ['n',['灰姑娘好傷心,哭著跑到花園裡。','Cinderella was heartbroken and ran crying into the garden.'],['cr emo 😢 @傷心|heartbroken','cr run -14 @跑到|ran']] ] },
+            ['n',['灰姑娘好傷心,哭著跑到花園裡。','Cinderella was heartbroken and ran crying into the garden.'],['cr cry @傷心|heartbroken','cr run -14 @跑到|ran']] ] },
     { bg:'gardenN', cast:{ cr:{k:'cr',x:-8,ex:'sad',name:['灰姑娘','Cinderella']}, cg:{k:'cg',x:30,hid:1,name:['灰姑娘','Cinderella']}, fairy:{k:'fairy',x:52,hid:1,face:-1,name:['仙女','Fairy Godmother']}, pumpkin:{k:'pumpkin',x:80,s:.9}, carriage:{k:'carriage',x:80,s:1.4,hid:1} },
-      say:[ ['n',['灰姑娘坐在花園裡,哭得好傷心。','Cinderella sat in the garden and cried and cried.'],['cr go 30','cr crouch @哭|cried','cr emo 😢 @傷心|cried']],
+      say:[ ['n',['灰姑娘坐在花園裡,哭得好傷心。','Cinderella sat in the garden and cried and cried.'],['cr go 30','cr crouch @哭|cried','cr cry @傷心|cried']],
             ['n',['這時,一陣亮光,仙女教母出現了!','Then, in a flash of light, her Fairy Godmother appeared!'],['fx sparkle 52 150 @亮光|light','fairy pop @仙女|Fairy','cr stand @出現|appeared','cr face wow @出現|appeared']],
-            ['fairy',['別哭,孩子,我來幫你去舞會!','Do not cry, my dear. I will help you go to the ball!'],['fairy wave','cr face none @舞會|ball']],
+            ['fairy',['別哭,孩子,我來幫你去舞會!','Do not cry, my dear. I will help you go to the ball!'],['fairy no','fairy wave @舞會|ball','cr face none @舞會|ball']],
             ['n',['仙女揮揮魔法棒,南瓜變成了漂亮的馬車!','She waved her magic wand, and a pumpkin became a beautiful carriage!'],['fairy turn 1 @揮揮|waved','fairy lift @揮揮|waved','fx beam fairy pumpkin #fff3a0 @魔法棒|wand','pumpkin swap carriage @馬車|carriage','fx sparkle carriage @馬車|carriage']],
             ['n',['灰姑娘的舊衣服,變成了閃亮亮的禮服和玻璃鞋。','Cinderella\'s old clothes became a sparkling gown and glass slippers.'],['fairy turn -1','fx beam fairy cr #bfe3ff @舊衣服|clothes','cr swap cg @變成|became','fx sparkle cg @閃亮亮|sparkling','cg face wow @玻璃鞋|slippers']],
             ['fairy',['記住,午夜十二點,魔法就會消失喔!','Remember, at midnight the magic will disappear!'],['fairy point @十二點|midnight','fairy emo 🕛 @十二點|midnight','cg nod @消失|disappear']] ] },
     { bg:'ballroom', fx:['night on'], cast:{ cg:{k:'cg',x:-8,name:['灰姑娘','Cinderella']}, prince:{k:'prince',x:70,face:-1,name:['王子','Prince']}, mom:{k:'mom',x:84,face:-1,name:['繼母','Stepmother']}, sis1:{k:'sis1',x:94,face:-1,name:['姊姊','Sister']}, sis2:{k:'sis2',x:104,face:-1,name:['姊姊','Sister']} },
       say:[ ['n',['灰姑娘走進舞會,大家都轉頭看著她。','Cinderella walked into the ball, and everyone turned to look at her.'],['cg go 26','fx sparkle cg @走進|walked','prince face wow @轉頭|turned','mom face wow @看著|look','sis1 face wow @看著|look']],
-            ['n',['王子一看見她,馬上走過來請她跳舞。','The moment the prince saw her, he came over and asked her to dance.'],['prince go 40 @走過來|came','prince nod @跳舞|dance','cg nod @跳舞|dance+300','fx hearts cg @跳舞|dance+500']],
+            ['n',['王子一看見她,馬上走過來請她跳舞。','The moment the prince saw her, he came over and asked her to dance.'],['prince go 40 @走過來|came','prince bow @跳舞|dance+700','cg bow @跳舞|dance+1000','fx hearts cg @跳舞|dance+500']],
             ['n',['他們跳了一首又一首,跳了好久好久。','They danced song after song for a long, long time.'],['cg go 32','prince go 44','cg turn @一首|song','prince turn @一首|song','cg turn @好久|long','prince turn @好久|long','fx hearts prince @好久|long']],
             ['n',['兩個姊姊怎麼也認不出,她就是灰姑娘。','The stepsisters did not even know it was Cinderella.'],['sis1 emo ❓ @認不出|know','sis2 emo ❓ @認不出|know+200','mom face angry @灰姑娘|Cinderella']] ] },
     { bg:'stairs', cast:{ carriage:{k:'carriage',x:92,s:1.4}, pumpkin:{k:'pumpkin',x:92,s:.9,hid:1}, slipper:{k:'slipper',x:52,y:282,s:.7,hid:1}, cg:{k:'cg',x:20,name:['灰姑娘','Cinderella']}, cr:{k:'cr',x:80,hid:1,name:['灰姑娘','Cinderella']}, prince:{k:'prince',x:-10,hid:1,name:['王子','Prince']} },
@@ -558,10 +609,10 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
             ['anna',['姊姊,你要不要一起堆雪人?','Elsa, do you want to build a snowman?'],['anna go 62','anna knock @姊姊|Elsa','elsa crouch @堆雪人|snowman']] ] },
     { bg:'ballroom', cast:{ hans:{k:'hans',x:104,face:-1,hid:1,name:['漢斯','Hans']}, elsaq:{k:'elsaq',x:78,face:-1,name:['艾莎','Elsa']}, anna:{k:'anna',x:8,name:['安娜','Anna']} },
       say:[ ['n',['好多年過去,艾莎長大,當上了女王。','Many years later, Elsa grew up and became the queen.'],['elsaq nod @女王|queen','fx sparkle elsaq.head @女王|queen','fx confetti @女王|queen']],
-            ['n',['城堡開舞會,安娜開心得轉圈圈。','The castle had a big party, and Anna happily spun around.'],['anna go 26','anna jump @轉圈圈|spun','anna turn @轉圈圈|spun+300','anna turn @轉圈圈|spun+700']],
+            ['n',['城堡開舞會,安娜開心得轉圈圈。','The castle had a big party, and Anna happily spun around.'],['anna go 26','anna jump @轉圈圈|spun','anna spin @轉圈圈|spun+300','anna spin @轉圈圈|spun+1250']],
             ['n',['她遇見了漢斯王子,兩個人一見面就好喜歡對方。','She met Prince Hans, and they liked each other right away.'],['hans show @遇見|met','hans go 42 @遇見|met','fx hearts anna @喜歡|liked','fx hearts hans @喜歡|liked+300']],
             ['anna',['姊姊,我要跟漢斯結婚!','Elsa, I am going to marry Hans!'],['anna go 56','hans go 46 @300','anna jump @結婚|marry']],
-            ['elsaq',['不行!你才剛認識他。','No! You just met him.'],['elsaq face angry','elsaq point @不行|No','anna face sad @認識|met']] ] },
+            ['elsaq',['不行!你才剛認識他。','No! You just met him.'],['elsaq face angry','elsaq no @不行|No','elsaq point @認識|met','anna face sad @認識|met']] ] },
     { bg:'ballroom', cast:{ hans:{k:'hans',x:30,ex:'wow',name:['漢斯','Hans']}, anna:{k:'anna',x:46,ex:'sad',name:['安娜','Anna']}, elsaq:{k:'elsaq',x:74,face:-1,ex:'angry',name:['艾莎','Elsa']} },
       say:[ ['n',['姊妹吵了起來,艾莎一生氣,魔法就跑了出來。','The sisters argued. Elsa got upset, and her magic burst out.'],['anna point','elsaq shiver @一生氣|upset','elsaq lift @魔法|magic','fx sparkle elsaq.hand @魔法|magic']],
             ['n',['尖尖的冰刺從地上冒出來,大家都嚇壞了!','Sharp ice spikes shot up from the floor. Everyone was scared!'],['fx ice 60 5 @冰刺|spikes','anna face wow @冰刺|spikes','anna fear @嚇壞|scared','hans fear @嚇壞|scared']],
@@ -581,7 +632,7 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
       say:[ ['n',['安娜走進大雪裡,冷得一直發抖。','Anna walked into the snow, shivering with cold.'],['anna go 22','anna shiver @發抖|shivering','anna face sad @發抖|shivering']],
             ['n',['她遇見了賣冰的克里斯托夫,和他的馴鹿斯文。','She met Kristoff, who sold ice, and his reindeer, Sven.'],['kristoff show @遇見|met','sven show @遇見|met','kristoff go 66 @遇見|met','sven go 84 @遇見|met','anna face none @克里斯托夫|Kristoff']],
             ['n',['突然,雪堆裡跳出一個會說話的雪人!','Suddenly, a talking snowman popped out of the snow!'],['olaf pop @跳出|popped','olaf jump @雪人|snowman','anna face wow @跳出|popped','anna fear @跳出|popped']],
-            ['olaf',['嗨!我是雪寶,我喜歡溫暖的擁抱!','Hi! I am Olaf, and I like warm hugs!'],['olaf wave','anna face none @雪寶|Olaf','fx hearts olaf @擁抱|hugs']] ] },
+            ['olaf',['嗨!我是雪寶,我喜歡溫暖的擁抱!','Hi! I am Olaf, and I like warm hugs!'],['olaf wave','olaf jump @擁抱|hugs','anna face none @雪寶|Olaf','fx hearts olaf @擁抱|hugs']] ] },
     { bg:'ice', cast:{ anna:{k:'anna',x:4,name:['安娜','Anna']}, annaw:{k:'annaw',x:4,hid:1,name:['安娜','Anna']}, elsa:{k:'elsa',x:70,face:-1,name:['艾莎','Elsa']} },
       say:[ ['n',['他們找到了冰宮殿,安娜走了進去。','They found the ice palace, and Anna went inside.'],['anna go 34','anna face wow @冰宮殿|palace','anna face none @走了|went']],
             ['anna',['姊姊,跟我回家吧,王國都結冰了!','Elsa, come home with me! The kingdom is frozen!'],['anna go 40','anna lift @回家|home']],
@@ -595,7 +646,7 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
             ['n',['安娜用盡力氣,衝過去擋在姊姊前面。','With all her strength, Anna ran in front of her sister.'],['annaw run 77 @衝過去|ran','annaw turn -1 @擋在|front']],
             ['n',['就在這一刻,安娜整個人變成了冰!','At that very moment, Anna turned into ice!'],['annaw swap annaice @變成|turned','fx flash @變成|turned','fx shake @變成|turned','fx sparkle annaice @冰|ice','hans fall @冰|ice+400']] ] },
     { bg:'fjord', fx:['winter on -8:140:26,52:140:26,112:140:26,540:72:16,508:96:12,608:92:12,182:150:12','freeze -20 110 200','storm on'], cast:{ hans:{k:'hanss',x:68,ex:'angry',name:['漢斯','Hans']}, annaice:{k:'annaice',x:77,face:-1,name:['安娜','Anna']}, anna:{k:'anna',x:77,face:-1,hid:1,name:['安娜','Anna']}, elsa:{k:'elsa',x:86,face:-1,ex:'wow',name:['艾莎','Elsa']} },
-      say:[ ['n',['艾莎抱著妹妹大哭,真心的愛讓冰融化了。','Elsa hugged her sister and cried. True love melted the ice.'],['hans fall','elsa stand','elsa go 84','elsa emo 😢 @大哭|cried','fx storm off @真心|True','annaice swap anna @融化|melted','anna face none @融化|melted','fx hearts anna @融化|melted+500']],
+      say:[ ['n',['艾莎抱著妹妹大哭,真心的愛讓冰融化了。','Elsa hugged her sister and cried. True love melted the ice.'],['hans fall','elsa stand','elsa go 84','elsa hug @抱著|hugged','elsa cry @大哭|cried','fx storm off @真心|True','annaice swap anna @融化|melted','anna face none @融化|melted','fx hearts anna @融化|melted+500']],
             ['n',['艾莎終於明白:愛,可以融化冬天。','Elsa finally understood: love can melt the winter.'],['fx thaw @融化|melt','elsa face none @明白|understood','elsa jump @冬天|winter','anna jump @冬天|winter','fx hearts elsa @冬天|winter+300']] ] }
   ],
   levels:{
@@ -666,7 +717,7 @@ STORIES.push({ id:'jasmine', title:['茉莉公主','Princess Jasmine'],
     { bg:'skyA', cast:{ carpet:{k:'carpet',x:-14,y:236,s:1.1}, jasmine:{k:'jasmine',x:-20,y:228,name:['茉莉','Jasmine']}, ali:{k:'ali',x:-6,y:228,name:['阿里王子','Prince Ali']} },
       say:[ ['n',['阿里王子帶茉莉坐上魔毯,飛上了夜空。','Prince Ali took Jasmine on the magic carpet, up into the night sky.'],['carpet glide 34 220 1.1 2600','jasmine glide 28 212 1 2600','ali glide 42 212 1 2600','jasmine face wow @飛上|up']],
             ['ali',['我帶你去看一個全新的世界。','Let me show you a whole new world.'],['ali point @全新|whole','fx sparkle 60 60 @世界|world','fx sparkle 80 110 @世界|world+400']],
-            ['n',['他們飛過星星和月亮,茉莉好開心。','They flew past the stars and the moon, and Jasmine was so happy.'],['carpet glide 60 196 1.1 2400','jasmine glide 54 188 1 2400','ali glide 68 188 1 2400','jasmine face none @開心|happy','fx hearts jasmine @開心|happy']],
+            ['n',['他們飛過星星和月亮,茉莉好開心。','They flew past the stars and the moon, and Jasmine was so happy.'],['carpet glide 60 196 1.1 2400','jasmine glide 54 188 1 2400','ali glide 68 188 1 2400','jasmine face none @開心|happy','jasmine laugh @開心|happy','fx hearts jasmine @開心|happy']],
             ['jasmine',['原來你就是市集裡的那個男孩!','You are the boy from the market!'],['jasmine point @男孩|boy','ali face wow @男孩|boy','ali emo 😳 @男孩|boy+300']] ] },
     { bg:'palaceA', fx:['night on','dim on .2'], cast:{ jasmine:{k:'jasmine',x:16,name:['茉莉','Jasmine']}, sultan:{k:'sultan',x:32,name:['蘇丹','Sultan']}, cage:{k:'cage',x:24,s:1.1,hid:1}, genie:{k:'genief',x:84,face:-1,hid:1,name:['精靈','Genie']}, jafar:{k:'jafars',x:62,face:-1,name:['賈方','Jafar']}, lamp:{k:'lamp',x:70,y:280,s:.8,hid:1} },
       say:[ ['n',['賈方偷走了神燈,精靈只好聽他的話。','Jafar stole the lamp, so the Genie had to obey him.'],['lamp show @神燈|lamp','fx glow on lamp 0 34 @神燈|lamp','jafar emo 😈 @偷走|stole','genie pop @精靈|Genie','genie face sad @只好|obey']],
@@ -747,7 +798,7 @@ STORIES.push({ id:'moana', title:['莫娜','Moana'],
       say:[ ['n',['莫娜一個人坐在船上,覺得自己好沒用。','Alone on the boat, Moana felt she had failed.'],['moana crouch','moana emo 😢 @沒用|failed']],
             ['n',['這時,奶奶的身影在海面上發著光出現了。','Then Gramma\'s glowing spirit appeared over the water.'],['fx glow on 66 160 70 #9fe3ff @發著光|glowing','tala show @身影|spirit','fx sparkle tala @出現|appeared','moana stand @出現|appeared','moana face wow @出現|appeared']],
             ['tala',['你是大海選中的人,你一定做得到。','The ocean chose you. I know you can do it.'],['tala nod','fx hearts tala @選中|chose','moana face none @做得到|can']],
-            ['n',['莫娜擦乾眼淚,決定自己去找特菲蒂。','Moana wiped her tears and decided to go to Te Fiti herself.'],['moana lift @決定|decided','tala fade @決定|decided','fx glow off 66 @決定|decided','boat glide 112 248 1.2 1800 @找|go','moana glide 112 232 1 1800 @找|go']] ] },
+            ['n',['莫娜擦乾眼淚,決定自己去找特菲蒂。','Moana wiped her tears and decided to go to Te Fiti herself.'],['moana cry','moana nod @決定|decided','moana lift @決定|decided+900','tala fade @決定|decided','fx glow off 66 @決定|decided','boat glide 112 248 1.2 1800 @找|go','moana glide 112 232 1 1800 @找|go']] ] },
     { bg:'lavaSea', cast:{ heart:{k:'heart',x:30,y:200,hid:1}, teka:{k:'teka',x:78,y:262,s:1.5,face:-1,name:['特卡','Te Ka']}, tefiti:{k:'tefiti',x:78,s:1.25,face:-1,hid:1,name:['特菲蒂','Te Fiti']}, moana:{k:'moana',x:-8,name:['莫娜','Moana']}, maui:{k:'mauih',x:20,y:-60,hid:1,name:['毛伊','Maui']} },
       say:[ ['n',['莫娜回來了,毛伊也帶著魚鉤飛回來幫忙!','Moana came back, and Maui flew back with his hook to help!'],['moana go 24','maui show @毛伊|Maui','maui glide 12 262 1.35 900 @飛回來|flew','fx sparkle maui.hand @魚鉤|hook','moana face wow @幫忙|help']],
             ['n',['毛伊引開特卡,莫娜勇敢地走向前。','Maui distracted Te Ka, and Moana bravely walked forward.'],['maui run 50 @引開|distracted','maui run 4 @引開|distracted+900','fx fire teka @特卡|Ka','moana go 48 @走向前|walked','heart show @勇敢|bravely','heart glide 52 196 @走向前|walked']],
@@ -755,7 +806,7 @@ STORIES.push({ id:'moana', title:['莫娜','Moana'],
             ['n',['莫娜把綠色的心,輕輕放回她的胸口。','Moana gently put the green heart back into her chest.'],['heart glide 76 180 @放回|put','fx flash #c8ffd8 @胸口|chest','fx glow off heart @胸口|chest','heart hide @胸口|chest','teka swap tefiti @胸口|chest+200','fx sparkle tefiti @胸口|chest+400']] ] },
     { bg:'bloomT', cast:{ moana:{k:'moana',x:24,name:['莫娜','Moana']}, heihei:{k:'heihei',x:12,s:.55}, maui:{k:'mauih',x:44,name:['毛伊','Maui']}, tefiti:{k:'tefiti',x:78,s:1.25,face:-1,name:['特菲蒂','Te Fiti']} },
       say:[ ['n',['特菲蒂醒了過來,大地又開滿了花。','Te Fiti woke up, and the land bloomed with flowers again.'],['tefiti nod @醒了|woke','fx sparkle 60 200 @開滿|bloomed','fx hearts tefiti @花|flowers','moana face wow @花|flowers']],
-            ['tefiti',['謝謝你,勇敢的孩子。','Thank you, brave child.'],['tefiti lift','fx hearts moana @勇敢|brave','moana nod @謝謝|Thank']],
+            ['tefiti',['謝謝你,勇敢的孩子。','Thank you, brave child.'],['tefiti lift','fx hearts moana @勇敢|brave','moana bow @謝謝|Thank']],
             ['n',['莫娜回到家鄉,成了最棒的航海家。','Moana went home and became the best wayfinder of all.'],['moana jump @家鄉|home','maui wave @航海家|wayfinder','fx confetti @最棒|best','heihei jump @最棒|best']] ] }
   ],
   levels:{
@@ -833,9 +884,9 @@ STORIES.push({ id:'mulan', title:['花木蘭','Mulan'],
             ['n',['木蘭用聰明的辦法,搶走了單于的劍。','Mulan used a clever trick and took Shan Yu\'s sword.'],['mulan go 50 @辦法|trick','fx sparkle shanyu.hand @搶走|took','shanyu face wow @劍|sword','mulan go 42 @劍|sword+400']] ] },
     { bg:'cityPalace', cast:{ emperor:{k:'emperor',x:62,face:-1,ex:'wow',name:['皇帝','Emperor']}, shanyu:{k:'shanyu',x:72,face:-1,ex:'wow',name:['單于','Shan Yu']}, mulan:{k:'mulanw',x:42,name:['木蘭','Mulan']}, shang:{k:'shang',x:18,name:['李翔','Shang']}, mushu:{k:'mushu',x:-20,y:200,s:.7,name:['木須','Mushu']} },
       say:[ ['n',['木須點燃煙火,把單于打敗了!','Mushu lit the fireworks and defeated Shan Yu!'],['mushu glide 60 180 .7 900 @點燃|lit','fx fire mushu @點燃|lit+600','fx boom shanyu @打敗|defeated','fx confetti @煙火|fireworks','shanyu fade @打敗|defeated+300']],
-            ['emperor',['謝謝你,木蘭,你是中國的英雄!','Thank you, Mulan. You are a hero of China!'],['emperor nod @謝謝|Thank','fx sparkle mulan @英雄|hero','mulan face none @英雄|hero','shang nod @英雄|hero']] ] },
+            ['emperor',['謝謝你,木蘭,你是中國的英雄!','Thank you, Mulan. You are a hero of China!'],['emperor nod @謝謝|Thank','fx sparkle mulan @英雄|hero','mulan face none @英雄|hero','mulan bow @謝謝|Thank','shang nod @英雄|hero']] ] },
     { bg:'chinaHome', cast:{ mulan:{k:'mulan',x:-8,name:['木蘭','Mulan']}, fazhou:{k:'fazhou',x:56,face:-1,name:['爸爸','Father']}, shang:{k:'shang',x:112,face:-1,name:['李翔','Shang']} },
-      say:[ ['n',['木蘭回到家,爸爸緊緊抱住了她。','Mulan came home, and Father hugged her tight.'],['mulan go 40','fazhou go 48 @抱住|hugged','fx hearts fazhou @抱住|hugged']],
+      say:[ ['n',['木蘭回到家,爸爸緊緊抱住了她。','Mulan came home, and Father hugged her tight.'],['mulan go 40','fazhou go 48 @抱住|hugged','fazhou hug @抱住|hugged','mulan hug @抱住|hugged','fx hearts fazhou @抱住|hugged']],
             ['fazhou',['你平安回來,就是最好的禮物。','Having you home safe is the greatest gift.'],['fazhou nod','mulan face none','fx hearts mulan @禮物|gift']],
             ['n',['後來李翔也來看她,他們成了好朋友。','Later Shang came to see her, and they became good friends.'],['shang go 70 @李翔|Shang','mulan turn 1 @李翔|Shang','shang nod @好朋友|friends','mulan wave @好朋友|friends','fx sparkle 50 60 @好朋友|friends']] ] }
   ],
@@ -888,7 +939,7 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
             ['flynn',['好吧,我帶你去,不過別再打我!','Fine, I will take you. Just do not hit me again!'],['flynn face wow @別再|not','flynn lift @打我|hit','rapun jump @帶你去|take']] ] },
     { bg:'towerOut', cast:{ rope:{k:'hairrope',x:35,y:262,hid:1}, flynn:{k:'flynn',x:50,name:['費林','Flynn']}, rapun:{k:'rapun',x:35,y:60,s:.4,hid:1,name:['樂佩','Rapunzel']}, pascal:{k:'pascal',x:35,y:60,s:.3,hid:1} },
       say:[ ['n',['樂佩順著長頭髮,從塔上滑了下來。','Rapunzel slid down from the tower on her long hair.'],['rope show','rapun show','pascal show','rapun glide 35 262 1 2200 @滑了|slid','pascal glide 30 262 .6 2200 @滑了|slid']],
-            ['n',['她第一次踩到草地,開心得又跳又叫!','For the first time, she stepped on the grass and jumped for joy!'],['rope fade','rapun go 26 @草地|grass','rapun jump @開心|joy','rapun jump @又叫|joy+600','fx hearts rapun @開心|joy','fx sparkle rapun.feet @草地|grass']],
+            ['n',['她第一次踩到草地,開心得又跳又叫!','For the first time, she stepped on the grass and jumped for joy!'],['rope fade','rapun go 26 @草地|grass','rapun jump @開心|joy','rapun spin @又叫|joy+600','fx hearts rapun @開心|joy','fx sparkle rapun.feet @草地|grass']],
             ['n',['可是她又擔心媽媽會難過,心裡亂糟糟的。','But then she worried Mother would be sad, and she felt all mixed up.'],['rapun face sad @擔心|worried','rapun shiver @亂糟糟|mixed','rapun face none @亂糟糟|mixed+900','rapun jump @亂糟糟|mixed+1100','flynn emo 😅 @亂糟糟|mixed']] ] },
     { bg:'forestR', cast:{ rapun:{k:'rapun',x:-8,name:['樂佩','Rapunzel']}, pascal:{k:'pascal',x:-14,s:.6,name:['變色龍','Pascal']}, flynn:{k:'flynn',x:-20,name:['費林','Flynn']} },
       say:[ ['n',['一路上,他們一起冒險,成了好朋友。','Along the way, they had adventures together and became good friends.'],['rapun go 40','flynn go 56','pascal go 30','fx hearts rapun @好朋友|friends','fx hearts flynn @好朋友|friends+300']],
@@ -897,7 +948,7 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
       say:[ ['n',['晚上,他們坐著小船,來到湖上。','That night, they rowed a little boat out onto the lake.'],['boat glide 34 248 1.2 2600','rapun glide 28 232 1 2600','flynn glide 40 232 1.03 2600']],
             ['n',['天空飄起了成千上萬的天燈,好漂亮!','Thousands of floating lights rose into the sky. So beautiful!'],['fx lanterns on @天燈|lights','rapun face wow @天燈|lights','rapun lift @漂亮|beautiful']],
             ['rapun',['我終於看到了,比我想的還要美!','I finally saw them. They are even more beautiful than I dreamed!'],['rapun emo ✨ @終於|finally','fx sparkle 40 60 @美|beautiful']],
-            ['n',['兩個人互相看著對方,心裡都好開心。','They looked at each other and felt so happy.'],['rapun turn 1','flynn turn -1 @看著|looked','rapun face none','fx hearts rapun @開心|happy','fx hearts flynn @開心|happy+300']] ] },
+            ['n',['兩個人互相看著對方,心裡都好開心。','They looked at each other and felt so happy.'],['rapun turn 1','flynn turn -1 @看著|looked','rapun face none','rapun laugh @開心|happy','fx hearts rapun @開心|happy','fx hearts flynn @開心|happy+300']] ] },
     { bg:'towerIn', fx:['night on'], cast:{ rapun:{k:'rapun',x:20,name:['樂佩','Rapunzel']}, rapun2:{k:'rapun2',x:20,hid:1,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:-10,hid:1,name:['費林','Flynn']}, gothel:{k:'gothel',x:70,face:-1,name:['葛索','Gothel']}, gothelold:{k:'gothelold',x:70,face:-1,hid:1,name:['葛索','Gothel']} },
       say:[ ['n',['樂佩發現,自己就是王國失蹤的公主!','Rapunzel realized she was the kingdom\'s lost princess!'],['rapun face wow @公主|princess','fx sparkle rapun.head #ffe08a @公主|princess','rapun emo 👑 @失蹤|lost']],
             ['n',['葛索騙了她,只想用她的頭髮讓自己變年輕。','Gothel had tricked her, using her hair just to stay young.'],['gothel face angry @騙了|tricked','gothel go 50 @頭髮|hair','rapun face angry @騙了|tricked']] ] },
@@ -906,7 +957,7 @@ STORIES.push({ id:'rapunzel', title:['長髮公主','Tangled'],
             ['n',['費林剪斷了樂佩的頭髮,魔法一下子不見了!','Flynn cut Rapunzel\'s hair, and the magic was gone!'],['fx poof rapun.head @剪斷|cut','rapun swap rapun2 @剪斷|cut+200','fx sparkle rapun2 #F2C94C @魔法|magic']],
             ['n',['葛索一下子變老,化成灰塵不見了。','Gothel suddenly grew old and crumbled into dust.'],['gothel swap gothelold @變老|old','gothelold shiver @化成|crumbled','fx poof gothelold @灰塵|dust','gothelold fade @灰塵|dust']] ] },
     { bg:'towerIn', fx:['night on'], cast:{ rapun2:{k:'rapun2',x:20,ex:'sad',name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:36,name:['費林','Flynn']} },
-      say:[ ['n',['樂佩抱著費林大哭,一滴眼淚發出了金光。','Rapunzel held Flynn and cried. One tear began to glow golden.'],['flynn fall','rapun2 go 30','rapun2 crouch @抱著|held','rapun2 emo 😢 @大哭|cried','fx glow on flynn 0 70 #ffe08a @金光|golden','fx sparkle flynn #ffe08a @眼淚|tear']],
+      say:[ ['n',['樂佩抱著費林大哭,一滴眼淚發出了金光。','Rapunzel held Flynn and cried. One tear began to glow golden.'],['flynn fall','rapun2 go 30','rapun2 crouch @抱著|held','rapun2 cry @大哭|cried','fx glow on flynn 0 70 #ffe08a @金光|golden','fx sparkle flynn #ffe08a @眼淚|tear']],
             ['flynn',['樂佩……我好像好起來了。','Rapunzel... I think I am all better.'],['flynn stand','fx glow off flynn','rapun2 stand @好起來|better','fx hearts rapun2 @好起來|better','fx hearts flynn @好起來|better+300']] ] },
     { bg:'castleDay', cast:{ rapun2:{k:'rapun2',x:14,name:['樂佩','Rapunzel']}, flynn:{k:'flynn',x:28,name:['費林','Flynn']}, king:{k:'king',x:72,face:-1,name:['國王','King']}, queen:{k:'queenR',x:88,face:-1,name:['王后','Queen']} },
       say:[ ['n',['樂佩回到王宮,見到了真正的爸爸媽媽。','Rapunzel returned to the palace and met her real parents.'],['rapun2 go 52','queen go 62 @爸爸媽媽|parents','fx hearts queen @見到|met','king nod @爸爸|parents']],
@@ -961,12 +1012,12 @@ STORIES.push({ id:'sleeping', title:['睡美人','Sleeping Beauty'],
       say:[ ['n',['仙女們把公主藏進森林小屋,改叫她玫瑰。','The fairies hid the princess in a forest cottage and called her Briar Rose.'],['flora point @小屋|cottage','briar jump @玫瑰|Rose','fx sparkle briar.head @玫瑰|Rose']],
             ['n',['十六年過去,玫瑰長成了美麗的姑娘。','Sixteen years passed, and Rose grew into a lovely young woman.'],['fx sparkle briar @十六年|Sixteen','briar grow 1 1400 @長成|grew','bunny jump @美麗|lovely','bird glide 20 150 .8 @美麗|lovely','fauna nod @姑娘|woman']] ] },
     { bg:'glade', cast:{ briar:{k:'briar',x:20,name:['玫瑰','Briar Rose']}, bird:{k:'bird',x:6,y:170,s:.8}, bunny:{k:'bunny',x:34,s:.6}, prince:{k:'phillip',x:112,face:-1,name:['王子','Prince Phillip']} },
-      say:[ ['n',['玫瑰在森林裡唱歌,小動物都來陪她跳舞。','Rose sang in the woods, and the little animals danced with her.'],['briar emo 🎵 @唱歌|sang','bird glide 30 140 .8 @小動物|animals','bunny jump @跳舞|danced','briar turn @跳舞|danced','briar turn @跳舞|danced+500']],
-            ['n',['她遇見了一位王子,兩個人一起跳舞。','She met a prince, and the two of them danced together.'],['prince go 50 @王子|prince','briar face wow @遇見|met','briar turn 1 @跳舞|danced','prince turn @跳舞|danced+300','prince turn @跳舞|danced+700','fx hearts briar @一起|together']],
+      say:[ ['n',['玫瑰在森林裡唱歌,小動物都來陪她跳舞。','Rose sang in the woods, and the little animals danced with her.'],['briar emo 🎵 @唱歌|sang','bird glide 30 140 .8 @小動物|animals','bunny jump @跳舞|danced','briar spin @跳舞|danced','briar spin @跳舞|danced+950']],
+            ['n',['她遇見了一位王子,兩個人一起跳舞。','She met a prince, and the two of them danced together.'],['prince go 50 @王子|prince','briar face wow @遇見|met','briar turn 1 @遇見|met+700','prince bow @跳舞|danced+1200','briar bow @跳舞|danced+1500','briar spin @跳舞|danced+2800','prince turn @跳舞|danced+2900','prince turn @跳舞|danced+3300','fx hearts briar @一起|together']],
             ['prince',['今天晚上,我們在小屋再見面吧!','Let us meet again at your cottage tonight!'],['prince nod @晚上|tonight','briar jump @再見面|meet','fx hearts prince @小屋|cottage']] ] },
     { bg:'cottageWood', fx:['night on'], cast:{ briar:{k:'briar',x:26,name:['玫瑰','Briar Rose']}, flora:{k:'flora',x:50,face:-1,name:['花仙子','Flora']}, fauna:{k:'fauna',x:62,face:-1,name:['翠仙子','Fauna']}, merry:{k:'merry',x:74,face:-1,name:['藍仙子','Merryweather']} },
       say:[ ['flora',['其實你是公主,今天晚上要回王宮。','You are really a princess, and tonight you must go back to the palace.'],['flora point @公主|princess','briar face wow @公主|princess','fx sparkle briar.head #FAC775 @王宮|palace']],
-            ['n',['玫瑰好傷心,她不想離開心愛的人。','Rose was heartbroken. She did not want to leave the one she loved.'],['briar face sad @傷心|heartbroken','briar crouch @離開|leave','briar emo 😢 @心愛|loved','fauna face sad @心愛|loved']] ] },
+            ['n',['玫瑰好傷心,她不想離開心愛的人。','Rose was heartbroken. She did not want to leave the one she loved.'],['briar face sad @傷心|heartbroken','briar crouch @離開|leave','briar cry @心愛|loved','fauna face sad @心愛|loved']] ] },
     { bg:'spinRoom', cast:{ wheel:{k:'wheel',x:62,s:1,hid:1}, aurora:{k:'aurora',x:-8,ex:'sleep',name:['奧蘿拉','Aurora']}, mal:{k:'malS',x:84,face:-1,hid:1,name:['黑魔女','Maleficent']} },
       say:[ ['n',['回到王宮,黑魔女用綠光把公主引上高塔。','Back at the palace, Maleficent used a green light to lure the princess up the tower.'],['fx glow on 62 160 60 #7dff6a @綠光|green','aurora glide 34 262 1 2400 @引上|lure']],
             ['mal',['來吧孩子,摸一摸那個紡錘。','Come, child. Touch the spindle.'],['mal pop @來吧|Come','fx poof mal @來吧|Come','wheel pop @紡錘|spindle','mal point @摸一摸|Touch']] ] },
@@ -983,7 +1034,7 @@ STORIES.push({ id:'sleeping', title:['睡美人','Sleeping Beauty'],
             ['n',['真愛的吻打破了魔法,公主醒過來了!','True love\'s kiss broke the spell, and the princess woke up!'],['fx flash #fff3c4 @打破|broke','fx sparkle aurora #ffe08a @醒|woke','aurora stand @醒|woke','aurora face none @醒|woke','prince stand @醒|woke','fx hearts aurora @醒|woke+400']] ] },
     { bg:'ballroom', cast:{ aurora:{k:'aurora',x:34,name:['奧蘿拉','Aurora']}, auroraB:{k:'auroraB',x:34,hid:1,name:['奧蘿拉','Aurora']}, prince:{k:'phillip',x:48,face:-1,name:['王子','Prince Phillip']}, king:{k:'king',x:76,face:-1,name:['國王','King']}, queen:{k:'queenR',x:90,face:-1,name:['王后','Queen']}, flora:{k:'flora',x:6,y:160,s:.7}, merry:{k:'merry',x:16,y:150,s:.7} },
       say:[ ['n',['大家都醒了,國王和王后高興極了。','Everyone woke up, and the king and queen were overjoyed.'],['king jump @高興|overjoyed','queen jump @高興|overjoyed','fx confetti @醒了|woke','fx hearts queen @高興|overjoyed']],
-            ['n',['公主和王子一起跳舞,仙女還把禮服一下變藍、一下變粉紅!','The princess and prince danced, and the fairies changed her dress from blue to pink!'],['aurora turn @跳舞|danced','prince turn @跳舞|danced','fx beam merry aurora #7fb0f0 @變藍|blue','aurora swap auroraB @變藍|blue+600','fx beam flora auroraB #ff9ab8 @粉紅|pink','auroraB swap aurora @粉紅|pink+600']],
+            ['n',['公主和王子一起跳舞,仙女還把禮服一下變藍、一下變粉紅!','The princess and prince danced, and the fairies changed her dress from blue to pink!'],['aurora spin @跳舞|danced','prince turn @跳舞|danced','fx beam merry aurora #7fb0f0 @變藍|blue','aurora swap auroraB @變藍|blue+600','fx beam flora auroraB #ff9ab8 @粉紅|pink','auroraB swap aurora @粉紅|pink+600']],
             ['n',['他們從此過著幸福快樂的日子。','And they lived happily ever after.'],['fx hearts aurora @幸福|happily','fx hearts prince @快樂|ever','aurora turn @快樂|ever']] ] }
   ],
   levels:{
@@ -1036,7 +1087,7 @@ STORIES.push({ id:'snow', title:['白雪公主','Snow White'],
             ['n',['他不忍心,把刀放下來了。','He could not do it, and he put the knife down.'],['hunter face sad @不忍心|could','hunter crouch @放下|down']],
             ['hunter',['快逃吧,跑得越遠越好!','Run away! Run as far as you can!'],['hunter stand','hunter point @快逃|Run','snow run 112 @越遠|far','bird glide 112 120 .8 @越遠|far']] ] },
     { bg:'scaryWood', cast:{ snow:{k:'snow',x:-8,name:['白雪公主','Snow White']}, bunny:{k:'bunny',x:76,s:.7,hid:1,name:['小兔子','Bunny']}, bird:{k:'bird',x:60,y:160,s:.8,hid:1,name:['小鳥','Bird']}, deer:{k:'bunny',x:88,s:.6,hid:1} },
-      say:[ ['n',['森林好黑,樹枝像怪手,公主嚇得哭了起來。','The forest was dark, and the branches looked like hands. She cried in fright.'],['snow run 40','fx shake @怪手|hands','snow fear @嚇得|fright','snow crouch @哭|cried','snow emo 😢 @哭|cried']],
+      say:[ ['n',['森林好黑,樹枝像怪手,公主嚇得哭了起來。','The forest was dark, and the branches looked like hands. She cried in fright.'],['snow run 40','fx shake @怪手|hands','snow fear @嚇得|fright','snow crouch @哭|cried','snow cry @哭|cried']],
             ['n',['天亮了,小動物們一隻一隻靠過來,陪著她。','Morning came, and little animals came close to keep her company.'],['fx sparkle 50 60 #fff3c4 @天亮|Morning','fx sparkle 30 90 #fff3c4 @天亮|Morning+300','bunny pop @小動物|animals','deer pop @一隻|animals+300','bird show @靠過來|close','bird glide 52 170 .8 @靠過來|close','snow stand @陪著|company','snow face none @陪著|company']],
             ['bird',['別怕,跟我來,前面有一間小屋!','Do not be afraid. Follow me, there is a little house ahead!'],['bird glide 70 150 .8 @跟我來|Follow','snow go 56 @小屋|house','bunny jump @別怕|afraid']] ] },
     { bg:'cottageS', cast:{ snow:{k:'snow',x:-8,name:['白雪公主','Snow White']}, bird:{k:'bird',x:-14,y:170,s:.8}, bunny:{k:'bunny',x:-18,s:.6} },
@@ -1118,7 +1169,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
             ['n',['她有一個大夢想:開一家自己的餐廳!','She had a big dream: to open her very own restaurant!'],['tiana emo 💭 @夢想|dream','sign pop @餐廳|restaurant','fx sparkle sign @餐廳|restaurant','tiana face wow @自己|own']],
             ['n',['為了存錢,她每天辛苦工作,很少休息。','To save money, she worked hard every day and hardly rested.'],['sign fade @存錢|save','tiana go 20 @辛苦|hard','tiana knock @工作|worked','tiana go 50 @每天|every+600','tiana face sad @很少|hardly','tiana shiver @休息|rested']] ] },
     { bg:'diner', cast:{ plate:{k:'beignet',x:36,y:236,s:.8,hid:1}, tiana:{k:'tiana',x:50,ex:'sad',name:['蒂安娜','Tiana']}, charlotte:{k:'charlotte',x:110,face:-1,name:['夏洛特','Charlotte']} },
-      say:[ ['n',['好朋友夏洛特跑進餐館,開心得又叫又跳。','Her best friend Charlotte ran into the diner, squealing with joy.'],['charlotte run 66 @夏洛特|Charlotte','charlotte jump @又叫又跳|squealing','tiana face none @好朋友|friend']],
+      say:[ ['n',['好朋友夏洛特跑進餐館,開心得又叫又跳。','Her best friend Charlotte ran into the diner, squealing with joy.'],['charlotte run 66 @夏洛特|Charlotte','charlotte jump @又叫又跳|squealing','charlotte clap @又叫又跳|squealing+700','tiana laugh @好朋友|friend+400','tiana face none @好朋友|friend']],
             ['charlotte',['蒂安娜,今晚舞會,請你做好多甜甜圈!','Tiana, please make lots of beignets for my party tonight!'],['charlotte lift @舞會|party','plate pop @甜甜圈|beignets','fx sparkle plate @甜甜圈|beignets']],
             ['n',['蒂安娜好高興,這樣就能存到開餐廳的錢了!','Tiana was thrilled. Now she could save enough for her restaurant!'],['tiana jump @高興|thrilled','tiana emo 💰 @存到|save','fx hearts tiana @餐廳|restaurant']] ] },
     { bg:'streetNO', cast:{ naveen:{k:'naveen',x:-8,name:['納文王子','Prince Naveen']}, frogN:{k:'frogN',x:40,y:276,hid:1,name:['青蛙納文','Frog Naveen']}, facilier:{k:'facilier',x:76,face:-1,hid:1,name:['法西里耶','Dr. Facilier']} },
@@ -1301,7 +1352,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
   const DW = [['#E24B4A','#378ADD'],['#EF9F27','#3B6D11'],['#FAC775','#534AB7'],['#97C459','#993C1D'],['#85B7EB','#444441'],['#AFA9EC','#0F6E56'],['#F0997B','#712B13']];
   function person(o) {
     const legs = o.skirt ? '' : '';
-    return `<g class="flip"><ellipse class="shadow" cx="60" cy="183" rx="24" ry="5" fill="#000" opacity=".16"/><g class="body">
+    return `<g class="flip"><ellipse class="shadow" cx="60" cy="183" rx="24" ry="5" fill="#000" opacity=".16"/><g class="life"><g class="body">
       ${o.braid ? `<path d="M56 62 Q16 120 40 192 Q60 208 92 196 Q72 150 76 62Z" fill="${o.hair}"/><path d="M40 192 Q60 208 92 196" stroke="${o.braidc || '#d9a62a'}" stroke-width="3" fill="none"/>` : ''}
       ${o.cape ? `<path d="M40 82 L80 82 L96 168 L24 168Z" fill="${o.cape}" opacity=".9"/>` : ''}
       <g class="legL"><rect x="45" y="155" width="9" height="26" rx="3" fill="${o.skin}"/><ellipse cx="50" cy="182" rx="8" ry="4" fill="${o.shoe}"/></g>
@@ -1340,7 +1391,8 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
         <path class="mx m-angry" d="M54 64 L66 63" stroke="#A32D2D" stroke-width="2.4" stroke-linecap="round"/>
         <path class="mx m-sleep" d="M56 63 h8" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
         <ellipse class="mx m-talk" cx="60" cy="64" rx="4" ry="3.2" fill="#7a1f2a"/>
-      </g></g></g>`;
+        <g class="tears"><ellipse cx="49" cy="59" rx="2.6" ry="3.8" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/><ellipse cx="71" cy="59" rx="2.6" ry="3.8" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/></g>
+      </g></g></g></g>`;
   }
   const PROP = {
     mirror: () => `<g class="flip"><g class="body"><ellipse cx="60" cy="100" rx="42" ry="64" fill="#FAC775" stroke="#BA7517" stroke-width="6"/><ellipse cx="60" cy="100" rx="33" ry="55" fill="#CECBF6"/><path d="M42 90 Q60 70 78 90 Q60 120 42 90Z" fill="#fff" opacity=".6"/><rect x="48" y="162" width="24" height="18" fill="#BA7517"/></g></g>`,
@@ -1385,10 +1437,14 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     door: () => `<g class="flip"><g class="body"><rect x="22" y="44" width="76" height="140" rx="4" fill="#6d4228"/><path d="M30 182 V70 Q60 34 90 70 V182Z" fill="#a3683e" stroke="#5a3420" stroke-width="3"/><path d="M42 100 q18 -22 36 0 q-18 14 -36 0Z M42 140 q18 -22 36 0 q-18 14 -36 0Z" fill="#2f7a5a"/><circle cx="60" cy="100" r="5" fill="#c0392b"/><circle cx="60" cy="140" r="5" fill="#f7c948"/><circle cx="82" cy="124" r="4" fill="#f7c948"/></g></g>`,
     bed: () => `<g class="flip"><g class="body"><rect x="-10" y="150" width="140" height="30" rx="6" fill="#8d6e63"/><rect x="-6" y="138" width="132" height="18" rx="8" fill="#fff"/><rect x="30" y="134" width="90" height="22" rx="6" fill="#ED93B1"/></g></g>`
   };
+  /* 會呼吸的動物/會說話的東西(其他道具不動) */
+  const ALIVE = ['bunny','bird','mouse','fish','crab','heihei','pua','abu','rajah','pascal','olaf','sven','mushu','frogN','frogT','louis','wave','teapot','clock','candle','teka','dragon'];
+  /* 結冰/石化的角色:不呼吸、不眨眼 */
+  const STATUE = ['annaice'];
   function build(c) {
-    if (PROP[c.k]) return { html: PROP[c.k](), s: c.s || 1 };
+    if (PROP[c.k]) { let h = PROP[c.k](); if (ALIVE.includes(c.k) && h.includes('<g class="body">') && /<\/g>$/.test(h)) h =h.replace('<g class="body">', '<g class="life"><g class="body">').replace(/<\/g>$/, '</g></g>'); return { html: h, s: c.s || 1 }; }
     if (c.k === 'dwarf') { const d = DW[(c.i || 0) % 7]; return { html: person({ skin:'#F5C4B3', hair:'#F1EFE8', top:d[0], sleeve:d[0], pants:d[1], shoe:'#412402', hat:d[0], beard:'#F1EFE8' }), s: c.s || .62 }; }
-    const o = OPT[c.k]; return { html: person(o), s: c.s || o.s };
+    const o = OPT[c.k]; let h = person(o); if (STATUE.includes(c.k)) h = h.replace('class="life"', 'class="still-body"'); return { html: h, s: c.s || o.s };
   }
 
   /* ====== 配音:每個角色不同的音高、語速,盡量挑男/女聲 ====== */
@@ -1431,12 +1487,15 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       const bg = BG[sc.bg]().replace(/(id="|url\(#)(g[\w-]*)/g, `$1$2_${n}`);
       const svg = document.createElementNS(NS, 'svg');
       svg.setAttribute('viewBox', '0 0 680 330'); svg.setAttribute('preserveAspectRatio', 'xMidYMax meet'); svg.id = 'stage';
-      svg.innerHTML = `<defs><radialGradient id="vig_${n}" cx="50%" cy="42%" r="78%"><stop offset="62%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#1a0f2e" stop-opacity=".38"/></radialGradient></defs><g class="world"><g class="bgL">${bg}</g><g class="tintL"></g><g class="persistL"></g><g class="castL"></g><g class="fxL"></g><g class="wxL"></g></g><rect x="-400" y="-400" width="1480" height="730" fill="url(#vig_${n})" pointer-events="none"/>`;
+      svg.innerHTML = `<defs><radialGradient id="vig_${n}" cx="50%" cy="42%" r="78%"><stop offset="62%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#1a0f2e" stop-opacity=".38"/></radialGradient></defs><g class="cam"><g class="world"><g class="bgL">${bg}</g><g class="tintL"></g><g class="persistL"></g><g class="castL"></g><g class="fxL"></g><g class="wxL"></g></g></g><rect x="-400" y="-400" width="1480" height="730" fill="url(#vig_${n})" pointer-events="none"/>`;
       if (old && fade) { old.removeAttribute('id'); old.classList.add('old'); host.insertBefore(svg, old); requestAnimationFrame(() => requestAnimationFrame(() => old.classList.add('out'))); setTimeout(() => old.remove(), 700); }
       else { host.innerHTML = ''; host.appendChild(svg); }
       this.svg = svg; this.actors = {}; this.state = {};
       ['tint', 'persist', 'cast', 'fx', 'wx'].forEach(k => this.L[k] = svg.querySelector('.' + k + 'L'));
-      this.world = svg.querySelector('.world');
+      this.world = svg.querySelector('.world'); this.camEl = svg.querySelector('.cam'); this.camK = 1;
+      /* 角色隨機眨眼,畫面比較有生命 */
+      clearInterval(this.blinker);
+      if (!STILL) this.blinker = setInterval(() => { if (n !== MOUNT) return; const ps = Object.values(this.actors).filter(a => !a.hid && !PROP[a.k] && !STATUE.includes(a.k) && !a.el.classList.contains('ex-sleep') && !a.el.classList.contains('fallen')); if (ps.length) this.pulse(ps[Math.floor(Math.random() * ps.length)], 'blink', 320); }, 1300);
       Object.entries(sc.cast).forEach(([id, c]) => {
         const b = build(c), g = document.createElementNS(NS, 'g');
         g.setAttribute('class', 'cast'); g.innerHTML = b.html; this.L.cast.appendChild(g);
@@ -1580,9 +1639,27 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
           return this.burst(340, 120, 18, i => STAR(i % 2 ? '#ffe08a' : '#fff', 7), 220, 1600); }
       }
     },
+    /* 鏡頭:把幾個角色框進畫面並放大(特寫);ids 空的就回到全景 */
+    cam(ids, kmax = 1.35, fast = false) {
+      if (!this.camEl) return;
+      const as = (ids || []).map(r => typeof r === 'object' ? r : this.actors[String(r).split('.')[0]]).filter(a => a && !a.hid && a.x >= -5 && a.x <= 105);
+      let k = 1, tx = 0, ty = 0;
+      if (as.length) {
+        const xs = as.map(a => a.x * 6.8), x1 = Math.min(...xs) - 90, x2 = Math.max(...xs) + 90;
+        const top = Math.min(...as.map(a => a.y - 190 * a.s - 30)), bot = Math.max(...as.map(a => a.y));
+        k = Math.min(kmax, 680 / (x2 - x1), 330 / Math.max(60, bot - top + 40));
+        if (k < 1.08) k = 1;
+        else { const cx = (x1 + x2) / 2, cy = (top + bot) / 2 + 10;
+          tx = Math.min(0, Math.max(680 - 680 * k, 340 - cx * k)); ty = Math.min(0, Math.max(330 - 330 * k, 165 - cy * k)); }
+      }
+      this.camK = k;
+      this.camEl.style.transition = fast ? 'none' : 'transform 1.1s cubic-bezier(.45,.05,.35,1)';
+      this.camEl.style.transform = `translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${k.toFixed(3)})`;
+    },
     flashAt(x, y, c) { this.burst(x, y, 1, () => `<circle r="26" fill="${c}" opacity=".6"/>`, 1, 400); },
     act(id, verb, args = [], fast = false) {
       if (id === 'fx') return Promise.resolve(this.fx(verb, args, fast));
+      if (id === 'cam') { this.camLock = true; this.cam(verb === 'zoom' ? [args[0]] : [], +(args[1] || 1.6), fast); return fast ? Promise.resolve() : wait(1100); }
       const a = this.actors[id]; if (!a) return Promise.resolve();
       const done = ms => fast ? Promise.resolve() : wait(ms);
       switch (verb) {
@@ -1593,7 +1670,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
           a.el.classList.remove('crouchd', 'fallen');
           a.x = nx; a.y = ny; a.s = ns;
           if (fast) { this.place(a, true); return Promise.resolve(); }
-          const cls = verb === 'glide' ? 'gliding' : 'walking';
+          const cls = verb === 'glide' ? 'gliding' : verb === 'run' ? 'running' : 'walking';
           a.el.style.transition = `transform ${dur}ms cubic-bezier(.42,.05,.58,.95), opacity .4s`; a.el.classList.add(cls); this.place(a);
           return wait(dur).then(() => a.el.classList.remove(cls));
         }
@@ -1628,6 +1705,10 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
           return fast ? Promise.resolve() : this.pulse(a, verb, verb === 'lift' ? 1500 : verb === 'shiver' ? 1400 : 1000);
         case 'fear': if (fast) return Promise.resolve(); this.bubble(a, '😨'); return this.pulse(a, 'fear', 1000);
         case 'point': if (fast) return Promise.resolve(); return this.pulse(a, 'point', 1200);
+        case 'spin': case 'bow': case 'clap': case 'hug': case 'laugh': case 'no':
+          return fast ? Promise.resolve() : this.pulse(a, verb, { spin: 900, bow: 1200, clap: 1200, hug: 1600, laugh: 1350, no: 900 }[verb]);
+        case 'think': if (fast) return Promise.resolve(); this.bubble(a, '💭'); return this.pulse(a, 'think', 1800);
+        case 'cry': if (fast) return Promise.resolve(); return this.pulse(a, 'cry', 2100);
       }
       return Promise.resolve();
     }
@@ -1715,6 +1796,20 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
   };
   Levels.choose = Levels.pick; Levels.match = Levels.pair;
 
+  /* 這一句的鏡頭要框誰:有人說話 → 說話的人+這句裡被動到的角色;旁白 → 只有一個角色在表演情緒時才特寫 */
+  const shotOf = (who, acts, after) => {
+    const ps = (acts || []).map(parseAct), ids = new Set(), dest = [];
+    ps.forEach(p => { if (p.id === 'fx' || p.id === 'cam') p.args.forEach(r => { const id = String(r).split('.')[0]; if (Stage.actors[id]) ids.add(id); }); else if (Stage.actors[p.id]) { ids.add(p.id); if (p.verb === 'swap' && Stage.actors[p.args[0]]) ids.add(p.args[0]);
+      /* 走路的人:目的地也要框進來,才不會走出畫面 */
+      const a = Stage.actors[p.id]; if (after) return; if (['pop', 'show'].includes(p.verb)) dest.push({ x: a.x, y: a.y, s: a.s });
+      if (['go', 'run', 'glide'].includes(p.verb)) dest.push({ x: +p.args[0], y: p.args[1] != null ? +p.args[1] : a.y, s: p.args[2] != null ? +p.args[2] : a.s }); } });
+    if (who !== 'n') return Stage.actors[who] ? [who, ...[...ids].filter(i => i !== who), ...dest] : [];
+    /* 天氣、爆炸這類全畫面特效要看全景 */
+    if (ps.some(p => p.id === 'fx' && WIDEFX.includes(p.verb))) return [];
+    const one = [...ids];
+    return one.length && one.length <= 3 ? [...one, ...dest] : [];
+  };
+  const WIDEFX = ['snow', 'storm', 'winter', 'thaw', 'sweep', 'lanterns', 'confetti', 'shake', 'flash', 'dim', 'boom', 'lightning', 'rain', 'night', 'sea', 'ice', 'freeze'];
   /* ====== 播放器 ====== */
   const Player = {
     S: null, si: 0, li: -1, busy: false, lvTok: 0,
@@ -1756,7 +1851,9 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       $('#cap').innerHTML = `${name}<div class="txt">${T(text)}</div>`;
       const k = who === 'n' ? null : (sc.cast[who] || {}).k, est = estMs(text, k), sp = this.speak(text, k, est), spk = Stage.actors[who];
       if (spk) { spk.el.classList.add('talking'); setTimeout(() => spk.el.classList.remove('talking'), est); }
-      this.busy = true; await Promise.all([runActs(acts, STILL, zh, text, est), sp]); this.busy = false;
+      Stage.camLock = false; const shot = after => { if (!Stage.camLock) Stage.cam(shotOf(who, acts, after), who === 'n' ? 1.25 : 1.35, STILL); };
+      shot(); const gen = MOUNT;
+      this.busy = true; await Promise.all([runActs(acts, STILL, zh, text, est).then(() => { if (gen === MOUNT) shot(true); }), sp]); this.busy = false;
     },
     prev() {
       if (this.busy) return;
@@ -1769,6 +1866,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       if (!lv) return after();
       /* 關卡進行中藏起上一句/再一句;過關只算一次,中途換頁或換語言就作廢 */
       const tok = ++this.lvTok, seed = [...this.S.id].reduce((a, c) => a + c.charCodeAt(0), 0) + this.si * 7 + 8;
+      Stage.camLock = true; Stage.cam([], 1, true);
       $('#cap').style.display = 'none'; $('.nav').style.visibility = 'hidden'; const host = $('#lv'); host.style.display = '';
       Levels.run(lv, host, () => { if (tok !== this.lvTok) return; this.lvTok++; $('#lv').style.display = 'none'; $('.nav').style.visibility = ''; document.querySelectorAll('.hot').forEach(h => h.remove()); after(); }, seed);
     }
@@ -1776,14 +1874,14 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
 
   /* ====== 首頁 ====== */
   const Home = {
-    show() {
+    show() { clearInterval(Stage.blinker);
       CUR = LANG;
       $('#app').innerHTML = `<div class="home"><div class="hometop">${langBtn()}</div><div style="font-size:64px">👑</div><h1>${U('home')}</h1>${STORIES.map((S, i) => { const p = store.get('princess_' + S.id); return `<div class="card2"><h2>${esc(tx(S.title))}</h2>${LANG === 'en' && !hasEn(S) ? `<p class="zhonly">${U('zhOnly')}</p>` : ''}<p>${U('scenes')(S.scenes.length, Object.keys(S.levels || {}).length)}</p><button data-go="${i}">${U('start')}</button> ${p ? `<button class="ghost" data-cont="${i}">${U('cont')}</button>` : ''}</div>`; }).join('')}</div>`;
       $('#lang').onclick = () => { setLang(LANG === 'en' ? 'zh' : 'en'); this.show(); };
       document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => Player.start(STORIES[+b.dataset.go], 0));
       document.querySelectorAll('[data-cont]').forEach(b => b.onclick = () => { const S = STORIES[+b.dataset.cont]; Player.start(S, store.get('princess_' + S.id) || 0); });
     },
-    finish(S) { $('#app').innerHTML = `<div class="home"><div style="font-size:64px">🌟</div><h1>${U('end')}</h1><div class="card2"><p>${T(U('endMsg')(tx(S.title)))}</p><p>${T(tx(S.parent) || '')}</p><button id="again">${U('replay')}</button></div></div>`; $('#again').onclick = () => Home.show(); }
+    finish(S) { clearInterval(Stage.blinker); $('#app').innerHTML = `<div class="home"><div style="font-size:64px">🌟</div><h1>${U('end')}</h1><div class="card2"><p>${T(U('endMsg')(tx(S.title)))}</p><p>${T(tx(S.parent) || '')}</p><button id="again">${U('replay')}</button></div></div>`; $('#again').onclick = () => Home.show(); }
   };
   window.__open = (si, li, st) => Player.start(STORIES[st || 0], si, li || 0);
   window.__stories = STORIES; window.__test = { Stage, runActs, estMs, Levels };
