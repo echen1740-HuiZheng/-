@@ -41,8 +41,10 @@ button.ghost{background:#4b3a7a;color:#fff}
 .ex-sad .m-sad,.ex-wow .m-wow,.ex-angry .m-angry,.ex-sleep .m-sleep,.ex-sleep .e-shut,.ex-sad .b-sad,.ex-angry .b-angry,.ex-wow .b-wow{display:inline}
 .talking .m-talk{display:inline;animation:tk .28s steps(1) infinite}
 @keyframes tk{50%{opacity:0}}
-.jump .body{animation:jp .6s ease-out 1}
-@keyframes jp{40%{transform:translateY(-34px)}70%{transform:translateY(0)}85%{transform:translateY(-6px)}}
+.jump .body{animation:jp .78s cubic-bezier(.33,.66,.4,1) 1;transform-origin:60px 182px}
+@keyframes jp{0%{transform:none}16%{transform:translateY(3px) scale(1.07,.9)}46%{transform:translateY(-38px) scale(.94,1.08)}72%{transform:translateY(0) scale(1.09,.88)}86%{transform:translateY(-3px) scale(.98,1.02)}100%{transform:none}}
+.jump .shadow{animation:shj .78s cubic-bezier(.33,.66,.4,1) 1;transform-origin:60px 183px}
+@keyframes shj{46%{transform:scale(.62);opacity:.08}}
 .knock .armR{animation:kn .3s ease-in-out 3;transform-origin:82px 88px}
 @keyframes kn{50%{transform:rotate(-60deg)}}
 .shiver .body{animation:sh .1s 14}
@@ -51,7 +53,14 @@ button.ghost{background:#4b3a7a;color:#fff}
 .lift .armL{transform:rotate(150deg);transform-origin:38px 88px}
 /* 細部動作:呼吸、走路擺手、跑步前傾、說話點頭比手勢 */
 .life{animation:br 3.4s ease-in-out infinite;transform-origin:60px 182px}
-@keyframes br{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,1.024)}}
+@keyframes br{0%,100%{transform:scale(1,1) rotate(-.5deg)}50%{transform:scale(1.012,1.024) rotate(.5deg)}}
+.hairb{animation:hs 3.4s ease-in-out infinite;transform-origin:60px 56px}
+@keyframes hs{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
+.walking .hairb{animation:hs .5s ease-in-out infinite}.running .hairb{animation:hs .28s ease-in-out infinite}
+.skirt{animation:sk 3.4s ease-in-out infinite;transform-origin:60px 118px}
+@keyframes sk{0%,100%{transform:skewX(-1.2deg)}50%{transform:skewX(1.2deg)}}
+.walking .capeg,.running .capeg{animation:cp .5s ease-in-out infinite;transform-origin:60px 82px}
+@keyframes cp{0%,100%{transform:skewX(-4deg)}50%{transform:skewX(3deg)}}
 .walking:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armL{animation:as .5s ease-in-out infinite;transform-origin:38px 88px}
 .walking:not(.point):not(.lift):not(.wave):not(.knock):not(.clap):not(.hug):not(.think) .armR{animation:as .5s ease-in-out infinite reverse;transform-origin:82px 88px}
 @keyframes as{0%,100%{transform:rotate(14deg)}50%{transform:rotate(-14deg)}}
@@ -446,7 +455,7 @@ EXT.push(A => {
   A.PROP.wolf = () => `<g class="flip"><g class="body"><path d="M14 170 Q20 140 56 140 Q86 138 96 128 L112 120 L108 136 Q116 142 104 150 Q92 152 90 160 L92 184 L82 184 L78 164 Q56 170 40 166 L38 184 L28 184 L28 166 Q10 172 2 156 Q10 160 14 170Z" fill="#4a4a5a"/><polygon points="98,124 102,110 108,124" fill="#4a4a5a"/><circle cx="104" cy="130" r="2.5" fill="#ffd24a"/><path d="M106 146 l4 4 l3 -4" stroke="#fff" stroke-width="1.5" fill="none"/></g></g>`;
   A.PROP.cage = () => `<g class="flip"><g class="body"><rect x="4" y="40" width="112" height="8" fill="#5a5a6a"/>${[10, 28, 46, 64, 82, 100].map(x => `<rect x="${x}" y="44" width="6" height="140" fill="#6a6a7a"/>`).join('')}<rect x="4" y="110" width="112" height="6" fill="#5a5a6a"/></g></g>`;
   A.PROP.book = () => `<g class="flip"><g class="body"><circle cx="60" cy="160" r="22" fill="#fff3c4" opacity=".4"/><path d="M38 150 Q50 144 60 150 Q70 144 82 150 V176 Q70 170 60 176 Q50 170 38 176Z" fill="#fff8e7" stroke="#a32d2d" stroke-width="3"/><line x1="60" y1="150" x2="60" y2="176" stroke="#a32d2d" stroke-width="2"/></g></g>`;
-  A.OPT.adam = { skin:'#F5C4B3', hair:'#c98a3a', top:'#3a5aa8', sleeve:'#3a5aa8', pants:'#222', shoe:'#111', collar:'#FAC775', long:1, s:1.1 };
+  A.OPT.adam = { lash:0, skin:'#F5C4B3', hair:'#c98a3a', top:'#3a5aa8', sleeve:'#3a5aa8', pants:'#222', shoe:'#111', collar:'#FAC775', long:1, s:1.1 };
   A.OPT.vil1 = { skin:'#F5C4B3', hair:'#6d4228', top:'#5a7a3a', sleeve:'#5a7a3a', pants:'#4a3a2a', shoe:'#222', hat:'#6d4228', torch:1, s:.98 };
   A.OPT.vil2 = { skin:'#e8c4b0', hair:'#2a2a2a', top:'#8a5a3a', sleeve:'#8a5a3a', pants:'#3a3a4a', shoe:'#222', beard:'#2a2a2a', torch:1, s:1.02 };
   A.OPT.gastont = { skin:'#F5C4B3', hair:'#2a1a12', top:'#c0392b', sleeve:'#c0392b', pants:'#4a2e14', shoe:'#222', torch:1, s:1.22 };
@@ -609,7 +618,7 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
             ['anna',['姊姊,你要不要一起堆雪人?','Elsa, do you want to build a snowman?'],['anna go 62','anna knock @姊姊|Elsa','elsa crouch @堆雪人|snowman']] ] },
     { bg:'ballroom', cast:{ hans:{k:'hans',x:104,face:-1,hid:1,name:['漢斯','Hans']}, elsaq:{k:'elsaq',x:78,face:-1,name:['艾莎','Elsa']}, anna:{k:'anna',x:8,name:['安娜','Anna']} },
       say:[ ['n',['好多年過去,艾莎長大,當上了女王。','Many years later, Elsa grew up and became the queen.'],['elsaq nod @女王|queen','fx sparkle elsaq.head @女王|queen','fx confetti @女王|queen']],
-            ['n',['城堡開舞會,安娜開心得轉圈圈。','The castle had a big party, and Anna happily spun around.'],['anna go 26','anna jump @轉圈圈|spun','anna spin @轉圈圈|spun+300','anna spin @轉圈圈|spun+1250']],
+            ['n',['城堡開舞會,安娜開心得轉圈圈。','The castle had a big party, and Anna happily spun around.'],['anna go 26','anna jump @轉圈圈|spun','anna spin @轉圈圈|spun+800','anna spin @轉圈圈|spun+1750']],
             ['n',['她遇見了漢斯王子,兩個人一見面就好喜歡對方。','She met Prince Hans, and they liked each other right away.'],['hans show @遇見|met','hans go 42 @遇見|met','fx hearts anna @喜歡|liked','fx hearts hans @喜歡|liked+300']],
             ['anna',['姊姊,我要跟漢斯結婚!','Elsa, I am going to marry Hans!'],['anna go 56','hans go 46 @300','anna jump @結婚|marry']],
             ['elsaq',['不行!你才剛認識他。','No! You just met him.'],['elsaq face angry','elsaq no @不行|No','elsaq point @認識|met','anna face sad @認識|met']] ] },
@@ -761,7 +770,7 @@ EXT.push(A => {
     <rect x="-400" y="176" width="1480" height="64" fill="#3aa0e0"/><path d="M200 240 Q440 20 760 240Z" fill="#58c77c"/><path d="M300 240 Q460 90 640 240Z" fill="#7cd18a"/><path d="M-400 236 Q0 224 340 236 T1080 232 V730 H-400Z" fill="url(#gG)"/>
     ${Array.from({ length: 24 }, (_, i) => `<circle class="amb-tw" cx="${(A.RND(i) * 760 - 40).toFixed(0)}" cy="${(140 + A.RND(i + 5) * 170).toFixed(0)}" r="${(4 + A.RND(i + 1) * 4).toFixed(1)}" fill="${['#ED93B1', '#FAC775', '#fff', '#ff7aa8'][i % 4]}" style="--dl:-${(A.RND(i) * 2).toFixed(1)}s"/>`).join('')}`;
   A.PROP.coconut = () => `<g class="flip"><g class="body"><circle cx="60" cy="168" r="14" fill="#3a2a1a"/><path d="M50 160 q10 6 20 0" stroke="#1a120a" stroke-width="2" fill="none"/></g></g>`;
-  A.OPT.mauih = { skin:'#a8683f', hair:'#111', top:'#a8683f', sleeve:'#a8683f', pants:'#7a4a2a', shoe:'#a8683f', long:1, tattoo:1, hook:1, s:1.35 };
+  A.OPT.mauih = { lash:0, skin:'#a8683f', hair:'#111', top:'#a8683f', sleeve:'#a8683f', pants:'#7a4a2a', shoe:'#a8683f', long:1, tattoo:1, hook:1, s:1.35 };
   A.OPT.moanak = { skin:'#c68a5e', hair:'#1f130c', top:'#E24B4A', sleeve:'#c68a5e', skirt:'#a86b36', shoe:'#c68a5e', long:1, s:.62 };
   A.OPT.talag = { skin:'#bfe8ff', hair:'#ffffff', top:'#7fd0f0', sleeve:'#7fd0f0', skirt:'#9fe3ff', shoe:'#bfe8ff', long:1, s:.95 };
   A.VP.mauih = A.VP.maui; A.VP.moanak = ['f', 1.6, 1.05]; A.VP.talag = A.VP.tala;
@@ -1350,47 +1359,53 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     facilier:{ skin:'#6a4a3a', hair:'#111', top:'#4a2a6a', sleeve:'#4a2a6a', pants:'#111', shoe:'#111', hat:'#1a1a1a', beard:'#111', cape:'#4a2a6a', s:1.2 }
   };
   const DW = [['#E24B4A','#378ADD'],['#EF9F27','#3B6D11'],['#FAC775','#534AB7'],['#97C459','#993C1D'],['#85B7EB','#444441'],['#AFA9EC','#0F6E56'],['#F0997B','#712B13']];
+  /* 人物 v3:細描邊、裙子/上衣明暗、手、睫毛、雙亮點眼睛、頭髮光澤;長髮/辮子會跟著晃 */
+  const OL = 'stroke="#2a1830" stroke-opacity=".28" stroke-width="1.5" stroke-linejoin="round"';
+  const SH = 'fill="#1a0f2e" opacity=".14"', HL = 'fill="#fff" opacity=".18"';
   function person(o) {
-    const legs = o.skirt ? '' : '';
-    return `<g class="flip"><ellipse class="shadow" cx="60" cy="183" rx="24" ry="5" fill="#000" opacity=".16"/><g class="life"><g class="body">
-      ${o.braid ? `<path d="M56 62 Q16 120 40 192 Q60 208 92 196 Q72 150 76 62Z" fill="${o.hair}"/><path d="M40 192 Q60 208 92 196" stroke="${o.braidc || '#d9a62a'}" stroke-width="3" fill="none"/>` : ''}
-      ${o.cape ? `<path d="M40 82 L80 82 L96 168 L24 168Z" fill="${o.cape}" opacity=".9"/>` : ''}
-      <g class="legL"><rect x="45" y="155" width="9" height="26" rx="3" fill="${o.skin}"/><ellipse cx="50" cy="182" rx="8" ry="4" fill="${o.shoe}"/></g>
-      <g class="legR"><rect x="66" y="155" width="9" height="26" rx="3" fill="${o.skin}"/><ellipse cx="71" cy="182" rx="8" ry="4" fill="${o.shoe}"/></g>
-      ${o.skirt ? `<path class="skirt" d="M36 118 L84 118 L98 170 Q60 180 22 170Z" fill="${o.skirt}"/>` : `<rect x="42" y="116" width="36" height="46" fill="${o.pants}"/>`}
-      ${o.tail ? `<path d="M36 118 L84 118 L88 170 Q74 186 66 186 L92 206 Q60 194 28 206 L54 186 Q46 186 32 170Z" fill="${o.skirt}"/>` : ''}
-      <path d="M44 82 L76 82 L80 120 L40 120Z" fill="${o.top}"/>
+    const girl = o.lash != null ? !!o.lash : !!(o.skirt || o.long || o.braid) && !o.beard, eye = o.eye || '#2b2160';
+    const hand = (x, y) => `<circle cx="${x}" cy="${y}" r="4.3" fill="${o.skin}" ${OL}/>`;
+    return `<g class="flip"><ellipse class="shadow" cx="60" cy="183" rx="24" ry="5" fill="#000" opacity=".18"/><g class="life"><g class="body">
+      ${o.braid ? `<g class="hairb"><path d="M56 62 Q16 120 40 192 Q60 208 92 196 Q72 150 76 62Z" fill="${o.hair}" ${OL}/><path d="M50 80 Q30 130 46 186" stroke="#fff" stroke-opacity=".18" stroke-width="3" fill="none"/><path d="M40 192 Q60 208 92 196" stroke="${o.braidc || '#d9a62a'}" stroke-width="3" fill="none"/>${[100,124,148,172].map((y, i) => `<path d="M${44 + i * 2} ${y} q10 6 22 0" stroke="#1a0f2e" stroke-opacity=".15" stroke-width="2" fill="none"/>`).join('')}</g>` : ''}
+      ${o.cape ? `<g class="capeg"><path d="M40 82 L80 82 L96 168 L24 168Z" fill="${o.cape}" opacity=".95" ${OL}/><path d="M66 84 L80 82 L96 168 L78 168Z" ${SH}/></g>` : ''}
+      <g class="legL"><rect x="45" y="155" width="9" height="26" rx="3" fill="${o.skin}" ${OL}/><ellipse cx="50" cy="182" rx="8" ry="4" fill="${o.shoe}"/><ellipse cx="47" cy="180.5" rx="3" ry="1.2" fill="#fff" opacity=".35"/></g>
+      <g class="legR"><rect x="66" y="155" width="9" height="26" rx="3" fill="${o.skin}" ${OL}/><ellipse cx="71" cy="182" rx="8" ry="4" fill="${o.shoe}"/><ellipse cx="68" cy="180.5" rx="3" ry="1.2" fill="#fff" opacity=".35"/></g>
+      ${o.skirt ? `<g class="skirt"><path d="M36 118 L84 118 L98 170 Q60 180 22 170Z" fill="${o.skirt}" ${OL}/><path d="M70 119 L84 118 L98 170 Q86 175 74 177 Q76 150 70 119Z" ${SH}/><path d="M40 121 L48 121 Q40 146 36 172 Q29 171 24 169Z" ${HL}/><path d="M52 124 Q50 150 50 176 M66 124 Q70 150 74 176" stroke="#1a0f2e" stroke-opacity=".1" stroke-width="2" fill="none"/><path d="M23 169 Q60 179 97 169" stroke="#fff" stroke-opacity=".45" stroke-width="2.5" fill="none"/></g>`
+        : `<rect x="42" y="116" width="36" height="46" rx="3" fill="${o.pants}" ${OL}/><rect x="64" y="117" width="13" height="44" ${SH}/><path d="M60 128 V160" stroke="#1a0f2e" stroke-opacity=".15" stroke-width="1.5"/>`}
+      ${o.tail ? `<path d="M36 118 L84 118 L88 170 Q74 186 66 186 L92 206 Q60 194 28 206 L54 186 Q46 186 32 170Z" fill="${o.skirt}" ${OL}/><path d="M40 132 q8 -6 16 0 M56 146 q8 -6 16 0 M42 160 q8 -6 16 0" stroke="#fff" stroke-opacity=".3" stroke-width="2" fill="none"/>` : ''}
+      <path d="M44 82 L76 82 L80 120 L40 120Z" fill="${o.top}" ${OL}/><path d="M66 82 L76 82 L80 120 L68 120Z" ${SH}/><path d="M47 84 L53 84 L50 104Z" ${HL}/>
+      ${o.skirt ? `<path d="M40 114 L80 114 L80.6 120 L39.4 120Z" fill="#1a0f2e" opacity=".18"/>` : o.tattoo ? '' : `<rect x="41" y="113" width="38" height="5" fill="#3a2a1a" opacity=".55"/><rect x="57" y="113" width="6" height="5" fill="#FAC775"/>`}
       ${o.tattoo ? '<path d="M50 88 q8 6 0 14 q-6 4 0 12 M70 88 q-8 6 0 14 q6 4 0 12 M54 100 h12" stroke="#3a2412" fill="none" stroke-width="2.5" stroke-linecap="round"/>' : ''}
-      <g class="armL"><path d="M38 90 Q28 108 36 122" stroke="${o.skin}" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M44 84 L34 98 Q30 84 38 78 Q42 76 48 80Z" fill="${o.sleeve}"/></g>
-      <g class="armR"><path d="M82 90 Q92 108 84 122" stroke="${o.skin}" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M76 84 L86 98 Q90 84 82 78 Q78 76 72 80Z" fill="${o.sleeve}"/>${o.hook ? '<path d="M86 124 L104 40 Q110 18 96 14 Q82 12 84 30" stroke="#e8dcc0" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M90 98 l10 4 M94 80 l10 4" stroke="#8d5a2b" stroke-width="3"/>' : ''}${o.broom ? '<path d="M84 122 L66 186" stroke="#8d5a2b" stroke-width="4"/><path d="M58 180 L76 186 L70 200 L50 194Z" fill="#d9b25a"/>' : ''}${o.torch ? '<path d="M86 124 L94 76" stroke="#6d4228" stroke-width="5"/><path class="amb-tw" d="M94 76 Q82 60 94 44 Q106 60 94 76Z" fill="#ffb02e"/><path d="M94 74 Q88 64 94 56 Q100 64 94 74Z" fill="#ffe08a"/>' : ''}${o.book ? `<rect x="78" y="106" width="22" height="16" rx="2" fill="${o.book}" transform="rotate(-20 88 114)"/><rect x="80" y="108" width="18" height="12" fill="#fff8e7" transform="rotate(-20 88 114)"/>` : ''}${o.trident ? '<path d="M86 124 L100 30" stroke="#d9a62a" stroke-width="4"/><path d="M90 40 Q88 26 100 30 Q112 34 108 46 M100 30 L103 14" stroke="#FAC775" stroke-width="3.5" fill="none" stroke-linecap="round"/>' : ''}${o.staff ? `<path d="M86 124 L100 24" stroke="#5a3a1a" stroke-width="4"/><circle cx="101" cy="20" r="7" fill="${o.staff}"/><circle cx="101" cy="20" r="12" fill="${o.staff}" opacity=".3"/>` : ''}${o.sword ? '<path d="M84 120 L118 74" stroke="#dfe6ee" stroke-width="4" stroke-linecap="round"/><path d="M78 116 L90 126" stroke="#8d5a2b" stroke-width="4"/>' : ''}${o.wand ? '<line x1="84" y1="120" x2="104" y2="94" stroke="#FAC775" stroke-width="3"/><circle cx="106" cy="90" r="6" fill="#FAC775"/><circle cx="106" cy="90" r="10" fill="#fff" opacity=".5"/>' : ''}</g>
-      ${o.collar ? `<path d="M50 80 L60 94 L70 80 L74 74 L60 70 L46 74Z" fill="${o.collar}"/>` : ''}
+      <g class="armL"><path d="M38 90 Q28 108 36 122" stroke="#2a1830" stroke-opacity=".28" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M38 90 Q28 108 36 122" stroke="${o.skin}" stroke-width="7" fill="none" stroke-linecap="round"/>${hand(36, 123)}<path d="M44 84 L34 98 Q30 84 38 78 Q42 76 48 80Z" fill="${o.sleeve}" ${OL}/><path d="M36 82 Q38 79 42 79" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none"/></g>
+      <g class="armR"><path d="M82 90 Q92 108 84 122" stroke="#2a1830" stroke-opacity=".28" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M82 90 Q92 108 84 122" stroke="${o.skin}" stroke-width="7" fill="none" stroke-linecap="round"/>${hand(84, 123)}<path d="M76 84 L86 98 Q90 84 82 78 Q78 76 72 80Z" fill="${o.sleeve}" ${OL}/><path d="M80 80 Q84 82 86 86" stroke="#1a0f2e" stroke-opacity=".15" stroke-width="2" fill="none"/>${o.hook ? '<path d="M86 124 L104 40 Q110 18 96 14 Q82 12 84 30" stroke="#e8dcc0" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M90 98 l10 4 M94 80 l10 4" stroke="#8d5a2b" stroke-width="3"/>' : ''}${o.broom ? '<path d="M84 122 L66 186" stroke="#8d5a2b" stroke-width="4"/><path d="M58 180 L76 186 L70 200 L50 194Z" fill="#d9b25a"/>' : ''}${o.torch ? '<path d="M86 124 L94 76" stroke="#6d4228" stroke-width="5"/><path class="amb-tw" d="M94 76 Q82 60 94 44 Q106 60 94 76Z" fill="#ffb02e"/><path d="M94 74 Q88 64 94 56 Q100 64 94 74Z" fill="#ffe08a"/>' : ''}${o.book ? `<rect x="78" y="106" width="22" height="16" rx="2" fill="${o.book}" transform="rotate(-20 88 114)"/><rect x="80" y="108" width="18" height="12" fill="#fff8e7" transform="rotate(-20 88 114)"/>` : ''}${o.trident ? '<path d="M86 124 L100 30" stroke="#d9a62a" stroke-width="4"/><path d="M90 40 Q88 26 100 30 Q112 34 108 46 M100 30 L103 14" stroke="#FAC775" stroke-width="3.5" fill="none" stroke-linecap="round"/>' : ''}${o.staff ? `<path d="M86 124 L100 24" stroke="#5a3a1a" stroke-width="4"/><circle cx="101" cy="20" r="7" fill="${o.staff}"/><circle cx="101" cy="20" r="12" fill="${o.staff}" opacity=".3"/>` : ''}${o.sword ? '<path d="M84 120 L118 74" stroke="#dfe6ee" stroke-width="4" stroke-linecap="round"/><path d="M86 116 L116 76" stroke="#fff" stroke-width="1.2" opacity=".8"/><path d="M78 116 L90 126" stroke="#8d5a2b" stroke-width="4"/>' : ''}${o.wand ? '<line x1="84" y1="120" x2="104" y2="94" stroke="#FAC775" stroke-width="3"/><circle cx="106" cy="90" r="6" fill="#FAC775"/><circle cx="106" cy="90" r="10" fill="#fff" opacity=".5"/>' : ''}</g>
+      ${o.collar ? `<path d="M50 80 L60 94 L70 80 L74 74 L60 70 L46 74Z" fill="${o.collar}" ${OL}/>` : ''}
       <g class="head">
-        <rect x="55" y="66" width="10" height="10" fill="${o.skin}"/>
-        ${o.long ? `<path d="M34 52 Q30 90 42 96 L48 60Z" fill="${o.hair}"/><path d="M86 52 Q90 90 78 96 L72 60Z" fill="${o.hair}"/>` : ''}
-        ${o.hood ? `<path d="M32 56 Q28 20 60 20 Q92 20 88 56 L78 80 L42 80Z" fill="${o.hood}"/>` : ''}
-        <circle cx="60" cy="52" r="23" fill="${o.skin}"/>
-        ${o.hood ? '' : `<path d="M36 52 Q34 24 60 26 Q86 24 84 52 Q80 38 72 36 Q60 42 48 36 Q40 38 36 52Z" fill="${o.hair}"/>`}${o.streak ? `<path d="M50 30 Q44 38 40 50" stroke="${o.streak}" stroke-width="4" fill="none" stroke-linecap="round"/>` : ''}
+        <rect x="55" y="66" width="10" height="10" fill="${o.skin}"/><rect x="55" y="70" width="10" height="5" fill="#1a0f2e" opacity=".14"/>
+        ${o.long ? `<g class="hairb"><path d="M34 52 Q30 90 42 96 L48 60Z" fill="${o.hair}" ${OL}/><path d="M86 52 Q90 90 78 96 L72 60Z" fill="${o.hair}" ${OL}/></g>` : ''}
+        ${o.hood ? `<path d="M32 56 Q28 20 60 20 Q92 20 88 56 L78 80 L42 80Z" fill="${o.hood}" ${OL}/>` : ''}
+        <circle cx="60" cy="52" r="23" fill="${o.skin}" ${OL}/><path d="M74 38 Q84 52 76 68 Q82 54 74 38Z" fill="#1a0f2e" opacity=".07"/>
+        ${o.hood ? '' : `<path d="M36 52 Q34 24 60 26 Q86 24 84 52 Q80 38 72 36 Q60 42 48 36 Q40 38 36 52Z" fill="${o.hair}" ${OL}/><path d="M44 36 Q52 29 64 30" stroke="#fff" stroke-opacity=".32" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M60 40 Q57 33 60 28" stroke="#1a0f2e" stroke-opacity=".18" stroke-width="1.5" fill="none"/>`}${o.streak ? `<path d="M50 30 Q44 38 40 50" stroke="${o.streak}" stroke-width="4" fill="none" stroke-linecap="round"/>` : ''}
         ${o.hood ? `<path d="M38 50 Q60 28 82 50 Q60 36 38 50Z" fill="${o.hood}"/>` : ''}
-        ${o.bow ? `<path d="M44 24 Q60 16 76 24 Q60 30 44 24Z" fill="${o.bow}"/><circle cx="60" cy="24" r="4" fill="#A32D2D"/>` : ''}
-        ${o.crown ? `<path d="M44 30 L48 14 L54 26 L60 10 L66 26 L72 14 L76 30Z" fill="${o.crown}"/>` : ''}
+        ${o.bow ? `<path d="M44 24 Q60 16 76 24 Q60 30 44 24Z" fill="${o.bow}" ${OL}/><circle cx="60" cy="24" r="4" fill="#A32D2D"/>` : ''}
+        ${o.crown ? `<path d="M44 30 L48 14 L54 26 L60 10 L66 26 L72 14 L76 30Z" fill="${o.crown}" ${OL}/><circle cx="60" cy="24" r="2.4" fill="#E24B4A"/><path d="M47 28 L49 18" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>` : ''}
         ${o.horns ? '<path d="M40 40 Q28 20 38 4 Q40 24 52 32Z" fill="#111"/><path d="M80 40 Q92 20 82 4 Q80 24 68 32Z" fill="#111"/>' : ''}
-        ${o.turban ?`<ellipse cx="60" cy="32" rx="26" ry="14" fill="${o.turban}"/><circle cx="60" cy="30" r="4" fill="#E24B4A"/>` : ''}
-        ${o.fez ? `<path d="M40 34 L46 -4 L74 -4 L80 34Z" fill="${o.fez}"/><rect x="40" y="30" width="40" height="6" fill="#FAC775"/>` : ''}
-        ${o.hat ? `<path d="M36 34 L60 8 L84 34Z" fill="${o.hat}"/><rect x="32" y="32" width="56" height="6" rx="3" fill="${o.hat}"/>` : ''}
-        ${o.beard ? `<path d="M44 58 Q60 92 76 58 Q60 70 44 58Z" fill="${o.beard}"/>` : ''}
-        ${o.nose ? `<path d="M60 52 L52 66 L62 62Z" fill="${o.skin}" stroke="#a07a5a" stroke-width="1"/><circle cx="56" cy="64" r="2" fill="#6d4c41"/>` : ''}
-        <g class="eyes"><ellipse cx="51" cy="52" rx="3.2" ry="4.2" fill="#26215C"/><ellipse cx="69" cy="52" rx="3.2" ry="4.2" fill="#26215C"/><circle cx="52.2" cy="50.4" r="1.2" fill="#fff"/><circle cx="70.2" cy="50.4" r="1.2" fill="#fff"/></g>
+        ${o.turban ?`<ellipse cx="60" cy="32" rx="26" ry="14" fill="${o.turban}" ${OL}/><path d="M38 34 Q60 24 82 34" stroke="#1a0f2e" stroke-opacity=".12" stroke-width="3" fill="none"/><circle cx="60" cy="30" r="4" fill="#E24B4A"/>` : ''}
+        ${o.fez ? `<path d="M40 34 L46 -4 L74 -4 L80 34Z" fill="${o.fez}" ${OL}/><rect x="40" y="30" width="40" height="6" fill="#FAC775"/>` : ''}
+        ${o.hat ? `<path d="M36 34 L60 8 L84 34Z" fill="${o.hat}" ${OL}/><rect x="32" y="32" width="56" height="6" rx="3" fill="${o.hat}" ${OL}/>` : ''}
+        ${o.beard ? `<path d="M44 58 Q60 92 76 58 Q60 70 44 58Z" fill="${o.beard}" ${OL}/>` : ''}
+        ${o.nose ? `<path d="M60 52 L52 66 L62 62Z" fill="${o.skin}" stroke="#a07a5a" stroke-width="1"/><circle cx="56" cy="64" r="2" fill="#6d4c41"/>` : `<path d="M59 58.5 q1.5 1.6 3 0" stroke="#a0604a" stroke-opacity=".55" stroke-width="1.3" fill="none" stroke-linecap="round"/>`}
+        <g class="eyes"><ellipse cx="51" cy="52" rx="3.6" ry="4.8" fill="${eye}"/><ellipse cx="69" cy="52" rx="3.6" ry="4.8" fill="${eye}"/><ellipse cx="51" cy="54.2" rx="2.4" ry="2" fill="#7a6ad8" opacity=".55"/><ellipse cx="69" cy="54.2" rx="2.4" ry="2" fill="#7a6ad8" opacity=".55"/><circle cx="52.4" cy="50.2" r="1.5" fill="#fff"/><circle cx="70.4" cy="50.2" r="1.5" fill="#fff"/><circle cx="50" cy="54.6" r=".7" fill="#fff"/><circle cx="68" cy="54.6" r=".7" fill="#fff"/>${girl ? `<path d="M47.2 49 l-2.6 -1.6 M47.6 51 l-2.8 -.6 M72.8 49 l2.6 -1.6 M72.4 51 l2.8 -.6" stroke="${eye}" stroke-width="1.2" stroke-linecap="round"/>` : ''}</g>
         <g class="mx e-shut" stroke="#26215C" stroke-width="2" fill="none" stroke-linecap="round"><path d="M47 53 Q51 56 55 53"/><path d="M65 53 Q69 56 73 53"/></g>
         <g class="brow b-sad" stroke="#4a3020" stroke-width="2" stroke-linecap="round"><path d="M46 44 L55 42"/><path d="M74 44 L65 42"/></g>
         <g class="brow b-angry" stroke="#4a3020" stroke-width="2.4" stroke-linecap="round"><path d="M46 42 L55 46"/><path d="M74 42 L65 46"/></g>
         <g class="brow b-wow" stroke="#4a3020" stroke-width="2" stroke-linecap="round" fill="none"><path d="M46 43 Q51 39 55 42"/><path d="M65 42 Q69 39 74 43"/></g>
-        ${o.beard || o.nose ? '' : `<circle cx="46" cy="60" r="4" fill="#F09595" opacity=".7"/><circle cx="74" cy="60" r="4" fill="#F09595" opacity=".7"/>`}
-        <path class="m0" d="M54 62 Q60 67 66 62" fill="none" stroke="#A32D2D" stroke-width="2" stroke-linecap="round"/>
+        ${o.beard || o.nose ? '' : `<ellipse cx="45.5" cy="60" rx="4.6" ry="3.2" fill="#F09595" opacity=".55"/><ellipse cx="74.5" cy="60" rx="4.6" ry="3.2" fill="#F09595" opacity=".55"/>`}
+        <path class="m0" d="M54 62 Q60 67.5 66 62" fill="none" stroke="#A32D2D" stroke-width="2" stroke-linecap="round"/>
         <path class="mx m-sad" d="M54 65 Q60 60 66 65" fill="none" stroke="#A32D2D" stroke-width="2" stroke-linecap="round"/>
         <ellipse class="mx m-wow" cx="60" cy="64" rx="3.5" ry="4.5" fill="#7a1f2a"/>
         <path class="mx m-angry" d="M54 64 L66 63" stroke="#A32D2D" stroke-width="2.4" stroke-linecap="round"/>
         <path class="mx m-sleep" d="M56 63 h8" stroke="#A32D2D" stroke-width="1.8" stroke-linecap="round"/>
-        <ellipse class="mx m-talk" cx="60" cy="64" rx="4" ry="3.2" fill="#7a1f2a"/>
+        <g class="mx m-talk"><ellipse cx="60" cy="64" rx="4" ry="3.2" fill="#7a1f2a"/><ellipse cx="60" cy="65.6" rx="2.4" ry="1.2" fill="#e8838f"/></g>
         <g class="tears"><ellipse cx="49" cy="59" rx="2.6" ry="3.8" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/><ellipse cx="71" cy="59" rx="2.6" ry="3.8" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/></g>
       </g></g></g></g>`;
   }
@@ -1501,7 +1516,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
         g.setAttribute('class', 'cast'); g.innerHTML = b.html; this.L.cast.appendChild(g);
         const a = { id, k: c.k, el: g, x: c.x, y: c.y || 262, s: b.s, face: c.face || 1, hid: !!c.hid };
         if (c.ex) g.classList.add('ex-' + c.ex);
-        this.actors[id] = a; this.place(a, true); this.flip(a);
+        this.actors[id] = a; this.place(a, true); this.flip(a, true);
         g.style.opacity = a.hid ? 0 : 1;
       });
       if (sc.fx) sc.fx.forEach(f => { const p = f.split(/\s+/); this.fx(p[0], p.slice(1), true); });
@@ -1510,7 +1525,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
       if (fast) a.el.style.transition = 'none';
       a.el.style.transform = `translate(${a.x*6.8 - 60*a.s}px, ${a.y - 182*a.s}px) scale(${a.s})`;
     },
-    flip(a) { const f = a.el.querySelector('.flip'); if (f) { f.style.transformOrigin = '60px 0'; f.style.transform = `scaleX(${a.face})`; } },
+    flip(a, fast) { const f = a.el.querySelector('.flip'); if (f) { f.style.transformOrigin = '60px 0'; f.style.transition = fast || STILL ? 'none' : 'transform .32s cubic-bezier(.4,0,.2,1)'; f.style.transform = `scaleX(${a.face})`; } },
     pulse(a, cls, ms) { a.el.classList.remove(cls); void a.el.getBoundingClientRect(); a.el.classList.add(cls); return wait(ms).then(() => a.el.classList.remove(cls)); },
     /* 角色身上的點:hand 手、head 頭、chest 胸口(預設) */
     pos(ref, yref) {
@@ -1666,7 +1681,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
         case 'go': case 'run': case 'glide': {
           const nx = +args[0], ny = args[1] != null ? +args[1] : a.y, ns = args[2] != null ? +args[2] : a.s;
           const dx = Math.hypot((nx - a.x)*6.8, ny - a.y), dur = verb === 'run' ? Math.max(300, dx/260*1000) : verb === 'glide' ? +(args[3] || Math.max(800, dx/90*1000)) : Math.max(400, dx/110*1000);
-          if (nx !== a.x && verb !== 'glide') { a.face = nx > a.x ? 1 : -1; this.flip(a); }
+          if (nx !== a.x && verb !== 'glide') { a.face = nx > a.x ? 1 : -1; this.flip(a, fast); }
           a.el.classList.remove('crouchd', 'fallen');
           a.x = nx; a.y = ny; a.s = ns;
           if (fast) { this.place(a, true); return Promise.resolve(); }
@@ -1689,14 +1704,14 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
         case 'fade': a.hid = true; a.el.style.transition = 'transform .4s, opacity 1.4s'; a.el.style.opacity = 0; return done(1400);
         case 'swap': {
           const b = this.actors[args[0]]; if (!b) return Promise.resolve();
-          b.x = a.x; b.y = a.y; b.face = a.face; this.place(b, true); this.flip(b);
+          b.x = a.x; b.y = a.y; b.face = a.face; this.place(b, true); this.flip(b, true);
           a.hid = true; b.hid = false;
           if (fast) { a.el.style.opacity = 0; b.el.style.opacity = 1; return Promise.resolve(); }
           this.fx('poof', [a.id]); a.el.style.transition = 'opacity .35s'; b.el.style.transition = 'opacity .5s .2s';
           a.el.style.opacity = 0; b.el.style.opacity = 1; return wait(700);
         }
         case 'face': a.el.classList.remove('ex-sad', 'ex-wow', 'ex-angry', 'ex-sleep'); if (args[0] && args[0] !== 'none') a.el.classList.add('ex-' + args[0]); return Promise.resolve();
-        case 'turn': a.face = args[0] ? +args[0] : -a.face; this.flip(a); return done(200);
+        case 'turn': a.face = args[0] ? +args[0] : -a.face; this.flip(a, fast); return done(320);
         case 'stand': a.el.classList.remove('crouchd', 'fallen'); return done(500);
         case 'crouch': a.el.classList.add('crouchd'); return done(500);
         case 'fall': a.el.classList.add('fallen'); return done(900);
