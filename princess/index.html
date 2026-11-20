@@ -30,7 +30,7 @@ button.ghost{background:#4b3a7a;color:#fff}
 .point .armR{transform:rotate(-80deg);transform-origin:76px 48px;transition:transform .4s}
 .fear .body{animation:sh .12s 8}
 @keyframes sh{0%,100%{transform:translateX(-2px)}50%{transform:translateX(2px)}}
-.crouchd .body{transform:translateY(22px) scaleY(.86);transform-origin:60px 182px;transition:transform .5s}
+.crouchd .body{transform:translateY(3px) scaleY(.86);transform-origin:60px 182px;transition:transform .5s}
 .fallen .body{transform:rotate(-88deg);transform-origin:60px 182px;transition:transform .9s}
 .glow{animation:gl 1.2s 1}@keyframes gl{50%{opacity:.6}}
 #stagebox svg.old{position:absolute;inset:0;transition:opacity .6s;pointer-events:none}
@@ -1631,19 +1631,26 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
     const skirt = o.skirt ? `<g class="skirt"><path d="${o.gown ? 'M53 77 Q40 120 25 172 Q36 180 46 178 Q54 183 60 180 Q66 183 74 178 Q84 180 95 172 Q80 120 67 77Z' : 'M53 77 Q42 124 30 172 Q45 179 60 177 Q75 179 90 172 Q78 124 67 77Z'}" fill="url(#${U}k)" ${OL}/><path d="M56 82 Q46 130 38 176 M60 82 Q59 130 60 180 M64 82 Q74 130 82 176" stroke="#1a0f2e" stroke-opacity=".14" stroke-width="2" fill="none"/><path d="M54.5 82 Q42 128 31 174" stroke="#fff" stroke-opacity=".28" stroke-width="2.6" fill="none"/><path d="M65.5 82 Q80 128 92 174 L95 172 Q80 120 67 77Z" fill="#1a0f2e" opacity=".14"/>${o.gown ? `<path d="M27 168 ${Array.from({ length: 10 }, (_, i) => `q3.4 ${i % 2 ? 6 : 7} 6.8 0`).join(' ')}" stroke="${shd(o.skirt, .55)}" stroke-width="2.4" fill="${shd(o.skirt, .35)}" ${OL}/>${[34, 44, 54, 64, 74, 84].map(x => `<circle cx="${x + 2}" cy="${172 + (x % 20 ? 2 : 3)}" r="1" fill="#fff" opacity=".85"/>`).join('')}<path d="M48 120 q4 -3 8 0 q4 3 8 0 q4 -3 8 0" stroke="${shd(o.skirt, .45)}" stroke-width="1.2" fill="none" opacity=".7"/>` : `<path d="M30 172 Q45 179 60 177 Q75 179 90 172" stroke="${shd(o.skirt, -.35)}" stroke-width="1.6" fill="none"/>`}</g>` : '';
     const pants = o.skirt ? '' : `<path d="M49 86 H71 Q72 96 71 104 Q60 108 49 104 Q48 96 49 86Z" fill="url(#${U}p)" ${OL}/>${o.tattoo ? '' : `<rect x="48.5" y="85" width="23" height="4.4" rx="1" fill="#3a2a1a" opacity=".75"/><rect x="58" y="85" width="4.4" height="4.4" fill="#FAC775"/>`}`;
     const leg = (x, cls) => o.tail || o.tentacles ? '' : `<g class="${cls}${o.skirt ? ' sk' : ''}">${o.skirt ? `<path d="M${x - 3} 150 L${x - 2.8} 178 H${x + 2.8} L${x + 3} 150Z" fill="${sk}" ${OL}/>` : `<path d="M${x - 6.4} 92 Q${x - 6.8} 130 ${x - 5} 166 H${x + 5} Q${x + 6.6} 130 ${x + 6} 92Z" fill="url(#${U}p)" ${OL}/><path d="M${x + (x < 60 ? -2 : 2)} 104 L${x + (x < 60 ? -2.4 : 2.4)} 160" stroke="#fff" stroke-opacity=".12" stroke-width="1.6"/>`}${o.skirt ? '' : `<path d="M${x - 4.4} 160 L${x - 4.2} 178 H${x + 4.2} L${x + 4.4} 160Z" fill="${o.shoe}" ${OL}/><path d="M${x - 4} 162.5 h8" stroke="#fff" stroke-opacity=".25" stroke-width="1.4"/>`}<path d="M${x - 5} 177 Q${x - 6} 184 ${x} 184 H${x + 6} Q${x + 7} 180 ${x + 2.6} 177Z" fill="${o.shoe}" ${OL}/><path d="M${x - 2.6} 179 h3.6" stroke="#fff" stroke-opacity=".45" stroke-width="1.1"/></g>`;
-    return `<g class="flip">${defs}<ellipse class="shadow" cx="60" cy="183" rx="20" ry="4.5" fill="#000" opacity=".18"/><g class="life"><g class="body">
-      ${back ? `<g class="hairb"><g ${HT}>${back}</g></g>` : ''}
-      ${o.cape ? `<g class="capeg"><path d="M46 48 Q34 110 24 174 Q60 182 96 174 Q86 110 74 48Z" fill="url(#${U}c)" ${OL}/></g>` : ''}
-      ${leg(54, 'legL')}${leg(66, 'legR')}
-      ${skirt}${pants}
-      ${o.tentacles ? [-2, -1, 0, 1, 2].map(i => { const x = 60 + i * 6, d = i >= 0 ? 1 : -1; return `<path d="M${x} 100 Q${x + i * 4} 150 ${x + i * 9} 176 q${d * 7} 5 ${d * 3} -5" stroke="${o.skirt}" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="${x + i * 5}" cy="150" r="1.8" fill="${o.tentacles}"/>`; }).join('') : ''}
-      ${o.tail && !o.tentacles ? `<path d="M52 76 L68 76 Q80 120 71 152 Q66 166 64 172 L90 192 Q60 184 30 192 L56 172 Q54 166 49 152 Q40 120 52 76Z" fill="url(#${U}k)" ${OL}/><path d="M52 98 q8 -6 16 0 M51 118 q8 -6 16 0 M52 138 q8 -6 16 0" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none"/>` : ''}
-      ${torso}
-      ${o.tattoo ? '<path d="M52 54 q6 5 0 11 q-5 3 0 9 M68 54 q-6 5 0 11 q5 3 0 9 M55 64 h10" stroke="#3a2412" fill="none" stroke-width="2.5" stroke-linecap="round"/>' : ''}
-      <g class="armL">${arm(-1)}</g>
-      <g class="armR">${arm(1)}<g class="held"><g transform="translate(-6 -19)">${items}</g></g></g>
-      ${o.collar ? `<path d="M53 44 L60 54 L67 44 L70 41 Q60 38 50 41Z" fill="${o.collar}" ${OL}/>` : ''}
-      ${head}</g></g></g>`;
+    /* 體型:依角色本身決定。round 圓胖有肚子、big 魁梧寬肩、thin 瘦高、stocky 矮壯;身體只橫向/縱向縮放,動作關節不變 */
+    const BD = { slim: [1, 1, 0, 1, 1], round: [1.6, .94, 1, 1.22, 1.45], big: [1.45, 1, 0, 1.38, 1.5], huge: [1.75, 1, 0, 1.55, 1.7], thin: [.82, 1.04, 0, .9, .85], stocky: [1.36, .86, 1, 1.18, 1.35], plump: [1.3, 1, 1, 1.1, 1.2] }[o.build || 'slim'] || [1, 1, 0, 1, 1];
+    const [WX, SY, BELLY, SHW, AW] = BD, SDX = (SHW - 1) * 16, HDY = 136 * (1 - SY);
+    const wide = c => WX === 1 ? c : `<g transform="translate(60 0) scale(${WX} 1) translate(-60 0)">${c}</g>`;
+    const belly = BELLY ? `<path d="M${60 - 12 * WX} 62 Q${60 - 19 * WX} 84 ${60 - 8 * WX} 98 Q60 102 ${60 + 8 * WX} 98 Q${60 + 19 * WX} 84 ${60 + 12 * WX} 62 Q60 70 ${60 - 12 * WX} 62Z" fill="url(#${U}t)" ${OL}/><path d="M${60 + 4 * WX} 72 Q${60 + 11 * WX} 82 ${60 + 6 * WX} 92" stroke="#1a0f2e" stroke-opacity=".16" stroke-width="2" fill="none"/>` : '';
+    const lower = c => SY === 1 ? c : `<g transform="translate(0 184) scale(1 ${SY}) translate(0 -184)">${c}</g>`;
+    const up = c => HDY ? `<g transform="translate(0 ${HDY.toFixed(1)})">${c}</g>` : c;
+    return `<g class="flip">${defs}<ellipse class="shadow" cx="60" cy="183" rx="${(20 * Math.max(WX, 1)).toFixed(0)}" ry="4.5" fill="#000" opacity=".18"/><g class="life"><g class="body">
+      ${back ? up(`<g class="hairb"><g ${HT}>${back}</g></g>`) : ''}
+      ${o.cape ? lower(wide(`<g class="capeg"><path d="M46 48 Q34 110 24 174 Q60 182 96 174 Q86 110 74 48Z" fill="url(#${U}c)" ${OL}/></g>`)) : ''}
+      ${lower(wide(`${leg(54, 'legL')}${leg(66, 'legR')}`))}
+      ${lower(wide(`${skirt}${pants}`))}
+      ${o.tentacles ? lower(wide([-2, -1, 0, 1, 2].map(i => { const x = 60 + i * 6, d = i >= 0 ? 1 : -1; return `<path d="M${x} 100 Q${x + i * 4} 150 ${x + i * 9} 176 q${d * 7} 5 ${d * 3} -5" stroke="${o.skirt}" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="${x + i * 5}" cy="150" r="1.8" fill="${o.tentacles}"/>`; }).join(''))) : ''}
+      ${o.tail && !o.tentacles ? lower(wide(`<path d="M52 76 L68 76 Q80 120 71 152 Q66 166 64 172 L90 192 Q60 184 30 192 L56 172 Q54 166 49 152 Q40 120 52 76Z" fill="url(#${U}k)" ${OL}/><path d="M52 98 q8 -6 16 0 M51 118 q8 -6 16 0 M52 138 q8 -6 16 0" stroke="#fff" stroke-opacity=".35" stroke-width="2" fill="none"/>`)) : ''}
+      ${lower(wide(torso) + belly)}
+      ${o.tattoo ? lower(wide('<path d="M52 54 q6 5 0 11 q-5 3 0 9 M68 54 q-6 5 0 11 q5 3 0 9 M55 64 h10" stroke="#3a2412" fill="none" stroke-width="2.5" stroke-linecap="round"/>')) : ''}
+      ${up(`<g transform="translate(${(-SDX).toFixed(1)} 0)"><g class="armL">${AW === 1 ? arm(-1) : `<g transform="translate(44 0) scale(${AW} 1) translate(-44 0)">${arm(-1)}</g>`}</g></g>`)}
+      ${up(`<g transform="translate(${SDX.toFixed(1)} 0)"><g class="armR">${AW === 1 ? arm(1) : `<g transform="translate(76 0) scale(${AW} 1) translate(-76 0)">${arm(1)}</g>`}<g class="held"><g transform="translate(-6 -19)">${items}</g></g></g></g>`)}
+      ${o.collar ? up(`<path d="M53 44 L60 54 L67 44 L70 41 Q60 38 50 41Z" fill="${o.collar}" ${OL}/>`) : ''}
+      ${up(head)}</g></g></g>`;
   }
 
   const PROP = {
@@ -1695,7 +1702,7 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
   const STATUE = ['annaice'];
   function build(c) {
     if (PROP[c.k]) { let h = PROP[c.k](); if (ALIVE.includes(c.k) && h.includes('<g class="body">') && /<\/g>$/.test(h)) h =h.replace('<g class="body">', '<g class="life"><g class="body">').replace(/<\/g>$/, '</g></g>'); return { html: h, s: c.s || 1 }; }
-    if (c.k === 'dwarf') { const d = DW[(c.i || 0) % 7]; return { html: person({ skin:'#F5C4B3', hair:'#F1EFE8', top:d[0], sleeve:d[0], pants:d[1], shoe:'#412402', hat:d[0], beard:'#F1EFE8', age:'old' }), s: c.s || .62 }; }
+    if (c.k === 'dwarf') { const d = DW[(c.i || 0) % 7]; return { html: person({ skin:'#F5C4B3', hair:'#F1EFE8', top:d[0], sleeve:d[0], pants:d[1], shoe:'#412402', hat:d[0], beard:'#F1EFE8', age:'old', build:'stocky' }), s: c.s || .62 }; }
     const o = OPT[c.k]; let h = person(o); if (STATUE.includes(c.k)) h = h.replace('class="life"', 'class="still-body"'); return { html: h, s: c.s || o.s };
   }
 
@@ -1735,6 +1742,9 @@ STORIES.push({ id:'tiana', title:['公主與青蛙','The Princess and the Frog']
   Object.entries({ old: 'tala talag maurice fazhou emperor sultan king duke odie fairy flora fauna merry gothelold witch triton dwarf', adult: 'queen queenR mom gothel ursula malS jafars jafarg2 facilier hunter hunterK guard tui mauih shanyu gaston gastont vil1 vil2 genief tefiti', kid: 'moanak' })
     .forEach(([a, ks]) => ks.split(' ').forEach(k => { if (OPT[k]) OPT[k].age = a; }));
   'cg aurora auroraB belleg tianaG elsaq queenR'.split(' ').forEach(k => { if (OPT[k]) OPT[k].gown = 1; });
+  /* 每個角色的體型(從角色本身出發:胖的胖、壯的壯、瘦的瘦) */
+  Object.entries({ round: 'maurice sultan king fairy flora fauna merry odie genief', plump: 'tala talag', huge: 'mauih shanyu ursula', big: 'gaston gastont tui triton beast kristoff hunter hunterK shang', stocky: 'vil1 vil2 guard', thin: 'jafars jafarg2 facilier gothel gothelold malS witch queen queenR fazhou emperor mom duke' })
+    .forEach(([b, ks]) => ks.split(' ').forEach(k => { if (OPT[k]) OPT[k].build = b; }));
 
   /* 背景描線:實心的形狀自動加上和人物一樣的深色線稿(天空、光束、半透明的東西不加) */
   const inkBG = svg => svg.replace(/<(path|rect|circle|ellipse|polygon)\b([^>]*?)(\/?)>/g, (m, tag, at, sl) => {
