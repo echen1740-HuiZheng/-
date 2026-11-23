@@ -887,6 +887,171 @@ STORIES.push({ id:'frozen', title:['冰雪奇緣','Frozen'],
     9:{ type:'order', q:['先發生什麼?照順序點一點。','What happened first? Tap them in order.'], items:[{p:'❄️',t:['冰刺','Ice spikes']},{p:'🏰',t:['冰宮殿','Ice palace']},{p:'❤️',t:['愛融化冬天','Love melts winter']}] }
   } });
 
+// 獵星女團 Huntrix:主題來自 Netflix《KPop Demon Hunters》的「白天偶像、夜晚獵魔」概念,
+// 角色造型、劇情、關卡、音效皆為原創,不使用原作歌詞、台詞、圖片或音樂。(角色名 魯米/米拉/佐伊 為音譯,待核對)
+EXT.push(A => {
+  const gr = (id, a, b) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
+  const stars = (n, h) => Array.from({ length: n }, (_, i) => `<circle class="amb-tw" cx="${(A.RND(i + 40) * 760 - 40).toFixed(0)}" cy="${(A.RND(i + 70) * h).toFixed(0)}" r="${(1 + A.RND(i) * 1.6).toFixed(1)}" fill="#fff" style="--dl:-${(A.RND(i) * 2).toFixed(1)}s"/>`).join('');
+  const city = (base, cols, seed) => Array.from({ length: 16 }, (_, i) => { const w = 40 + A.RND(i + seed) * 34, h = 50 + A.RND(i + seed + 9) * 90, x = -380 + i * 72; return `<rect x="${x}" y="${base - h}" width="${w}" height="${h + 4}" fill="${cols[i % cols.length]}"/>${Array.from({ length: 6 }, (_, j) => A.RND(i * 7 + j + seed) > .45 ? `<rect x="${x + 6 + (j % 2) * 16}" y="${base - h + 8 + Math.floor(j / 2) * 18}" width="8" height="9" fill="#ffe9a0" opacity=".85"/>` : '').join('')}`; }).join('');
+  const crowd = (y, n) => Array.from({ length: n }, (_, i) => { const x = -380 + i * (1480 / n) + (i % 2) * 8, c = ['#ff7ac8', '#7ad8ff', '#fff07a', '#b08aff'][i % 4]; return `<g class="amb-drift" style="--d:${3 + i % 3}s"><ellipse cx="${x}" cy="${y + 10}" rx="17" ry="20" fill="#120a2a"/><circle cx="${x}" cy="${y - 12}" r="11" fill="#120a2a"/><path d="M${x + 14} ${y} L${x + 22} ${y - 30}" stroke="${c}" stroke-width="4" stroke-linecap="round"/><circle cx="${x + 22}" cy="${y - 32}" r="6" fill="${c}" opacity=".9"/><circle cx="${x + 22}" cy="${y - 32}" r="12" fill="${c}" opacity=".25"/></g>`; }).join('');
+  A.BG.hStage = () => `<defs>${gr('gS', '#2a1060', '#7a2a9a')}<linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8c0" stop-opacity=".55"/><stop offset="1" stop-color="#fff8c0" stop-opacity="0"/></linearGradient></defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/>${stars(26, 90)}
+    <g class="amb-shim">${[[120, -20], [340, 8], [560, 30]].map((p, i) => `<path d="M${p[0]} -10 L${p[0] - 70 + p[1]} 240 L${p[0] + 70 + p[1]} 240Z" fill="url(#gB)" opacity=".5"/>`).join('')}</g>
+    ${[80, 200, 340, 480, 600].map((x, i) => `<circle cx="${x}" cy="${20 + (i % 2) * 8}" r="9" fill="#ffe9a0"/><circle cx="${x}" cy="${20 + (i % 2) * 8}" r="18" fill="#ffe9a0" opacity=".25"/>`).join('')}
+    <rect x="-400" y="210" width="1480" height="30" fill="#3a1a6a"/>${crowd(250, 22)}
+    <path d="M-400 236 H1080 V330 H-400Z" fill="#5a2a8a"/><rect x="-400" y="236" width="1480" height="7" fill="#ff7ac8"/>${Array.from({ length: 12 }, (_, i) => `<rect x="${-380 + i * 130}" y="${242}" width="22" height="3" fill="#ffe9a0" class="amb-tw" style="--dl:-${(i * .4).toFixed(1)}s"/>`).join('')}`;
+  A.BG.hBack = () => `<defs>${gr('gW', '#5a3a7a', '#2a1a4a')}</defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gW)"/>
+    <rect x="70" y="30" width="150" height="150" rx="10" fill="#c8e8ff" stroke="#f4d8ff" stroke-width="6"/><path d="M90 150 L150 50 M130 160 L200 70" stroke="#fff" stroke-width="6" opacity=".5"/>${Array.from({ length: 8 }, (_, i) => `<circle class="amb-tw" cx="${80 + (i % 4) * 46}" cy="${i < 4 ? 22 : 190}" r="5" fill="#fff4b0" style="--dl:-${(i * .3).toFixed(1)}s"/>`).join('')}
+    <rect x="300" y="40" width="8" height="150" fill="#d8c0e8"/>${['#ff7ac8', '#7ad8ff', '#fff07a', '#b08aff', '#ff9a7a'].map((c, i) => `<path d="M${312 + i * 40} 52 l-14 -2 l-4 100 h40 l-4 -100Z" fill="${c}" opacity=".9"/>`).join('')}<rect x="300" y="46" width="230" height="6" rx="3" fill="#d8c0e8"/>
+    <rect x="-400" y="222" width="1480" height="108" fill="#3a2a5a"/><rect x="-400" y="222" width="1480" height="6" fill="#ff7ac8" opacity=".7"/><rect x="560" y="150" width="70" height="72" rx="6" fill="#8a5a3a"/><rect x="568" y="158" width="54" height="10" fill="#c8a07a"/>`;
+  A.BG.hRoof = () => `<defs>${gr('gS', '#0a0a30', '#4a2a7a')}</defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/>${stars(40, 150)}<circle cx="520" cy="60" r="34" fill="#fff4d0"/><circle cx="510" cy="52" r="34" fill="#4a2a7a" opacity=".0"/><circle cx="520" cy="60" r="56" fill="#fff4d0" opacity=".15"/>
+    <g opacity=".95">${city(236, ['#1a1448', '#241a5a', '#161040'], 3)}</g><g>${city(246, ['#2a2068', '#1c1650'], 31)}</g>
+    <rect x="-400" y="236" width="1480" height="94" fill="#2a2258"/><rect x="-400" y="236" width="1480" height="8" fill="#4a3a8a"/><rect x="-400" y="262" width="1480" height="3" fill="#1a1440" opacity=".7"/><g transform="translate(540 160)"><rect x="-30" y="0" width="60" height="70" fill="#3a2e70"/><path d="M-36 0 L0 -24 L36 0Z" fill="#241a5a"/></g>`;
+  A.PROP.beat = () => `<g class="flip"><g class="body"><ellipse cx="60" cy="196" rx="26" ry="6" fill="#000" opacity=".18"/><path d="M42 140 L28 108 M78 140 L92 108" stroke="#c8a07a" stroke-width="4" stroke-linecap="round"/><circle cx="26" cy="104" r="6" fill="#ff9ac0"/><circle cx="94" cy="104" r="6" fill="#ff9ac0"/><ellipse cx="60" cy="166" rx="34" ry="30" fill="#fff4e0" stroke="#e8c8a0" stroke-width="2.4"/><path d="M28 168 Q60 186 92 168" stroke="#ffb0c8" stroke-width="3" fill="none"/><circle cx="48" cy="160" r="4" fill="#2a2040"/><circle cx="72" cy="160" r="4" fill="#2a2040"/><circle cx="49.4" cy="158.6" r="1.4" fill="#fff"/><circle cx="73.4" cy="158.6" r="1.4" fill="#fff"/><path d="M54 170 q6 5 12 0" stroke="#2a2040" stroke-width="2" fill="none"/><circle cx="40" cy="170" r="5" fill="#ffb0a0" opacity=".6"/><circle cx="80" cy="170" r="5" fill="#ffb0a0" opacity=".6"/><g transform="translate(60 128)"><circle r="9" fill="#ff7ac8"/><path d="M-3 4 V-12 L7 -9" stroke="#fff" stroke-width="2.4" fill="none"/></g><ellipse cx="44" cy="196" rx="9" ry="5" fill="#e8c8a0"/><ellipse cx="76" cy="196" rx="9" ry="5" fill="#e8c8a0"/></g></g>`;
+  /* 造型依據:紫色漸層長髮+長辮高馬尾(魯米)、紅粉漸層雙馬尾(米拉)、黑色短髮+雙小髻(佐伊);三人配色以白/淡藍/黑/金為主,各帶一點黃;
+     魯米的惡魔花紋是發光粉紅色。舞台裝=白+金+淡藍,獵人裝=黑底金邊(自己設計);武器:魯米劍、米拉長柄彎刀、佐伊雙飛刀。 */
+  const GOLD = '#ffd24a', WHT = '#f6f2ff', ICE = '#a8d8f8', BLK = '#1c1c2c', NVY = '#2a2a48';
+  A.OPT.rumi = { skin: '#f0c8a8', hair: '#7a3ad0', hair2: '#b88af0', hs: 'sbraid', top: WHT, sleeve: WHT, skirt: ICE, shoe: GOLD, bow: GOLD, age: 'teen', s: .98 };
+  A.OPT.rumiH = { skin: '#f0c8a8', hair: '#7a3ad0', hair2: '#b88af0', hs: 'sbraid', top: BLK, sleeve: BLK, pants: NVY, shoe: GOLD, collar: GOLD, sword: 1, age: 'teen', s: .98 };
+  A.OPT.rumiM = Object.assign({}, A.OPT.rumiH, { marks: '#ff5ab8' });
+  A.OPT.mira = { skin: '#e8b890', hair: '#ff4f86', hair2: '#ff9ccf', hs: 'twin', top: BLK, sleeve: BLK, skirt: WHT, shoe: GOLD, age: 'teen', s: 1.04 };
+  A.OPT.miraH = { skin: '#e8b890', hair: '#ff4f86', hair2: '#ff9ccf', hs: 'twin', top: BLK, sleeve: BLK, pants: NVY, shoe: GOLD, collar: GOLD, polearm: GOLD, age: 'teen', s: 1.04 };
+  A.OPT.zoey = { skin: '#f4d0b0', hair: '#14141a', hs: 'short', buns: 1, top: GOLD, sleeve: GOLD, skirt: WHT, shoe: ICE, lash: 1, age: 'kid', s: .92 };
+  A.OPT.zoeyH = { skin: '#f4d0b0', hair: '#14141a', hs: 'short', buns: 1, top: BLK, sleeve: BLK, pants: NVY, shoe: GOLD, collar: GOLD, knives: GOLD, lash: 1, age: 'kid', s: .92 };
+  A.OPT.rumiS = Object.assign({}, A.OPT.rumi, { marks: '#ff5ab8' });
+  A.OPT.miraF = Object.assign({}, A.OPT.mira, { eye: '#e84a4a', fangs: 1 });
+  A.OPT.zoeyF = Object.assign({}, A.OPT.zoey, { eye: '#e84a4a', fangs: 1 });
+  A.OPT.celine = { skin: '#e8c0a0', hair: '#2a1a24', hs: 'bun', top: WHT, sleeve: WHT, pants: NVY, shoe: GOLD, collar: GOLD, age: 'adult', s: 1.04 };
+  const BOY = { lash: 0, hs: 'short', age: 'teen', s: 1.02 }, DEM = o => Object.assign({}, o, { skin: '#c85ad0', marks: '#8a5af0', fangs: 1, eye: '#ffe94a' });
+  A.OPT.jinu = Object.assign({ skin: '#f0d0b8', hair: '#1c1824', top: '#a8d8f8', sleeve: '#a8d8f8', pants: WHT, shoe: '#ffb0d8', collar: '#ffd0ea' }, BOY);
+  A.OPT.jinuD = Object.assign({}, A.OPT.jinu, { skin: '#8a78e0', marks: '#ffe94a', fangs: 1, eye: '#ffe94a' });
+  A.OPT.romance = Object.assign({ skin: '#f4d4bc', hair: '#ff8ac8', top: '#ffc8e4', sleeve: '#ffc8e4', pants: WHT, shoe: '#a8d8f8' }, BOY);
+  A.OPT.romanceD = DEM(A.OPT.romance);
+  A.OPT.abby = Object.assign({ skin: '#f0cfb0', hair: '#ff9a3a', top: '#6ad8d0', sleeve: '#6ad8d0', pants: WHT, shoe: '#ffc8e4' }, BOY);
+  A.OPT.abbyD = DEM(A.OPT.abby);
+  A.OPT.baby = Object.assign({ skin: '#f6d8c0', hair: '#6adf8a', top: '#a8d8f8', sleeve: '#a8d8f8', pants: WHT, shoe: '#6ad8d0' }, BOY, { s: .94 });
+  A.OPT.babyD = DEM(A.OPT.baby);
+  A.OPT.mystery = Object.assign({ skin: '#ecc8a8', hair: '#9a6ae0', top: '#ffc8e4', sleeve: '#ffc8e4', pants: WHT, shoe: '#a8d8f8' }, BOY);
+  A.OPT.mysteryD = DEM(A.OPT.mystery);
+  A.PROP.shade = () => `<g class="flip"><g class="body"><ellipse cx="60" cy="196" rx="24" ry="6" fill="#000" opacity=".2"/><path d="M30 190 Q22 140 44 124 L40 100 L54 118 Q60 116 66 118 L80 100 L76 124 Q98 140 90 190 Q74 198 60 192 Q46 198 30 190Z" fill="#5a2a8a" stroke="#2a1050" stroke-width="3" stroke-linejoin="round"/><circle cx="48" cy="152" r="7" fill="#ffe94a"/><circle cx="72" cy="152" r="7" fill="#ffe94a"/><circle cx="48" cy="153" r="3" fill="#1a0a30"/><circle cx="72" cy="153" r="3" fill="#1a0a30"/><path d="M46 170 q14 10 28 0" stroke="#1a0a30" stroke-width="3" fill="none"/></g></g>`;
+  A.PROP.gwima = () => `<g class="flip"><g class="body"><circle cx="60" cy="120" r="70" fill="#ff5a2a" opacity=".16"/><path d="M-6 190 Q-14 120 20 86 Q10 50 42 52 Q60 24 80 52 Q112 50 100 86 Q134 120 126 190 Q92 204 60 196 Q28 204 -6 190Z" fill="#3a1048" stroke="#1a0630" stroke-width="3.5" stroke-linejoin="round"/><path d="M18 100 Q4 74 24 60 M102 100 Q116 74 96 60" stroke="#6a2a78" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="38" cy="108" rx="13" ry="9" fill="#ff9a3a"/><ellipse cx="82" cy="108" rx="13" ry="9" fill="#ff9a3a"/><ellipse cx="38" cy="108" rx="4" ry="8" fill="#2a0a10"/><ellipse cx="82" cy="108" rx="4" ry="8" fill="#2a0a10"/><path d="M26 92 L50 100 M94 92 L70 100" stroke="#1a0630" stroke-width="5" stroke-linecap="round"/><path d="M26 140 Q60 176 94 140 Q60 152 26 140Z" fill="#ff6a2a" stroke="#1a0630" stroke-width="3"/><path d="M40 146 l5 10 l5 -9 l5 11 l5 -11 l5 10 l5 -9" stroke="#ffd24a" stroke-width="3" fill="none" stroke-linejoin="round"/></g></g>`;
+  const rock = (x, y, w, h, c) => `<path d="M${x - w / 2} ${y} L${x - w * .2} ${y - h} L${x} ${y - h * .6} L${x + w * .25} ${y - h * 1.1} L${x + w / 2} ${y}Z" fill="${c}"/>`;
+  A.BG.hJet = () => `<defs>${gr('gW', '#f4eee4', '#d8cfc0')}</defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gW)"/>
+    ${[40, 190, 340, 490, 640].map(x => `<rect x="${x - 30}" y="40" width="60" height="78" rx="30" fill="#2a2a60" stroke="#fff" stroke-width="6"/><circle cx="${x - 10 + (x % 3) * 8}" cy="${64 + (x % 4) * 6}" r="2" fill="#fff"/><circle cx="${x + 12}" cy="${96 - (x % 3) * 4}" r="1.6" fill="#fff"/>`).join('')}
+    <rect x="-400" y="132" width="1480" height="14" fill="#c9bfae"/><rect x="-400" y="146" width="1480" height="184" fill="#8a3a5a"/><rect x="-400" y="236" width="1480" height="4" fill="#e8c46a" opacity=".8"/>
+    ${[60, 250, 440, 600].map(x => `<g><rect x="${x - 34}" y="150" width="68" height="62" rx="14" fill="#f2e6d0" stroke="#c9b48a" stroke-width="2"/><rect x="${x - 40}" y="196" width="80" height="34" rx="10" fill="#e8d6b8" stroke="#c9b48a" stroke-width="2"/></g>`).join('')}`;
+  A.BG.hStreet = () => `<defs>${gr('gS', '#120a40', '#5a2a8a')}</defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/>${stars(18, 90)}
+    ${[[-60, 150, 110], [90, 120, 100], [520, 140, 120], [640, 110, 100]].map((b, i) => `<rect x="${b[0]}" y="${236 - b[1]}" width="${b[2]}" height="${b[1]}" fill="${['#241a5a', '#2e2068'][i % 2]}"/>${Array.from({ length: 6 }, (_, j) => `<rect x="${b[0] + 10 + (j % 3) * 30}" y="${236 - b[1] + 12 + Math.floor(j / 3) * 26}" width="14" height="14" fill="#ffe9a0" opacity=".8"/>`).join('')}`).join('')}
+    <rect x="-400" y="236" width="1480" height="94" fill="#2a2058"/><rect x="-400" y="236" width="1480" height="8" fill="#4a3a8a"/><rect x="-400" y="290" width="1480" height="6" fill="#ffd24a" opacity=".5"/>
+    ${[['#ff4f9a', 150], ['#46e0e8', 420], ['#ffd24a', 590]].map((n, i) => `<g class="amb-tw" style="--dl:-${i * .7}s"><rect x="${n[1] - 36}" y="${60 + i * 14}" width="72" height="26" rx="6" fill="#0a0a28" stroke="${n[0]}" stroke-width="3.5"/><path d="M${n[1] - 24} ${73 + i * 14} h48" stroke="${n[0]}" stroke-width="4" stroke-linecap="round"/></g>`).join('')}`;
+  A.BG.hLair = () => `<defs>${gr('gS', '#2a0830', '#8a2a4a')}<radialGradient id="gL" cx="50%" cy="100%" r="70%"><stop offset="0" stop-color="#ff7a2a" stop-opacity=".55"/><stop offset="1" stop-color="#ff7a2a" stop-opacity="0"/></radialGradient></defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/><rect x="-400" y="-400" width="1480" height="730" fill="url(#gL)"/>
+    <g class="amb-drift" opacity=".5"><ellipse cx="120" cy="50" rx="90" ry="20" fill="#5a1a48"/><ellipse cx="500" cy="70" rx="110" ry="22" fill="#5a1a48"/></g>
+    ${rock(40, 236, 180, 130, '#2a1030')}${rock(330, 236, 140, 80, '#341238')}${rock(600, 236, 200, 150, '#2a1030')}
+    <path d="M-400 246 Q0 236 340 246 T1080 242 V330 H-400Z" fill="#3a1440"/><path d="M-400 290 Q120 276 340 292 T1080 286" stroke="#ff7a2a" stroke-width="5" fill="none" opacity=".7"/>${Array.from({ length: 14 }, (_, i) => `<circle class="amb-tw" cx="${(A.RND(i + 5) * 680).toFixed(0)}" cy="${(120 + A.RND(i + 9) * 150).toFixed(0)}" r="2.4" fill="#ffb04a" style="--dl:-${(A.RND(i) * 2).toFixed(1)}s"/>`).join('')}`;
+  A.BG.hAward = () => `<defs>${gr('gS', '#2a1a10', '#6a4a1a')}<linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff8c0" stop-opacity=".55"/><stop offset="1" stop-color="#fff8c0" stop-opacity="0"/></linearGradient></defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/>
+    ${[40, 640].map(x => `<path d="M${x - 40} 0 Q${x} 120 ${x - 50} 236 L${x + 50} 236 Q${x + 10} 120 ${x + 40} 0Z" fill="#7a1a2a"/>`).join('')}
+    <path d="M120 236 V90 Q340 -20 560 90 V236" stroke="#ffd24a" stroke-width="12" fill="none"/>${[[340, 20], [230, 52], [450, 52]].map(p => `<path d="M${p[0]} ${p[1] - 14} l4 10 l10 1 l-8 7 l3 10 l-9 -6 l-9 6 l3 -10 l-8 -7 l10 -1Z" fill="#fff4b0"/>`).join('')}
+    <g class="amb-shim">${[180, 340, 500].map(x => `<path d="M${x} 0 L${x - 60} 240 L${x + 60} 240Z" fill="url(#gB)" opacity=".4"/>`).join('')}</g>
+    <rect x="-400" y="236" width="1480" height="94" fill="#4a1a22"/><rect x="-400" y="236" width="1480" height="7" fill="#ffd24a"/><rect x="220" y="244" width="240" height="86" fill="#b8283a"/>${crowd(300, 14)}`;
+  A.BG.hDawn = () => `<defs>${gr('gS', '#ffd0a0', '#ff9ac0')}</defs><rect x="-400" y="-400" width="1480" height="730" fill="url(#gS)"/><circle cx="340" cy="215" r="60" fill="#fff4c0" opacity=".9"/><circle cx="340" cy="215" r="100" fill="#fff4c0" opacity=".25"/>
+    ${['#ff5a6a', '#ffb03a', '#ffe94a', '#6adf8a', '#46c8f0', '#8a6af0'].map((c, i) => `<path d="M${-60 + i * 6} 236 Q340 ${-20 + i * 14} ${740 - i * 6} 236" stroke="${c}" stroke-width="10" fill="none" opacity=".75"/>`).join('')}
+    <g opacity=".9">${city(236, ['#6a3a6a', '#7a4a7a'], 11)}</g><rect x="-400" y="236" width="1480" height="94" fill="#5a2a5a"/><rect x="-400" y="236" width="1480" height="8" fill="#8a4a8a"/>${Array.from({ length: 14 }, (_, i) => `<circle class="amb-tw" cx="${(A.RND(i + 2) * 680).toFixed(0)}" cy="${(20 + A.RND(i + 6) * 100).toFixed(0)}" r="2" fill="#fff" style="--dl:-${(A.RND(i) * 2).toFixed(1)}s"/>`).join('')}`;
+  Object.assign(A.VP, { rumi: ['f', 1.1, 1], rumiH: ['f', 1.1, 1], rumiM: ['f', 1.1, 1], rumiS: ['f', 1.1, 1], miraF: ['f', .95, 1], zoeyF: ['f', 1.3, 1.05], celine: ['f', .85, .92], jinu: ['m', .8, 1], jinuD: ['m', .8, 1], romance: ['m', .9, 1], romanceD: ['m', .9, 1], abby: ['m', .7, 1], abbyD: ['m', .7, 1], baby: ['m', 1.4, 1.05], babyD: ['m', 1.4, 1.05], mystery: ['m', .6, .9], mysteryD: ['m', .6, .9], shade: ['m', 1.6, 1], gwima: ['m', .35, .8], mira: ['f', .95, 1], miraH: ['f', .95, 1], zoey: ['f', 1.3, 1.05], zoeyH: ['f', 1.3, 1.05], beat: ['f', 1.7, 1.1] });
+});
+(() => {
+  const N = { rumi: ['魯米', 'Rumi'], mira: ['米拉', 'Mira'], zoey: ['佐伊', 'Zoey'], celine: ['賽琳', 'Celine'], jinu: ['阿燼', 'Jinu'], gwima: ['鬼魔', 'Gwi-Ma'], beat: ['小拍', 'Beat'], romance: ['羅曼斯', 'Romance'], baby: ['貝比', 'Baby'], abby: ['阿比', 'Abby'], mystery: ['神祕', 'Mystery'] };
+  const c = (k, x, o) => Object.assign({ k, x, name: N[k.replace(/[HMSDF]$/, '')] || N[k] }, o || {});
+  STORIES.push({ id: 'huntrix', chapters: 12, title: ['獵星女團', 'Huntrix'],
+    parent: ['想一想:魯米一直藏著自己的祕密,後來說出真實的自己,朋友反而更靠近她。你有沒有不敢說的事?可以先對誰說?', 'Think about it: Rumi hid her secret, but when she showed her true self, her friends came closer. Is there something hard for you to say? Who could you tell first?'],
+    scenes: [
+      /* 1 舞台 */
+      { bg: 'hStage', cast: { rumi: c('rumi', 30), mira: c('mira', 50), zoey: c('zoey', 70) },
+        say: [['n', ['夜光市的大舞台上,三個女孩唱著歌,她們是最紅的偶像團體「獵星」。', 'On the big stage of Starlight City, three girls sang together. They were the famous idol group Huntrix.'], ['rumi wave @唱著|sang', 'mira spin @偶像|idol', 'zoey jump @獵星|Huntrix', 'fx sparkle 340 60 #ffd0f0 @舞台|stage']],
+          ['n', ['可是只有她們知道,每一次唱歌,都在築起一道看不見的光牆,叫做「魂門」。', 'But only they knew that every song built an invisible wall of light called the Honmoon.'], ['rumi lift @築起|built', 'fx sparkle 340 120 #ffe9a0 @光牆|wall', 'mira nod @魂門|Honmoon']],
+          ['n', ['魂門擋住了壞東西,保護每一位聽歌的粉絲。', 'The Honmoon kept bad things away and protected every fan who was listening.'], ['mira nod @保護|protected', 'zoey clap @粉絲|fan', 'fx glow on rumi @魂門|Honmoon']],
+          ['rumi', ['大家跟我一起,把歌聲送上天吧!', 'Everyone, sing with me and send our song up to the sky!'], ['rumi lift @送上天|sky', 'fx confetti @歌聲|song', 'zoey jump @大家|Everyone']]] },
+      /* 2 飛機 */
+      { bg: 'hJet', cast: { rumi: c('rumi', 22), rumiH: c('rumiH', 22, { hid: 1 }), mira: c('mira', 44), miraH: c('miraH', 44, { hid: 1 }), zoey: c('zoey', 66), zoeyH: c('zoeyH', 66, { hid: 1 }), s1: { k: 'shade', x: 84, face: -1, hid: 1, name: ['影怪', 'Shade'] }, s2: { k: 'shade', x: 92, face: -1, hid: 1, name: ['影怪', 'Shade'] } },
+        say: [['n', ['演唱會結束了,三個女孩搭上私人飛機,要去下一個城市。', 'After the concert, the three girls boarded a private plane to the next city.'], ['rumi wave @飛機|plane', 'zoey jump @下一個|next', 'mira nod @搭上|boarded']],
+          ['n', ['突然,送飲料的空服員露出了尖牙,原來是假扮的惡魔!', 'Suddenly the flight attendants showed sharp fangs. They were demons in disguise!'], ['s1 pop @尖牙|fangs', 's2 pop @惡魔|demons', 'mira fear @惡魔|demons', 'zoey face wow @突然|Suddenly']],
+          ['zoey', ['想搗亂?先聽我們唱完歌再說!', 'Making trouble? Listen to our song first!'], ['zoey point 80 @搗亂|trouble', 'rumi face angry @唱完|song', 'mira lift @聽|Listen']],
+          ['n', ['三人一邊唱歌,一邊亮出武器,魯米手裡的劍閃閃發光!', 'Singing all the while, the three drew their weapons. The sword in Rumi\'s hand shone brightly!'], ['rumi swap rumiH @亮出|drew', 'mira swap miraH @亮出|drew', 'zoey swap zoeyH @亮出|drew', 'fx flash @閃閃發光|shone']]] },
+      /* 3 祕密 */
+      { bg: 'hBack', cast: { rumi: c('rumi', 30), rumiS: c('rumiS', 30, { hid: 1 }), celine: c('celine', 62, { face: -1 }), beat: c('beat', 86, { face: -1 }) },
+        say: [['n', ['魯米有一個祕密:她身上有會發光的花紋,因為她的爸爸是惡魔。', 'Rumi had a secret: glowing patterns on her skin, because her father was a demon.'], ['rumi think @祕密|secret', 'rumi swap rumiS @花紋|patterns', 'fx glow on rumiS @發光|glowing']],
+          ['celine', ['別怕,孩子。這個祕密,只要我們兩個人知道就好。', 'Do not be afraid, dear. Only the two of us need to know this secret.'], ['celine nod @別怕|afraid', 'rumiS face sad @祕密|secret', 'celine hug @兩個人|two']],
+          ['n', ['魯米想用新歌把魂門變成金色,讓花紋永遠消失。', 'Rumi hoped her new song would turn the Honmoon golden and make the patterns vanish.'], ['rumiS think @金色|golden', 'fx sparkle 340 80 #ffd24a @金色|golden', 'beat jump @消失|vanish']],
+          ['n', ['可是,她的歌聲卻越來越不穩了。', 'But her voice was growing shakier and shakier.'], ['rumiS face sad @不穩|shakier', 'rumiS shiver @不穩|shakier', 'celine face sad @歌聲|voice']]] },
+      /* 4 魔界 */
+      { bg: 'hLair', cast: { gwima: c('gwima', 66, { s: 1.15, face: -1 }), jinu: c('jinuD', 22), s1: { k: 'shade', x: 40, hid: 1, name: ['影怪', 'Shade'] } },
+        say: [['n', ['在黑暗的魔界,惡魔王鬼魔很生氣,因為手下一直搶不到人類的靈魂。', 'In the dark demon world, the demon king Gwi-Ma was angry because his demons kept failing to take human souls.'], ['gwima grow @生氣|angry', 'fx shake @魔界|demon', 'jinu fear @靈魂|souls']],
+          ['gwima', ['為什麼那些偶像的歌聲,還打不倒?想辦法!', 'Why can those idols\' singing not be beaten? Find a way!'], ['gwima point jinu @想辦法|Find', 'fx fire gwima @打不倒|beaten', 'jinu bow @為什麼|Why']],
+          ['jinu', ['大王,讓我組一個男團。只要搶走她們的粉絲,魂門就會變弱。', 'My king, let me form a boy band. If we steal her fans, the Honmoon will grow weak.'], ['jinu lift @男團|band', 'jinu think @粉絲|fans', 'gwima nod @變弱|weak']],
+          ['n', ['鬼魔點點頭,「使者男孩」就這樣誕生了。', 'Gwi-Ma nodded, and the Saja Boys were born.'], ['fx flash @誕生|born', 's1 pop @使者男孩|Saja', 'gwima laugh @點點頭|nodded']]] },
+      /* 5 男團登場 */
+      { bg: 'hStreet', cast: { jinu: c('jinu', 14, { face: 1 }), jinuD: c('jinuD', 14, { hid: 1 }), romance: c('romance', 32), romanceD: c('romanceD', 32, { hid: 1 }), baby: c('baby', 48), babyD: c('babyD', 48, { hid: 1 }), rumi: c('rumiH', 68, { face: -1 }), mira: c('miraH', 82, { face: -1 }), zoey: c('zoeyH', 94, { face: -1 }) },
+        say: [['n', ['使者男孩一出道,街上的粉絲全被迷住了,連歌聲也被吸走了。', 'The moment the Saja Boys debuted, fans all over the street were charmed, and the music was drained away.'], ['romance wave @出道|debuted', 'baby spin @迷住|charmed', 'jinu bow @粉絲|fans', 'fx sparkle 340 100 #ffc8e4 @吸走|drained']],
+          ['mira', ['好奇怪,他們身上有股惡魔的味道!', 'How strange. They smell like demons!'], ['mira point 30 @惡魔|demons', 'zoey face wow @奇怪|strange', 'rumi face angry @味道|smell']],
+          ['n', ['三個女孩衝上去,偽裝被撕破,男孩們變回了惡魔的樣子!', 'The three girls rushed in, the disguises tore away, and the boys turned back into demons!'], ['rumi go 60 @衝上去|rushed', 'jinu swap jinuD @變回|turned', 'romance swap romanceD @變回|turned', 'baby swap babyD @變回|turned', 'fx flash @撕破|tore']],
+          ['zoey', ['想搶我們的粉絲?沒那麼容易!', 'Steal our fans? Not so easy!'], ['zoey jump @沒那麼|Not', 'zoey point 30 @搶|Steal', 'rumi lift @我們|our']]] },
+      /* 6 屋頂 */
+      { bg: 'hRoof', fx: ['night on'], cast: { rumi: c('rumiM', 30), jinu: c('jinu', 68, { face: -1 }) },
+        say: [['n', ['交手的時候,阿燼看見了魯米身上的花紋,可是他沒有說出去。', 'During the clash, Jinu saw the patterns on Rumi, but he did not tell anyone.'], ['jinu face wow @看見|saw', 'fx glow on rumi @花紋|patterns', 'jinu nod @沒有|not']],
+          ['jinu', ['妳不用躲。羞愧的聲音,就是鬼魔用來控制惡魔的東西。', 'You do not have to hide. Shame is what Gwi-Ma uses to control demons.'], ['jinu point rumi @不用躲|hide', 'jinu think @羞愧|Shame', 'rumi face sad @羞愧|Shame']],
+          ['rumi', ['你為什麼要幫我?', 'Why are you helping me?'], ['rumi think @為什麼|Why', 'jinu turn @幫|helping', 'rumi point 60 @你|you']],
+          ['n', ['魯米又驚訝又害怕,轉身追了上去,想問個明白。', 'Rumi was surprised and scared. She turned and ran after him to find out the truth.'], ['jinu run 94 @追|ran', 'rumi run 80 @追了上去|ran+300', 'fx sparkle 340 100 #ffe94a @明白|truth']]] },
+      /* 7 寫歌 */
+      { bg: 'hBack', cast: { rumi: c('rumi', 24), mira: c('mira', 48), zoey: c('zoey', 72), beat: c('beat', 90, { face: -1 }) },
+        say: [['n', ['使者男孩越來越紅,惡魔也越來越多。獵星決定寫一首歌,打敗他們!', 'The Saja Boys grew more popular, and more demons showed up. Huntrix decided to write a song to beat them!'], ['mira point 60 @惡魔|demons', 'zoey jump @寫|write', 'rumi nod @決定|decided']],
+          ['zoey', ['我來寫歌詞!我還要先練練我的飛刀!', 'I will write the words! First I need to practice with my throwing knives!'], ['zoey lift @飛刀|knives', 'zoey spin @歌詞|words', 'beat jump @練|practice']],
+          ['rumi', ['我……我不太想用這種方式打敗他們。', 'I… I am not sure I want to beat them this way.'], ['rumi face sad @不太想|sure', 'rumi shiver @打敗|beat', 'mira face wow @不太想|sure']],
+          ['mira', ['魯米,妳最近怎麼了?都不跟我們說實話。', 'Rumi, what is wrong lately? You are not telling us everything.'], ['mira point rumi @魯米|Rumi', 'zoey face sad @實話|everything', 'rumi bow @怎麼了|wrong']]] },
+      /* 8 約定 */
+      { bg: 'hRoof', fx: ['night on'], cast: { rumi: c('rumiH', 28), jinu: c('jinu', 66, { face: -1 }), beat: c('beat', 86, { face: -1, hid: 1 }) },
+        say: [['n', ['魯米偷偷去找阿燼,對他說:一起贏下頒獎典禮吧。', 'Rumi secretly went to find Jinu. She said, Let us win the awards night together.'], ['rumi go 48 @找|find', 'jinu face wow @頒獎|awards', 'rumi point jinu @一起|together']],
+          ['jinu', ['好。我會幫妳,我也想留在有陽光的地方。', 'Okay. I will help you. I want to stay where there is sunshine too.'], ['jinu nod @好|Okay', 'jinu laugh @陽光|sunshine', 'fx sparkle jinu #ffe94a @陽光|sunshine']],
+          ['n', ['魯米的聲音居然恢復了!她開心得想唱歌。', 'Rumi\'s voice came back! She was so happy she wanted to sing.'], ['rumi jump @恢復|back', 'rumi lift @唱歌|sing', 'fx sparkle rumi #ffd0f0 @開心|happy']],
+          ['n', ['可是遠遠的黑暗裡,鬼魔也聽見了這個約定。', 'But far away in the darkness, Gwi-Ma had heard the deal too.'], ['fx dim on .3 @黑暗|darkness', 'jinu fear @聽見|heard', 'rumi face wow @鬼魔|Gwi-Ma']]] },
+      /* 9 頒獎 */
+      { bg: 'hAward', cast: { rumi: c('rumi', 24), rumiS: c('rumiS', 24, { hid: 1 }), mira: c('mira', 12, { hid: 1 }), zoey: c('zoey', 30, { hid: 1 }), miraF: c('miraF', 62, { face: -1 }), zoeyF: c('zoeyF', 80, { face: -1 }) },
+        say: [['n', ['頒獎典禮那一晚,魯米唱著新歌,台下全是歡呼聲。', 'On awards night Rumi sang the new song, and the crowd cheered.'], ['rumi lift @新歌|song', 'rumi laugh @歡呼|cheered', 'fx confetti @歡呼|cheered']],
+          ['n', ['這時,假扮成米拉和佐伊的惡魔,騙魯米唱出另一首歌,她身上的花紋全亮了!', 'Then demons disguised as Mira and Zoey tricked Rumi into singing another song, and all her patterns lit up!'], ['miraF wave @假扮|disguised', 'zoeyF wave @騙|tricked', 'rumi swap rumiS @亮|lit', 'fx glow on rumiS @花紋|patterns']],
+          ['n', ['真正的米拉和佐伊衝了進來,看見了一切。', 'The real Mira and Zoey rushed in and saw everything.'], ['mira show @真正|real', 'zoey show @真正|real', 'mira go 40 @衝|rushed', 'zoey go 52 @衝|rushed']],
+          ['mira', ['魯米,妳為什麼一直不告訴我們?', 'Rumi, why did you never tell us?'], ['mira face sad @告訴|tell', 'zoey face sad @為什麼|why', 'rumiS face sad @魯米|Rumi']]] },
+      /* 10 入侵 */
+      { bg: 'hAward', fx: ['dim on .35'], cast: { gwima: c('gwima', 68, { s: 1.1, face: -1 }), rumi: c('rumiH', 20), mira: c('miraH', 40, { ex: 'sleep' }), zoey: c('zoeyH', 52, { ex: 'sleep' }), jinu: c('jinuD', 86, { face: -1 }) },
+        say: [['n', ['鬼魔闖進人類世界施了魔法,觀眾和米拉、佐伊都呆呆地搖擺。', 'Gwi-Ma cast a spell. The crowd, Mira and Zoey swayed in a daze to the Saja Boys\' song.'], ['fx flash @魔法|spell', 'mira face sleep @呆呆|daze', 'zoey face sleep @搖擺|swayed', 'gwima grow @闖進|spell']],
+          ['rumi', ['米拉!佐伊!快醒醒!', 'Mira! Zoey! Wake up!'], ['rumi go 30 @快醒醒|Wake', 'rumi face sad @米拉|Mira', 'rumi lift @佐伊|Zoey']],
+          ['n', ['魯米想放棄魂門了,可是看見大家被困住,她握緊了拳頭。', 'Rumi wanted to give up on the Honmoon, but seeing everyone trapped, she clenched her fists.'], ['rumi face sad @放棄|give', 'rumi nod @握緊|clenched', 'fx glow on rumi @拳頭|fists']]] },
+      /* 11 真心 */
+      { bg: 'hAward', fx: ['dim on .3'], cast: { rumi: c('rumiM', 50), mira: c('miraH', 28, { ex: 'sleep' }), zoey: c('zoeyH', 72, { ex: 'sleep' }), gwima: c('gwima', 92, { s: 1.0, face: -1, hid: 1 }) },
+        say: [['n', ['魯米走上舞台,不再遮住花紋,大聲唱出真實的自己。', 'Rumi walked onto the stage. She stopped hiding her patterns and sang out as her true self.'], ['rumi go 50 @走上|walked', 'rumi lift @唱出|sang', 'fx glow on rumi @花紋|patterns']],
+          ['n', ['她的歌聲像光一樣散開,米拉和佐伊醒了過來!', 'Her voice spread like light, and Mira and Zoey woke up!'], ['fx sparkle 340 100 #ffd0f0 @光|light', 'mira face none @醒|woke', 'zoey face none @醒|woke', 'mira jump @醒|woke+200']],
+          ['mira', ['魯米,我們是一起的。不管有沒有花紋,妳都是我們的朋友。', 'Rumi, we are together. With patterns or without, you are our friend.'], ['mira hug @一起|together', 'zoey nod @朋友|friend', 'rumi face wow @朋友|friend']],
+          ['zoey', ['對!我們三個一起,把他打回魔界去!', 'Yes! The three of us will send him back to the demon world together!'], ['zoey jump @對|Yes', 'gwima show @魔界|demon', 'rumi lift @一起|together']]] },
+      /* 12 結局 */
+      { bg: 'hDawn', cast: { rumi: c('rumiH', 24), mira: c('miraH', 42), zoey: c('zoeyH', 60), celine: c('celine', 80, { face: -1 }), jinu: c('jinu', 10, { hid: 1 }), gwima: c('gwima', 90, { s: .9, face: -1 }) },
+        say: [['n', ['三個人的歌聲合在一起,鬼魔被光打倒了。', 'The three voices joined together, and the light defeated Gwi-Ma.'], ['fx flash @打倒|defeated', 'gwima fall @打倒|defeated', 'rumi lift @歌聲|voices']],
+          ['n', ['阿燼笑著把光送給魯米,化成光點飛向天空,終於自由了。', 'Jinu smiled, gave Rumi his light, and rose into the sky as sparkles, free at last.'], ['jinu show @阿燼|Jinu', 'fx sparkle jinu #ffe94a @光點|sparkles', 'jinu fade @自由|free']],
+          ['n', ['魂門變成了彩虹色,魔界的門又關上了。', 'The Honmoon turned rainbow-colored, and the gate to the demon world closed again.'], ['fx sparkle 340 60 #8a6af0 @彩虹|rainbow', 'fx confetti @關上|closed', 'celine clap @魂門|Honmoon']],
+          ['n', ['天亮了,魯米不再害怕。賽琳和粉絲們,都在等她們回家。', 'Dawn came, and Rumi was not afraid anymore. Celine and the fans were waiting for them to come home.'], ['rumi laugh @不再|not', 'celine wave @賽琳|Celine', 'mira hug @回家|home']],
+          ['rumi', ['謝謝你們,我最好的朋友。我們是獵星!', 'Thank you, my best friends. We are Huntrix!'], ['rumi lift @我們|We', 'zoey jump @獵星|Huntrix', 'fx confetti @謝謝|Thank']]] }
+    ],
+    levels: {
+      0: { type: 'rhythm', q: ['跟著節拍點一點,用歌聲點亮魂門!', 'Tap with the beat and light up the Honmoon with your song!'], bpm: 84, notes: 16, need: .5, lanes: 3, win: ['魂門亮起來了!大家都聽見了!', 'The Honmoon is glowing! Everyone can hear it!'] },
+      1: { type: 'slash', q: ['影怪衝過來了!點一點,把牠們斬掉!', 'Shades are rushing in! Tap them to slash them away!'], need: 8, total: 13, rate: 900, win: ['全部打跑了!', 'You chased them all away!'] },
+      2: { type: 'catch', icon: '🎤', q: ['拖動魯米,接住金色音符,小心黑霧!', 'Drag Rumi to catch the golden notes. Watch out for the dark mist!'], need: 10, total: 17, win: ['接到好多音符,魯米的歌聲有力了一點!', 'So many notes! Rumi\'s voice grew a little stronger!'] },
+      3: { type: 'simon', q: ['看燈光亮起的順序,再照著點一遍!', 'Watch the lights, then tap them in the same order!'], rounds: 4, win: ['記得真清楚!', 'What a great memory!'] },
+      4: { type: 'guard', q: ['影子攻擊來了!在圈圈縮小前,點對方向擋住!', 'A shadow attack is coming! Tap the right arrow before the ring shrinks!'], need: 7, total: 11, win: ['全部擋住了!', 'You blocked them all!'] },
+      5: { type: 'maze', q: ['用方向鍵(或滑動),追上前面的阿燼!', 'Use the arrows (or swipe) to catch up with Jinu!'], size: 5, icon: '🎤', goal: '🏃', win: ['追上了!', 'You caught up!'] },
+      6: { type: 'whack', q: ['洞裡冒出影怪!用飛刀點牠們,別點到粉絲!', 'Shades pop out of the holes! Tap them with your knives, but not the fans!'], need: 9, total: 15, up: 1100, rate: 800, win: ['飛刀好準!', 'What great aim!'] },
+      7: { type: 'memory', q: ['翻翻看,找出一樣的圖!', 'Flip the cards and find the pairs!'], cards: [{ a: 'rumiH', t: ['魯米', 'Rumi'] }, { a: 'miraH', t: ['米拉', 'Mira'] }, { a: 'zoeyH', t: ['佐伊', 'Zoey'] }] },
+      8: { type: 'spot', q: ['哪一個是假的?找出眼神怪怪的那一個!', 'Which one is fake? Find the one with strange eyes!'], rounds: 3, n: 4, faces: ['🙂', '😀', '😊'], win: ['抓到假冒者了!', 'You caught the fakes!'] },
+      9: { type: 'rescue', q: ['觀眾被迷霧困住了!點一點,把霧趕走!', 'The crowd is trapped in mist! Tap to clear it away!'], n: 8, max: 2, win: ['大家都清醒了!', 'Everyone is awake again!'] },
+      10: { type: 'rhythm', q: ['最後的歌!四個格子一起守住魂門!', 'The final song! Four lanes to protect the Honmoon!'], lanes: 4, names: [['魯米','Rumi'],['米拉','Mira'],['佐伊','Zoey'],['大家','All']], bpm: 108, notes: 26, need: .6, fall: 1.5, seed: 11, win: ['魯米的真心歌聲打動了大家!', 'Rumi\'s true song touched everyone!'] },
+      11: { type: 'burst', q: ['三個人一起唱!快速連點,填滿魂門的能量!', 'Sing all together! Tap fast to fill the Honmoon with power!'], gain: 4, win: ['魂門變成彩虹色了!', 'The Honmoon turned rainbow-colored!'] }
+    } });
+})();
+
 // 茉莉公主(阿拉丁):依迪士尼 1992 電影大綱,憑記憶撰寫。標 待核對:市集蘋果、魔毯飛行與賈方變身的順序、譯名。
 EXT.push(A => {
   const gr = (id, a, b) => `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
@@ -2135,7 +2300,7 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
     const eye = o.eye || '#3a2a7a', sk = o.skin, skD = shd(sk, -.18), hc = o.hair, hD = shd(hc, -.32), hL = shd(hc, .38);
     const hs = o.hs || (o.hood ? 'none' : o.braid ? 'vlong' : o.long ? (girl ? 'long' : 'mlong') : girl ? 'bob' : 'short');
     const lg = (id, c, k1, k2, horiz) => `<linearGradient id="${U}${id}" x1="0" y1="0" x2="${horiz ? 1 : 0}" y2="${horiz ? 0 : 1}"><stop offset="0" stop-color="${shd(c, k1 * .7)}"/><stop offset=".2" stop-color="${shd(c, k1 * .7)}"/><stop offset=".2" stop-color="${c}"/><stop offset=".64" stop-color="${c}"/><stop offset=".64" stop-color="${shd(c, k2 * .85)}"/><stop offset="1" stop-color="${shd(c, k2 * .85)}"/></linearGradient>`;
-    const defs = `<defs>${lg('t', o.top, .22, -.28, 1)}${lg('s', o.sleeve, .25, -.25, 1)}${o.skirt ? lg('k', o.skirt, .2, -.3, 1) : ''}${o.pants ? lg('p', o.pants, .15, -.3, 1) : ''}${lg('h', hc, .25, -.25)}${o.cape ? lg('c', o.cape, .1, -.35, 1) : ''}<radialGradient id="${U}f" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="${shd(sk, .14)}"/><stop offset=".7" stop-color="${sk}"/><stop offset="1" stop-color="${skD}"/></radialGradient><radialGradient id="${U}i" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="${shd(eye, .55)}"/><stop offset="1" stop-color="${eye}"/></radialGradient></defs>`;
+    const defs = `<defs>${lg('t', o.top, .22, -.28, 1)}${lg('s', o.sleeve, .25, -.25, 1)}${o.skirt ? lg('k', o.skirt, .2, -.3, 1) : ''}${o.pants ? lg('p', o.pants, .15, -.3, 1) : ''}${o.hair2 ? `<linearGradient id="${U}h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shd(hc, -.1)}"/><stop offset=".35" stop-color="${hc}"/><stop offset="1" stop-color="${o.hair2}"/></linearGradient>` : lg('h', hc, .25, -.25)}${o.cape ? lg('c', o.cape, .1, -.35, 1) : ''}<radialGradient id="${U}f" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="${shd(sk, .14)}"/><stop offset=".7" stop-color="${sk}"/><stop offset="1" stop-color="${skD}"/></radialGradient><radialGradient id="${U}i" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="${shd(eye, .55)}"/><stop offset="1" stop-color="${eye}"/></radialGradient></defs>`;
     const hand = (x, y, d) => `<path d="M${x - 2.6} ${y - 4} C${x - 3.8} ${y} ${x - 3.6} ${y + 4.4} ${x - 1.4} ${y + 6.4} C${x + .4} ${y + 7.8} ${x + 2.8} ${y + 6.4} ${x + 3} ${y + 3.4} C${x + 3.2} ${y + .6} ${x + 3} ${y - 2} ${x + 2.6} ${y - 4}Z" fill="${sk}" ${OL}/><path d="M${x + d * 2.6} ${y - 2.2} q${d * 2.8} 1.2 ${d * 2} 4.6 q${-d * .6} 1.4 ${-d * 1.8} .6" fill="${sk}" ${OL}/><path d="M${x - .6} ${y + 2.6} v3" stroke="${skD}" stroke-width=".8"/>`;
     /* 後髮(畫在身體後面,會跟著晃) */
     const back = {
@@ -2181,6 +2346,8 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
         ${o.beard ? `<path d="M42 58 Q46 84 60 88 Q74 84 78 58 Q72 70 60 70 Q48 70 42 58Z" fill="${o.beard}" ${OL}/>` : ''}
         ${o.nose ? `<path d="M60 50 L52 64 L62 61Z" fill="${sk}" stroke="#a07a5a" stroke-width="1"/>` : `<path d="M60.6 60.4 Q59.6 62.6 61.6 63" stroke="${shd(sk, -.4)}" stroke-width="1.1" fill="none" stroke-linecap="round" opacity=".75"/>`}
         <g class="eyes"><g transform="translate(60 54) scale(${ES}) translate(-60 -54)">${[[51, -1], [69, 1]].map(([x, d]) => `<path d="M${x - 6.2} 54 Q${x} 46.4 ${x + 6.2} 53.4 Q${x + 1} 60.6 ${x - 6.2} 54Z" fill="#fff"/><circle cx="${x + d * .3}" cy="54.4" r="4.7" fill="url(#${U}i)"/><circle cx="${x + d * .3}" cy="54.4" r="4.7" fill="none" stroke="#120a24" stroke-opacity=".5" stroke-width=".8"/><path d="M${x + d * .3 - 4.7} 54.4 A4.7 4.7 0 0 1 ${x + d * .3 + 4.7} 54.4Z" fill="#000" opacity=".3"/><circle cx="${x + d * .3}" cy="55" r="2.3" fill="#120a24"/><ellipse cx="${x + d * .3}" cy="57.4" rx="2.6" ry="1.1" fill="#fff" opacity=".22"/><circle cx="${x + 1.8}" cy="52.3" r="1.7" fill="#fff"/><circle cx="${x - 1.4}" cy="56.6" r=".8" fill="#fff" opacity=".9"/><path d="M${x - 6.2} 54 Q${x} 46.4 ${x + 6.2} 53.4" fill="none" stroke="#1a0f2e" stroke-opacity=".25" stroke-width="3.4"/><path d="M${x - 6.8} 54.2 Q${x} 45.2 ${x + 6.6} 53" stroke="#1e1028" stroke-width="${girl && !old ? 2 : 1.5}" fill="none" stroke-linecap="round"/>${girl && young ? `<path d="M${x + d * 6.4} ${d < 0 ? 54.2 : 53} q${d * 2.6} -1.2 ${d * 3.4} -3.4 M${x + d * 5.2} ${d < 0 ? 51 : 50} q${d * 1.8} -1.4 ${d * 2.2} -3.4" stroke="#1e1028" stroke-width="1.2" fill="none" stroke-linecap="round"/>` : girl && age === 'adult' ? `<path d="M${x + d * 6.4} ${d < 0 ? 54.2 : 53} q${d * 2.2} -1 ${d * 3} -2.6" stroke="#1e1028" stroke-width="1.1" fill="none" stroke-linecap="round"/>` : ''}${old ? `<path d="M${x - 6.8} 54.4 Q${x} 44.6 ${x + 6.8} 53.4 Q${x} 50.2 ${x - 6.8} 54.4Z" fill="${sk}"/><path d="M${x - 6.4} 53.6 Q${x} 50.4 ${x + 6.4} 52.8" stroke="#1e1028" stroke-width="1.3" fill="none"/><path d="M${x + d * 7.4} 53 l${d * 3} -1.6 M${x + d * 7.4} 55.4 l${d * 3} 1" stroke="${shd(sk, -.4)}" stroke-width=".9"/>` : ''}<path d="M${x - 5} 48.4 Q${x} 44.4 ${x + 5} 48" stroke="#1a0f2e" stroke-opacity=".22" stroke-width=".9" fill="none"/><path d="M${x - 4} 59.2 Q${x} 60.6 ${x + 4} 58.8" stroke="#1e1028" stroke-opacity=".35" stroke-width=".9" fill="none"/>${vil ? `<path d="M${x - 6.8} 54.6 Q${x} 44.6 ${x + 6.8} 53.6 L${x + 6.8} 52.4 Q${x} 49.6 ${x - 6.8} 51.6Z" fill="${sk}"/><path d="M${x - 7} ${d < 0 ? 53.2 : 51.4} L${x + 7} ${d < 0 ? 51.4 : 53.2}" stroke="#140a1c" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="${x + d * .3}" cy="55.2" rx="1" ry="2.6" fill="#140a1c"/><path d="M${x + d * 7} ${d < 0 ? 53 : 51.6} l${d * 3.4} ${d < 0 ? -2.4 : -2.4}" stroke="#140a1c" stroke-width="1.6" stroke-linecap="round"/>` : ''}`).join('')}</g></g>
+        ${o.buns ? [43, 77].map(x => `<circle cx="${x}" cy="20" r="8" fill="url(#${U}h)" ${OL}/>`).join('') : ''}
+        ${o.marks ? `<g stroke="${o.marks}" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".9"><path d="M41 60 q4 3 1 8 M44 56 q3 1 4 4 M79 60 q-4 3 -1 8 M76 56 q-3 1 -4 4 M60 36 v5 M55 37 l2 4 M65 37 l-2 4"/></g>` : ''}
         ${o.glasses ? `<g fill="none" stroke="${o.glasses}" stroke-width="1.8"><circle cx="50.5" cy="54" r="6.6"/><circle cx="69.5" cy="54" r="6.6"/><path d="M57.1 53.4 Q60 51.6 62.9 53.4"/><path d="M45 50.6 q3 -2 6 -1" stroke="#fff" stroke-width="1.1" opacity=".6"/></g>` : ''}
         ${o.shades ? `<g><circle cx="50.5" cy="54" r="7.4" fill="#1a1420" stroke="#e8e0d0" stroke-width="1.6"/><circle cx="69.5" cy="54" r="7.4" fill="#1a1420" stroke="#e8e0d0" stroke-width="1.6"/><path d="M57.9 54 Q60 52.4 62.1 54" stroke="#e8e0d0" stroke-width="1.4" fill="none"/><path d="M46 50.6 q3 -2 6 -1" stroke="#fff" stroke-width="1.2" opacity=".6" fill="none"/></g>` : ''}
         <g class="mx e-shut" stroke="#1e1028" stroke-width="2" fill="none" stroke-linecap="round"><path d="M45 54 Q51 58 57 54"/><path d="M63 54 Q69 58 75 54"/></g>
@@ -2199,7 +2366,7 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
         ${o.fangs ? '<path d="M55.5 63.5 l1.5 4 l1.5 -4Z M61.5 63.5 l1.5 4 l1.5 -4Z" fill="#fff"/>' : ''}
         <g class="tears"><ellipse cx="49" cy="59" rx="2.4" ry="3.6" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/><ellipse cx="71" cy="59" rx="2.4" ry="3.6" fill="#5cc3f0" stroke="#fff" stroke-width=".8"/></g>
       </g></g>`.split(OL).join(OLH);
-    const items = `${o.hook ? '<path d="M86 124 L104 40 Q110 18 96 14 Q82 12 84 30" stroke="#e8dcc0" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M90 98 l10 4 M94 80 l10 4" stroke="#8d5a2b" stroke-width="3"/>' : ''}${o.broom ? '<path d="M84 122 L66 186" stroke="#8d5a2b" stroke-width="4"/><path d="M58 180 L76 186 L70 200 L50 194Z" fill="#d9b25a"/>' : ''}${o.torch ? '<path d="M86 124 L94 76" stroke="#6d4228" stroke-width="5"/><path class="amb-tw" d="M94 76 Q82 60 94 44 Q106 60 94 76Z" fill="#ffb02e"/><path d="M94 74 Q88 64 94 56 Q100 64 94 74Z" fill="#ffe08a"/>' : ''}${o.book ? `<rect x="78" y="106" width="22" height="16" rx="2" fill="${o.book}" transform="rotate(-20 88 114)"/><rect x="80" y="108" width="18" height="12" fill="#fff8e7" transform="rotate(-20 88 114)"/>` : ''}${o.trident ? `<path d="M80 150 L101 22" stroke="#8a5a14" stroke-width="5.5" stroke-linecap="round"/><path d="M80 150 L101 22" stroke="#e0ab3a" stroke-width="3.5" stroke-linecap="round"/><g transform="translate(101 22) rotate(9.3)"><path d="M-12 -2 Q-12 9 0 9 Q12 9 12 -2" stroke="#8a5a14" stroke-width="5.5" fill="none"/><path d="M-12 -2 Q-12 9 0 9 Q12 9 12 -2" stroke="#FAC775" stroke-width="3.5" fill="none"/><path d="M-12 -1 V-15 M0 9 V-22 M12 -1 V-15" stroke="#8a5a14" stroke-width="5" stroke-linecap="round"/><path d="M-12 -1 V-15 M0 9 V-22 M12 -1 V-15" stroke="#FAC775" stroke-width="3" stroke-linecap="round"/><path d="M-16 -13 L-12 -22 L-8 -13Z M-4 -20 L0 -30 L4 -20Z M8 -13 L12 -22 L16 -13Z" fill="#FAC775" stroke="#8a5a14" stroke-width="1"/><circle r="2.6" cy="5" fill="#5cc3f0"/></g>${hand(84, 123, 1)}` : ''}${o.staff ? `<path d="M86 124 L100 24" stroke="#5a3a1a" stroke-width="4"/><circle cx="101" cy="20" r="7" fill="${o.staff}"/><circle cx="101" cy="20" r="12" fill="${o.staff}" opacity=".3"/>` : ''}${o.sword ? '<path d="M84 120 L118 74" stroke="#dfe6ee" stroke-width="4" stroke-linecap="round"/><path d="M86 116 L116 76" stroke="#fff" stroke-width="1.2" opacity=".8"/><path d="M78 116 L90 126" stroke="#8d5a2b" stroke-width="4"/>' : ''}${o.wand ? '<line x1="84" y1="120" x2="104" y2="94" stroke="#FAC775" stroke-width="3"/><circle cx="106" cy="90" r="6" fill="#FAC775"/><circle cx="106" cy="90" r="10" fill="#fff" opacity=".5"/>' : ''}${o.longbow ? '<path d="M84 66 Q106 123 84 180" stroke="#6d4228" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M84 66 Q106 123 84 180" stroke="#a8763a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M84 66 L84 180" stroke="#efe6d0" stroke-width="1"/>' : ''}`;
+    const items = `${o.hook ? '<path d="M86 124 L104 40 Q110 18 96 14 Q82 12 84 30" stroke="#e8dcc0" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M90 98 l10 4 M94 80 l10 4" stroke="#8d5a2b" stroke-width="3"/>' : ''}${o.broom ? '<path d="M84 122 L66 186" stroke="#8d5a2b" stroke-width="4"/><path d="M58 180 L76 186 L70 200 L50 194Z" fill="#d9b25a"/>' : ''}${o.torch ? '<path d="M86 124 L94 76" stroke="#6d4228" stroke-width="5"/><path class="amb-tw" d="M94 76 Q82 60 94 44 Q106 60 94 76Z" fill="#ffb02e"/><path d="M94 74 Q88 64 94 56 Q100 64 94 74Z" fill="#ffe08a"/>' : ''}${o.book ? `<rect x="78" y="106" width="22" height="16" rx="2" fill="${o.book}" transform="rotate(-20 88 114)"/><rect x="80" y="108" width="18" height="12" fill="#fff8e7" transform="rotate(-20 88 114)"/>` : ''}${o.trident ? `<path d="M80 150 L101 22" stroke="#8a5a14" stroke-width="5.5" stroke-linecap="round"/><path d="M80 150 L101 22" stroke="#e0ab3a" stroke-width="3.5" stroke-linecap="round"/><g transform="translate(101 22) rotate(9.3)"><path d="M-12 -2 Q-12 9 0 9 Q12 9 12 -2" stroke="#8a5a14" stroke-width="5.5" fill="none"/><path d="M-12 -2 Q-12 9 0 9 Q12 9 12 -2" stroke="#FAC775" stroke-width="3.5" fill="none"/><path d="M-12 -1 V-15 M0 9 V-22 M12 -1 V-15" stroke="#8a5a14" stroke-width="5" stroke-linecap="round"/><path d="M-12 -1 V-15 M0 9 V-22 M12 -1 V-15" stroke="#FAC775" stroke-width="3" stroke-linecap="round"/><path d="M-16 -13 L-12 -22 L-8 -13Z M-4 -20 L0 -30 L4 -20Z M8 -13 L12 -22 L16 -13Z" fill="#FAC775" stroke="#8a5a14" stroke-width="1"/><circle r="2.6" cy="5" fill="#5cc3f0"/></g>${hand(84, 123, 1)}` : ''}${o.staff ? `<path d="M86 124 L100 24" stroke="#5a3a1a" stroke-width="4"/><circle cx="101" cy="20" r="7" fill="${o.staff}"/><circle cx="101" cy="20" r="12" fill="${o.staff}" opacity=".3"/>` : ''}${o.sword ? '<path d="M84 120 L118 74" stroke="#dfe6ee" stroke-width="4" stroke-linecap="round"/><path d="M86 116 L116 76" stroke="#fff" stroke-width="1.2" opacity=".8"/><path d="M78 116 L90 126" stroke="#8d5a2b" stroke-width="4"/>' : ''}${o.polearm ? `<path d="M80 152 L100 20" stroke="#2a2a3a" stroke-width="4.4" stroke-linecap="round"/><path d="M100 20 Q124 4 116 -22 Q104 -4 96 6Z" fill="#e8f4ff" stroke="${o.polearm}" stroke-width="2.4" stroke-linejoin="round"/><path d="M100 20 Q118 2 113 -14" stroke="${o.polearm}" stroke-width="1.6" fill="none" opacity=".8"/><circle cx="82" cy="136" r="3" fill="${o.polearm}"/>` : ''}${o.knives ? `<g transform="translate(88 118) rotate(-24)"><path d="M0 0 Q9 -10 3 -24 Q-8 -14 0 0Z" fill="#e8f4ff" stroke="${o.knives}" stroke-width="2.2"/><rect x="-2.4" y="0" width="4.8" height="9" rx="2" fill="#6a4a2a"/></g><g transform="translate(32 118) rotate(24) scale(-1 1)"><path d="M0 0 Q9 -10 3 -24 Q-8 -14 0 0Z" fill="#e8f4ff" stroke="${o.knives}" stroke-width="2.2"/><rect x="-2.4" y="0" width="4.8" height="9" rx="2" fill="#6a4a2a"/></g>` : ''}${o.wand ? '<line x1="84" y1="120" x2="104" y2="94" stroke="#FAC775" stroke-width="3"/><circle cx="106" cy="90" r="6" fill="#FAC775"/><circle cx="106" cy="90" r="10" fill="#fff" opacity=".5"/>' : ''}${o.longbow ? '<path d="M84 66 Q106 123 84 180" stroke="#6d4228" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M84 66 Q106 123 84 180" stroke="#a8763a" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M84 66 L84 180" stroke="#efe6d0" stroke-width="1"/>' : ''}`;
     /* 手臂:女生泡泡袖+露手臂;男生長袖 */
     const M0 = (str, d) => d < 0 ? str : str.replace(/(-?\d+\.?\d*) (-?\d+\.?\d*)/g, (m, x, y) => `${(120 - x).toFixed(1)} ${y}`);
     const arm = d => { const hx = d < 0 ? 42 : 78;
@@ -2602,8 +2769,8 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
       host.innerHTML = `<h3><button class="ghost say" title="再聽一次">🔊</button> ${T(q)}</h3><div id="lb"></div><div class="fb" id="fb"></div>`;
       $('.say', host).onclick = () => say(q); say(q);
       const lb = $('#lb', host), fb = $('#fb', host);
-      const win = (msg) => { fb.innerHTML = '<span class="star">🌟</span> ' + T(msg); say(msg); setTimeout(done, 1900); };
-      const hint = (msg) => { fb.innerHTML = T(msg); say(msg); };
+      const win = (msg) => { msg = tx(msg); fb.innerHTML = '<span class="star">🌟</span> ' + T(msg); say(msg); setTimeout(done, 1900); };
+      const hint = (msg) => { msg = tx(msg); fb.innerHTML = T(msg); say(msg); };
       (this[cfg.type] || this.pick).call(this, cfg, lb, win, hint); fitPics(lb);
     },
     /* 選一張圖 */
@@ -2718,6 +2885,204 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
     }
   };
   Levels.choose = Levels.pick; Levels.match = Levels.pair;
+  /* 動作類關卡(獵星女團用)。在 template 的 Levels 之後載入,可用 Levels/tx/T/U/$/say/wiggle/mix。
+   原則:不會「失敗」——沒達標就自動重來;每關 30~60 秒;手機直式可玩;音效全用 WebAudio 現場合成(原創)。 */
+(() => {
+  if (!document.getElementById('arc-css')) {
+    const st = document.createElement('style'); st.id = 'arc-css';
+    st.textContent = `.rh{position:relative;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.rhbar{height:16px;border-radius:9px;background:#2a1a4a;overflow:hidden;border:2px solid #fff;box-shadow:0 0 0 2px #7a3ad0}
+.rhbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#46d8e8,#ff7ac8,#ffd24a);transition:width .15s}
+.rhbar.gold i{background:linear-gradient(90deg,#ffe27a,#ffb02e,#ffe27a);box-shadow:0 0 18px #ffd24a}
+.rhmeta{display:flex;justify-content:space-between;font-weight:800;color:#5a2a8a;margin:4px 2px;font-size:15px}
+.rhfield{position:relative;height:clamp(190px,34vh,270px);border-radius:14px;overflow:hidden;background:linear-gradient(#1a1050,#3a1a7a);display:flex}
+.rhlane{flex:1;position:relative;border-left:1px solid #ffffff22}.rhlane:first-child{border-left:0}
+.rhline{position:absolute;left:0;right:0;height:5px;background:#fff;opacity:.85;box-shadow:0 0 14px #fff}
+.rhnote{position:absolute;left:50%;width:44px;height:44px;margin-left:-22px;margin-top:-22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 14px currentColor;border:3px solid #fff}
+.rhnote.hit{animation:rhhit .35s forwards}@keyframes rhhit{to{transform:scale(2);opacity:0}}
+.rhpads{display:flex;gap:8px;margin-top:8px}
+.rhpad{flex:1;height:clamp(54px,9vh,70px);border-radius:14px;border:3px solid #fff;font-size:18px;font-weight:800;color:#fff;text-shadow:0 1px 3px #0006;cursor:pointer}
+.rhpad.on{transform:scale(.94);filter:brightness(1.4)}
+.rhpop{position:absolute;font-weight:900;font-size:22px;color:#fff;text-shadow:0 0 8px #ff7ac8,0 2px 2px #000;pointer-events:none;animation:rhpop .7s forwards}@keyframes rhpop{to{transform:translateY(-34px);opacity:0}}
+.rhgo{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#1a105099;z-index:3}
+.rhgo button{font-size:24px;padding:14px 30px;border-radius:30px;border:3px solid #fff;background:#ff7ac8;color:#fff;font-weight:900;cursor:pointer}`;
+    document.head.appendChild(st);
+  }
+  const lcg = s => () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  /* 節奏守魂門:音符落到線上時點對應的格子。cfg: lanes bpm notes need(0~1) names win */
+  Levels.rhythm = function (cfg, lb, win, hint) {
+    const L = cfg.lanes || 3, bpm = cfg.bpm || 96, N = cfg.notes || 24, need = Math.ceil(N * (cfg.need || .55)), beat = 60 / bpm * (cfg.gap || 1), FALL = cfg.fall || 1.7, W = .3;
+    const cols = ['#ff7ac8', '#46d8e8', '#ffd24a', '#b08aff'].slice(0, L), names = (cfg.names || [['魯米','Rumi'],['米拉','Mira'],['佐伊','Zoey'],['全員','All']]).slice(0, L), icon = ['🎤', '💃', '🎵', '⭐'];
+    const freq = [523.25, 659.25, 783.99, 987.77, 880, 698.46];
+    lb.className = ''; lb.innerHTML = `<div class="rh"><div class="rhbar" id="rhb"><i></i></div><div class="rhmeta"><span id="rhs">0 / ${need}</span><span id="rhc"></span></div><div class="rhfield">${cols.map((c, i) => `<div class="rhlane" data-l="${i}"><div class="rhline" style="top:84%"></div></div>`).join('')}<div class="rhgo"><button>▶ ${tx(['開始!', 'Start!'])}</button></div></div><div class="rhpads">${cols.map((c, i) => `<button class="rhpad" data-l="${i}" style="background:${c}">${icon[i]} ${tx(tx(names[i]))}</button>`).join('')}</div></div>`;
+    const field = lb.querySelector('.rhfield'), lanes = [...lb.querySelectorAll('.rhlane')], bar = lb.querySelector('.rhbar'), fill = bar.querySelector('i');
+    let ac = null, notes = [], t0 = 0, hits = 0, combo = 0, best = 0, over = false, raf = 0, run = 0;
+    const tone = (f, d, v, type) => { if (!ac) return; const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime; o.type = type || 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(v || .18, t); g.gain.exponentialRampToValueAtTime(.001, t + d); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + d + .02); };
+    const popTxt = (l, s) => { const p = document.createElement('div'); p.className = 'rhpop'; p.textContent = s; p.style.left = (l + .5) * 100 / L + '%'; p.style.top = '62%'; p.style.transform = 'translateX(-50%)'; field.appendChild(p); setTimeout(() => p.remove(), 750); };
+    const mk = () => { const r = lcg((cfg.seed || 7) * 131 + N), out = []; let prev = -1;
+      for (let i = 0; i < N; i++) { let l = Math.floor(r() * L); if (l === prev && r() < .6) l = (l + 1) % L; prev = l; out.push({ l, t: 1.8 + i * beat, hit: 0, el: null }); } return out; };
+    const start = () => { run++; const my = run; over = false; hits = 0; combo = 0; best = 0; notes = mk(); lanes.forEach(x => x.querySelectorAll('.rhnote').forEach(n => n.remove())); fill.style.width = '0'; bar.classList.remove('gold'); lb.querySelector('#rhs').textContent = `0 / ${need}`; lb.querySelector('#rhc').textContent = '';
+      try { ac = ac || (window.__arcAC = window.__arcAC || new (window.AudioContext || window.webkitAudioContext)()); ac.resume && ac.resume(); } catch (e) { ac = null; }
+      t0 = performance.now(); if (ac) { const a0 = ac.currentTime + .05; for (let i = 0; i < N + 4; i++) { const t = a0 + 1.8 + (i - 0) * beat, o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(48, t + .12); g.gain.setValueAtTime(.22, t); g.gain.exponentialRampToValueAtTime(.001, t + .18); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + .2); } }
+      cancelAnimationFrame(raf); const loop = () => { if (!lb.isConnected || my !== run) return; const now = (performance.now() - t0) / 1000;
+        notes.forEach(n => { const d = n.t - now; if (!n.el && d < FALL && d > -.6) { n.el = document.createElement('div'); n.el.className = 'rhnote'; n.el.style.cssText = `background:${cols[n.l]};color:${cols[n.l]}`; n.el.textContent = icon[n.l]; lanes[n.l].appendChild(n.el); }
+          if (n.el && !n.hit) { const y = (1 - d / FALL) * 84; n.el.style.top = y + '%'; if (d < -W && !n.miss) { n.miss = 1; n.el.style.opacity = .35; combo = 0; lb.querySelector('#rhc').textContent = ''; } if (d < -.6) n.el.remove(); } });
+        if (!over && now > notes[N - 1].t + .8) { over = true; if (hits >= need) { bar.classList.add('gold'); popTxt(1, '✨'); win(tx(cfg.win) ? cfg.win : ['魂門亮起來了!', 'The Honmoon is glowing!']); try { ac && tone(1046, .6, .2); setTimeout(() => ac && tone(1318, .8, .2), 160); } catch (e) {} return; } hint(['差一點!再試一次,跟著節拍點。', 'Almost! Try again and follow the beat.']); setTimeout(() => lb.isConnected && start(), 1500); return; }
+        raf = requestAnimationFrame(loop); }; raf = requestAnimationFrame(loop); };
+    const tap = l => { if (over || !t0 || lb.querySelector('.rhgo')) return; const now = (performance.now() - t0) / 1000, pad = lb.querySelectorAll('.rhpad')[l]; pad.classList.add('on'); setTimeout(() => pad.classList.remove('on'), 110);
+      let c = null, bd = 9; notes.forEach(n => { if (n.l === l && !n.hit && !n.miss) { const d = Math.abs(n.t - now); if (d < bd) { bd = d; c = n; } } });
+      if (c && bd <= W) { c.hit = 1; hits++; combo++; best = Math.max(best, combo); c.el && c.el.classList.add('hit'); tone(freq[(l + combo) % freq.length], .35); popTxt(l, bd < .12 ? tx(['完美!', 'Perfect!']) : tx(['好!', 'Good!'])); fill.style.width = Math.min(100, hits / need * 100) + '%'; lb.querySelector('#rhs').textContent = `${Math.min(hits, need)} / ${need}`; lb.querySelector('#rhc').textContent = combo > 2 ? `🔥 ${combo}` : ''; }
+      else { tone(160, .12, .08, 'square'); } };
+    lb.querySelectorAll('.rhpad').forEach(b => { b.addEventListener('pointerdown', e => { e.preventDefault(); tap(+b.dataset.l); }); });
+    lanes.forEach(x => x.addEventListener('pointerdown', e => { e.preventDefault(); tap(+x.dataset.l); }));
+    lb.querySelector('.rhgo button').onclick = () => { lb.querySelector('.rhgo').remove(); start(); };
+  };
+  /* 動作關卡全螢幕:先把舞台藏起來,免得遊戲區被擠到畫面外;結束或換頁時還原 */
+  const ARC = new Set(['rhythm']), run0 = Levels.run;
+  Levels.run = function (cfg, host, done, seed) {
+    const box = $('#stagebox'), arc = ARC.has(cfg.type); if (arc && box) box.style.display = 'none';
+    return run0.call(this, cfg, host, () => { if (box) box.style.display = ''; done(); }, seed);
+  };
+  Levels.ARC = ARC;
+})();
+
+/* 動作關卡第二批:slash catch simon guard maze whack spot rescue burst(rhythm 在 levels_arcade.js)。
+   共同規則:不會失敗,沒達標就自動重來;音效現場合成;手機直式可玩;每關 30~60 秒。 */
+(() => {
+  const st = document.createElement('style');
+  st.textContent = `.arf{position:relative;height:clamp(200px,38vh,290px);border-radius:14px;overflow:hidden;background:linear-gradient(#1a1050,#3a1a7a);touch-action:none;user-select:none;-webkit-user-select:none}
+.arf .en{position:absolute;width:58px;height:58px;margin:-29px 0 0 -29px;cursor:pointer;transition:left var(--t,2.4s) linear}
+.arf .en.cut{animation:rhhit .3s forwards;pointer-events:none}
+.arpl{position:absolute;bottom:8px;width:56px;height:56px;margin-left:-28px;border-radius:50%;background:#ff7ac8;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 16px #ff7ac8}
+.aritem{position:absolute;font-size:30px;margin:-15px 0 0 -15px}
+.arbtns{display:flex;gap:8px;margin-top:8px}.arbtns button{flex:1;height:clamp(52px,9vh,68px);border-radius:14px;border:3px solid #fff;font-size:26px;font-weight:800;color:#fff;background:#7a3ad0;cursor:pointer}.arbtns button:active{transform:scale(.94)}
+.arsim{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;height:100%;box-sizing:border-box}.arsim b{border-radius:18px;border:4px solid #fff;opacity:.55;display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer;transition:all .15s}.arsim b.lit{opacity:1;transform:scale(1.04);box-shadow:0 0 30px #fff;filter:brightness(1.4)}
+.arbig{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-size:84px;filter:drop-shadow(0 0 14px #fff)}
+.arring{position:absolute;left:50%;top:44%;width:190px;height:190px;margin:-95px 0 0 -95px;border:6px solid #ffd24a;border-radius:50%;animation:arshr var(--d,1.6s) linear forwards}@keyframes arshr{to{transform:scale(.3);opacity:.3}}
+.armz{display:grid;height:100%;padding:6px;box-sizing:border-box;gap:0}.armz i{position:relative;font-style:normal;display:flex;align-items:center;justify-content:center;font-size:22px;box-sizing:border-box;border:0 solid #ffd24a}
+.arhole{position:relative;border-radius:50%;background:radial-gradient(#0a0520 55%,#3a2a6a);margin:6px;cursor:pointer}.arhole span{position:absolute;left:0;right:0;bottom:30%;text-align:center;font-size:44px;transition:transform .15s;transform:translateY(120%)}.arhole.up span{transform:translateY(0)}
+.arfaces{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;height:100%;padding:10px;box-sizing:border-box}.arfaces b{font-size:58px;cursor:pointer;filter:drop-shadow(0 2px 3px #0008)}
+.arcrowd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px;height:100%;box-sizing:border-box}.arcrowd b{position:relative;display:flex;align-items:center;justify-content:center;font-size:44px;border-radius:14px;background:#ffffff14;cursor:pointer}.arcrowd b u{position:absolute;inset:0;border-radius:14px;background:#cfc8e8;text-decoration:none}
+.arpush{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;height:150px;border-radius:50%;border:6px solid #fff;background:radial-gradient(#ff9ccf,#ff4f86);font-size:56px;color:#fff;cursor:pointer;box-shadow:0 0 30px #ff4f86}.arpush:active{transform:translate(-50%,-50%) scale(.92)}`;
+  document.head.appendChild(st);
+  const lcg = s => () => (s = (s * 1664525 + 1013904223) % 4294967296) / 4294967296;
+  let AC = null; const ensure = () => { try { AC = AC || (window.__arcAC = window.__arcAC || new (window.AudioContext || window.webkitAudioContext)()); AC.resume && AC.resume(); } catch (e) { AC = null; } };
+  const tone = (f, d, v, type) => { if (!AC) return; const o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime; o.type = type || 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(v || .16, t); g.gain.exponentialRampToValueAtTime(.001, t + (d || .25)); o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + (d || .25) + .02); };
+  const NT = [523.25, 587.33, 659.25, 783.99, 880, 1046.5];
+  const blob = c => `<svg viewBox="0 0 60 60" width="58" height="58"><path d="M10 50 Q4 24 20 14 L18 4 L26 12 Q30 10 34 12 L42 4 L40 14 Q56 24 50 50 Q40 56 30 52 Q20 56 10 50Z" fill="${c || '#5a2a8a'}" stroke="#2a1050" stroke-width="2.5"/><circle cx="22" cy="30" r="5" fill="#ffe94a"/><circle cx="38" cy="30" r="5" fill="#ffe94a"/><circle cx="22" cy="31" r="2" fill="#1a0a30"/><circle cx="38" cy="31" r="2" fill="#1a0a30"/><path d="M22 42 q8 6 16 0" stroke="#1a0a30" stroke-width="2.4" fill="none"/></svg>`;
+  /* 共同外框:進度條+開始鈕;api.add(n) 加分,達標自動過關;api.restart(msg) 重來 */
+  const arena = (cfg, lb, win, hint, need, build, o) => {
+    o = o || {}; lb.className = '';
+    lb.innerHTML = `<div class="rh"><div class="rhbar"><i></i></div><div class="rhmeta"><span class="sc">0 / ${need}</span><span class="cb"></span></div><div class="arf"><div class="rhgo"><button>▶ ${tx(['開始!', 'Start!'])}</button></div></div>${o.btns || ''}</div>`;
+    const field = lb.querySelector('.arf'), bar = lb.querySelector('.rhbar'), fill = bar.querySelector('i'), sc = lb.querySelector('.sc'), cb = lb.querySelector('.cb');
+    let run = 0, score = 0, combo = 0, stop = null, done = false;
+    const api = { field, lb, rnd: lcg((cfg.seed || 3) * 97 + need), alive: r => lb.isConnected && r === run && !done, get run() { return run; }, tone, NT, blob,
+      pop(x, y, t) { const p = document.createElement('div'); p.className = 'rhpop'; p.textContent = t; p.style.cssText = `left:${x}%;top:${y}%;transform:translateX(-50%)`; field.appendChild(p); setTimeout(() => p.remove(), 750); },
+      add(n, x, y) { if (done) return; score = Math.min(need, score + n); combo += n; fill.style.width = score / need * 100 + '%'; sc.textContent = `${score} / ${need}`; cb.textContent = combo > 2 ? `🔥 ${combo}` : '';
+        if (score >= need) { done = true; bar.classList.add('gold'); stop && stop(); tone(1046, .5, .2); setTimeout(() => tone(1318, .7, .2), 150); win(tx(cfg.win) ? cfg.win : ['做到了!魂門更亮了!', 'You did it! The Honmoon shines brighter!']); } },
+      miss() { combo = 0; cb.textContent = ''; },
+      restart(msg) { if (done) return; need = Math.max(3, need - 1); stop && stop(); hint(msg || ['差一點!再試一次。', 'Almost! Try again.']); setTimeout(() => lb.isConnected && go(), 1400); } };
+    const go = () => { run++; score = 0; combo = 0; done = false; fill.style.width = '0'; bar.classList.remove('gold'); sc.textContent = `0 / ${need}`; cb.textContent = ''; [...field.children].forEach(c => { if (!c.classList.contains('rhgo')) c.remove(); }); stop = build(api, run) || null; };
+    lb.querySelector('.rhgo button').onclick = () => { lb.querySelector('.rhgo').remove(); ensure(); go(); };
+    return api;
+  };
+
+  /* 揮劍斬影怪:影怪從左飛到右,點到就斬 */
+  Levels.slash = function (cfg, lb, win, hint) {
+    const need = cfg.need || 10, total = cfg.total || 16, rate = cfg.rate || 900;
+    arena(cfg, lb, win, hint, need, (api, r) => { let n = 0, alive = 0; const iv = setInterval(() => { if (!api.alive(r)) return clearInterval(iv);
+        if (n >= total) { if (!alive) { clearInterval(iv); api.restart(); } return; } n++; alive++;
+        const e = document.createElement('div'); e.className = 'en'; const y = 14 + api.rnd() * 66, dur = (cfg.speed || 2.6) - api.rnd() * .5; e.style.cssText = `left:-8%;top:${y}%;--t:${dur}s`; e.innerHTML = api.blob(cfg.color); api.field.appendChild(e); void e.offsetWidth; e.style.left = '106%';
+        const gone = () => { if (e.classList.contains('cut')) return; alive--; e.remove(); api.miss(); }; const to = setTimeout(gone, dur * 1000 + 100);
+        e.onpointerdown = ev => { ev.preventDefault(); if (e.classList.contains('cut')) return; e.classList.add('cut'); e.style.left = getComputedStyle(e).left; clearTimeout(to); alive--; api.tone(NT_(n), .2); api.pop(parseFloat(e.style.left) / api.field.clientWidth * 100, y, '⚔️'); api.add(1); setTimeout(() => e.remove(), 320); }; }, rate);
+      return () => clearInterval(iv); });
+  };
+  const NT_ = n => NT[n % NT.length];
+
+  /* 接音符:左右拖動接星星,躲開黑霧 */
+  Levels.catch = function (cfg, lb, win, hint) {
+    const need = cfg.need || 12, total = cfg.total || 20, fall = cfg.fall || 2.2;
+    arena(cfg, lb, win, hint, need, (api, r) => { const f = api.field, pl = document.createElement('div'); pl.className = 'arpl'; pl.textContent = cfg.icon || '🎤'; pl.style.left = '50%'; f.appendChild(pl);
+      let px = 50, items = [], spawned = 0, last = performance.now(), acc = 0;
+      const mv = e => { const b = f.getBoundingClientRect(); px = Math.max(6, Math.min(94, (e.clientX - b.left) / b.width * 100)); pl.style.left = px + '%'; };
+      f.onpointerdown = e => { mv(e); f.setPointerCapture && f.setPointerCapture(e.pointerId); }; f.onpointermove = mv;
+      const iv = setInterval(() => { if (!api.alive(r)) return clearInterval(iv); const now = performance.now(), dt = (now - last) / 1000; last = now; acc += dt;
+        if (spawned < total && acc > (cfg.gap || .75)) { acc = 0; spawned++; const bad = api.rnd() < (cfg.bad || .25), el = document.createElement('div'); el.className = 'aritem'; el.textContent = bad ? '🌫️' : ['⭐', '🎵', '💛'][spawned % 3]; const it = { x: 8 + api.rnd() * 84, y: -5, bad, el }; el.style.left = it.x + '%'; f.appendChild(el); items.push(it); }
+        items.forEach(it => { it.y += dt * 100 / fall; it.el.style.top = it.y + '%'; if (it.y > 80 && Math.abs(it.x - px) < 11 && !it.got) { it.got = 1; it.el.remove(); if (it.bad) { api.miss(); tone(150, .2, .1, 'square'); pl.style.filter = 'grayscale(1)'; setTimeout(() => pl.style.filter = '', 300); } else { api.tone(NT_(spawned), .25); api.add(1); } } if (it.y > 106) { it.got = 1; it.el.remove(); } });
+        items = items.filter(i => !i.got); if (spawned >= total && !items.length) { clearInterval(iv); api.restart(); } }, 30);
+      return () => clearInterval(iv); });
+  };
+
+  /* 記燈光順序:跟著亮起的顏色重複 */
+  Levels.simon = function (cfg, lb, win, hint) {
+    const rounds = cfg.rounds || 4, cols = ['#ff7ac8', '#46d8e8', '#ffd24a', '#b08aff'], ic = ['🎤', '💃', '🎵', '⭐'];
+    arena(cfg, lb, win, hint, rounds, (api, r) => { const f = api.field; f.innerHTML = `<div class="arsim">${cols.map((c, i) => `<b data-i="${i}" style="background:${c}">${ic[i]}</b>`).join('')}</div>`; const pads = [...f.querySelectorAll('b')]; let seq = [], pos = 0, lock = true;
+      const flash = (i, ms) => { pads[i].classList.add('lit'); api.tone(NT[i + 1], .3); setTimeout(() => pads[i].classList.remove('lit'), ms || 380); };
+      const show = async () => { lock = true; await new Promise(z => setTimeout(z, 700)); for (const i of seq) { if (!api.alive(r)) return; flash(i); await new Promise(z => setTimeout(z, 620)); } lock = false; pos = 0; hint(['換你了!照順序點。', 'Your turn! Tap them in order.']); };
+      const next = () => { seq.push(Math.floor(api.rnd() * 4)); show(); }; next();
+      pads.forEach(p => p.onpointerdown = e => { e.preventDefault(); if (lock || !api.alive(r)) return; const i = +p.dataset.i; flash(i, 220);
+        if (i === seq[pos]) { pos++; if (pos === seq.length) { lock = true; api.add(1); if (api.alive(r)) setTimeout(next, 600); } } else { tone(150, .25, .1, 'square'); api.miss(); pos = 0; hint(['沒關係,再看一次!', 'No problem, watch again!']); show(); } });
+      return () => { lock = true; }; }, {});
+  };
+
+  /* 擋招:大箭頭出現,在圈圈縮小前點對方向 */
+  Levels.guard = function (cfg, lb, win, hint) {
+    const need = cfg.need || 8, total = cfg.total || 12, A = ['⬅️', '⬆️', '➡️'];
+    const api = arena(cfg, lb, win, hint, need, (api, r) => { let n = 0, cur = -1, t0 = 0, to = 0; const dur = () => Math.max(.9, (cfg.dur || 1.9) - n * .06);
+      const spawn = () => { if (!api.alive(r)) return; if (n >= total) return api.restart(); const f = api.field; f.innerHTML = ''; n++; cur = Math.floor(api.rnd() * 3); t0 = performance.now(); const d = dur(); f.innerHTML = `<div class="arring" style="--d:${d}s"></div><div class="arbig">${cfg.enemy || '👹'}</div><div class="arbig" style="top:14%;font-size:46px">${A[cur]}</div>`; clearTimeout(to); to = setTimeout(() => { if (api.alive(r)) { api.miss(); spawn(); } }, d * 1000 + 150); };
+      lb.querySelectorAll('.arbtns button').forEach((b, i) => b.onpointerdown = e => { e.preventDefault(); if (cur < 0 || !api.alive(r)) return; if (i === cur) { cur = -1; clearTimeout(to); api.tone(NT_(n), .25); api.pop(50, 40, '🛡️'); api.add(1); setTimeout(spawn, 450); } else { tone(150, .15, .08, 'square'); } });
+      setTimeout(spawn, 500); return () => { clearTimeout(to); cur = -1; }; }, { btns: `<div class="arbtns">${A.map(a => `<button>${a}</button>`).join('')}</div>` });
+  };
+
+  /* 迷宮追逐:方向鈕或滑動,走到終點 */
+  Levels.maze = function (cfg, lb, win, hint) {
+    const S = cfg.size || 6;
+    arena(cfg, lb, win, hint, 1, (api, r) => { const rnd = lcg((cfg.seed || 5) * 31 + S), W = Array.from({ length: S * S }, () => [1, 1, 1, 1]); /* 上右下左 */ const vis = new Set([0]), stk = [0], D = [[-1, 0, 0, 2], [0, 1, 1, 3], [1, 0, 2, 0], [0, -1, 3, 1]];
+      while (stk.length) { const c = stk[stk.length - 1], y = Math.floor(c / S), x = c % S, nb = D.map(d => [y + d[0], x + d[1], d[2], d[3]]).filter(q => q[0] >= 0 && q[0] < S && q[1] >= 0 && q[1] < S && !vis.has(q[0] * S + q[1])); if (!nb.length) { stk.pop(); continue; } const q = nb[Math.floor(rnd() * nb.length)], n = q[0] * S + q[1]; W[c][q[2]] = 0; W[n][q[3]] = 0; vis.add(n); stk.push(n); }
+      const f = api.field; f.innerHTML = `<div class="armz" style="grid-template-columns:repeat(${S},1fr);grid-template-rows:repeat(${S},1fr)">${W.map((w, i) => `<i style="border-width:${w[0] ? 3 : 0}px ${w[1] ? 3 : 0}px ${w[2] ? 3 : 0}px ${w[3] ? 3 : 0}px"></i>`).join('')}</div>`; const cells = [...f.querySelectorAll('i')]; let p = 0; const G = S * S - 1;
+      const draw = () => { cells.forEach(c => c.textContent = ''); cells[G].textContent = cfg.goal || '🏃'; cells[p].textContent = cfg.icon || '🎤'; };
+      const mv = d => { if (!api.alive(r)) return; if (W[p][d]) { tone(150, .08, .06, 'square'); return; } const y = Math.floor(p / S), x = p % S; p = (y + D[d][0]) * S + x + D[d][1]; api.tone(NT_(p), .1, .1); draw(); if (p === G) api.add(1); };
+      draw(); lb.querySelectorAll('.arbtns button').forEach((b, i) => b.onpointerdown = e => { e.preventDefault(); mv([0, 3, 2, 1][i]); });
+      let sx = 0, sy = 0; f.onpointerdown = e => { sx = e.clientX; sy = e.clientY; }; f.onpointerup = e => { const dx = e.clientX - sx, dy = e.clientY - sy; if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return; mv(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0)); };
+      const key = e => { if (!lb.isConnected) return; const m = { ArrowUp: 0, ArrowRight: 1, ArrowDown: 2, ArrowLeft: 3 }[e.key]; if (m != null) { e.preventDefault(); mv(m); } }; document.addEventListener('keydown', key); const kc = setInterval(() => { if (!lb.isConnected) { document.removeEventListener('keydown', key); clearInterval(kc); } }, 500);
+      return () => document.removeEventListener('keydown', key); }, { btns: `<div class="arbtns"><button>⬆️</button><button>⬅️</button><button>⬇️</button><button>➡️</button></div>` });
+  };
+
+  /* 打影怪(佐伊飛刀):洞裡冒出來,點中;別點到粉絲 */
+  Levels.whack = function (cfg, lb, win, hint) {
+    const need = cfg.need || 10, total = cfg.total || 16, up = cfg.up || 1100, rate = cfg.rate || 800;
+    arena(cfg, lb, win, hint, need, (api, r) => { const f = api.field; f.innerHTML = `<div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);height:100%;padding:6px;box-sizing:border-box">${Array.from({ length: 6 }, () => '<div class="arhole"><span></span></div>').join('')}</div>`; const hs = [...f.querySelectorAll('.arhole')]; let n = 0, busy = new Set();
+      const iv = setInterval(() => { if (!api.alive(r)) return clearInterval(iv); if (n >= total) { if (!busy.size) { clearInterval(iv); api.restart(); } return; } const free = hs.map((h, i) => i).filter(i => !busy.has(i)); if (!free.length) return; const i = free[Math.floor(api.rnd() * free.length)], h = hs[i], sp = h.firstChild, fan = api.rnd() < (cfg.decoy || .15); n++; busy.add(i); sp.textContent = fan ? '😊' : '👹'; h.classList.add('up'); h.dataset.fan = fan ? 1 : '';
+        const hide = () => { h.classList.remove('up'); setTimeout(() => busy.delete(i), 200); }; const to = setTimeout(() => { if (h.classList.contains('up')) { hide(); } }, up);
+        h.onpointerdown = e => { e.preventDefault(); if (!h.classList.contains('up')) return; clearTimeout(to); hide(); if (h.dataset.fan) { api.miss(); tone(180, .2, .1, 'square'); api.pop(25 + (i % 3) * 25, 30, '🙈'); } else { api.tone(NT_(n), .2); api.pop(20 + (i % 3) * 30, 20 + Math.floor(i / 3) * 40, '🗡️'); api.add(1); } }; }, rate);
+      return () => clearInterval(iv); });
+  };
+
+  /* 找假冒者:眨眼不自然的那一個 */
+  Levels.spot = function (cfg, lb, win, hint) {
+    const rounds = cfg.rounds || 3, nn = cfg.n || 4;
+    arena(cfg, lb, win, hint, rounds, (api, r) => { const f = api.field; let round = 0, iv = 0, imp = 0;
+      const next = () => { if (!api.alive(r)) return; clearInterval(iv); imp = Math.floor(api.rnd() * (nn + round)); const N = nn + round, base = cfg.faces || ['🙂', '😀', '😊']; f.innerHTML = `<div class="arfaces">${Array.from({ length: N }, (_, i) => `<b data-i="${i}">${base[i % base.length]}</b>`).join('')}</div>`; const bs = [...f.querySelectorAll('b')];
+        iv = setInterval(() => { if (!api.alive(r)) return clearInterval(iv); const b = bs[imp]; b.textContent = '😈'; setTimeout(() => { b.textContent = base[imp % base.length]; }, 260); }, Math.max(900, 1500 - round * 250));
+        bs.forEach(b => b.onpointerdown = e => { e.preventDefault(); if (!api.alive(r)) return; if (+b.dataset.i === imp) { clearInterval(iv); api.tone(NT_(round + 3), .3); api.pop(50, 40, '🎯'); round++; b.textContent = '😈'; api.add(1); setTimeout(next, 800); } else { tone(150, .15, .08, 'square'); b.style.transform = 'rotate(-12deg)'; setTimeout(() => b.style.transform = '', 200); hint(['不是他,再看看誰怪怪的。', 'Not that one. Look for the odd one.']); } }); };
+      next(); return () => clearInterval(iv); });
+  };
+
+  /* 解救觀眾:點掉迷霧,每個人要點 1~3 次 */
+  Levels.rescue = function (cfg, lb, win, hint) {
+    const n = cfg.n || 8, need = n;
+    arena(cfg, lb, win, hint, need, (api, r) => { const f = api.field; const fog = Array.from({ length: n }, () => 1 + Math.floor(api.rnd() * (cfg.max || 2) + (api.rnd() < .3 ? 1 : 0))); f.innerHTML = `<div class="arcrowd">${fog.map((k, i) => `<b data-i="${i}"><span>😵‍💫</span><u style="opacity:${.25 + k * .22}">🌫️</u></b>`).join('')}</div>`;
+      f.querySelectorAll('b').forEach((b, i) => b.onpointerdown = e => { e.preventDefault(); if (!api.alive(r) || fog[i] <= 0) return; fog[i]--; api.tone(NT_(i + fog[i]), .15); if (fog[i] <= 0) { b.querySelector('u').remove(); b.querySelector('span').textContent = '🥰'; api.add(1); } else b.querySelector('u').style.opacity = .25 + fog[i] * .22; }); }, {});
+  };
+
+  /* 合唱衝刺:連點填滿能量,放煙火 */
+  Levels.burst = function (cfg, lb, win, hint) {
+    arena(cfg, lb, win, hint, 100, (api, r) => { const f = api.field; f.innerHTML = '<button class="arpush">🎤</button>'; const gain = cfg.gain || 5;
+      f.querySelector('.arpush').onpointerdown = e => { e.preventDefault(); if (!api.alive(r)) return; api.tone(NT_(Math.floor(Math.random() * 6)), .12, .12); api.pop(10 + Math.random() * 80, 15 + Math.random() * 40, ['🎆', '✨', '🎇', '💖'][Math.floor(Math.random() * 4)]); api.add(gain); }; }, {});
+  };
+  ['slash', 'catch', 'simon', 'guard', 'maze', 'whack', 'spot', 'rescue', 'burst'].forEach(k => Levels.ARC.add(k));
+})();
+
 
   /* 這一句的鏡頭要框誰:有人說話 → 說話的人+這句裡被動到的角色;旁白 → 只有一個角色在表演情緒時才特寫 */
   const shotOf = (who, acts, after) => {
@@ -2762,7 +3127,7 @@ STORIES.push({ id:'wish', title:['星願','Wish'],
     async go(si, li) {
       this.lvTok++; const nav = $('.nav'); if (nav) nav.style.visibility = '';
       this.busy = false; this.si = si; this.dots(); store.set('princess_' + this.S.id, si);
-      Stage.mount($('#stagebox'), this.S.scenes[si], li === 0); $('#lv').style.display = 'none'; $('#cap').style.display = '';
+      $('#stagebox').style.display = ''; Stage.mount($('#stagebox'), this.S.scenes[si], li === 0); $('#lv').style.display = 'none'; $('#cap').style.display = '';
       for (let j = 0; j < li; j++) await runActs(this.S.scenes[si].say[j][2], true);
       this.li = li - 1; if (li === 0 || li > 0) this.next();
     },
